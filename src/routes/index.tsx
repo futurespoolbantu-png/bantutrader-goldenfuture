@@ -421,43 +421,43 @@ function Home() {
 }
 
 function MobileAppSection() {
+  const { t } = useI18n();
   return (
     <section className="mx-auto mt-32 max-w-7xl px-4">
       <Reveal className="mb-14 text-center">
         <span className="inline-flex items-center gap-2 rounded-full border border-border bg-foreground/5 px-4 py-1.5 text-xs font-medium">
-          <Sparkles className="h-3 w-3 text-gold" /> Mobile App Coming Soon
+          <Sparkles className="h-3 w-3 text-gold" /> {t("app.badge")}
         </span>
         <h2 className="mx-auto mt-5 max-w-2xl font-display text-4xl font-bold md:text-5xl">
-          Your portfolio, <span className="text-gradient-gold">in your pocket.</span>
+          {t("app.title1")} <span className="text-gradient-gold">{t("app.title2")}</span>
         </h2>
         <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
-          Our investor portal is being optimized for mobile. Access your portfolio via our secure
-          web dashboard while we prepare a seamless mobile experience.
+          {t("app.subtitle")}
         </p>
       </Reveal>
 
       <div className="relative">
         {/* floating badges */}
         <FloatingBadge className="left-2 top-6 hidden md:block" delay={0.2}>
-          Aurum Core · 20% Annual Target
+          {t("app.floating1")}
         </FloatingBadge>
         <FloatingBadge className="right-2 top-24 hidden md:block" delay={0.4}>
-          Sterling Ascend · 35% High-risk 1yr
+          {t("app.floating2")}
         </FloatingBadge>
         <FloatingBadge
           className="bottom-10 left-16 hidden md:block"
           delay={0.6}
           tone="success"
         >
-          South Africa · Now Available
+          {t("app.floating3")}
         </FloatingBadge>
 
         <div className="mx-auto flex max-w-4xl items-end justify-center gap-4 md:gap-8">
           <Phone tilt="-8deg" scale={0.85}>
             <div className="text-[10px] uppercase tracking-widest text-muted-foreground">
-              Analytics
+              {t("app.analytics")}
             </div>
-            <div className="mt-1 font-display text-lg font-bold">Strategies</div>
+            <div className="mt-1 font-display text-lg font-bold">{t("app.strategies")}</div>
             <div className="mt-4 space-y-3">
               {[
                 { n: "Aurum Core", p: 78, tone: "gold" },
@@ -472,7 +472,7 @@ function MobileAppSection() {
                   <div className="h-1.5 rounded-full bg-foreground/10">
                     <div
                       className={`h-full rounded-full ${
-                        s.tone === "success" ? "bg-[oklch(0.78_0.19_155)]" : "bg-gold"
+                        s.tone === "success" ? "bg-[oklch(0.55_0.18_155)]" : "bg-gold"
                       }`}
                       style={{ width: `${s.p}%` }}
                     />
@@ -484,11 +484,11 @@ function MobileAppSection() {
 
           <Phone>
             <div className="text-[10px] uppercase tracking-widest text-muted-foreground">
-              Portfolio Overview
+              {t("app.portfolio")}
             </div>
             <div className="mt-1 font-display text-2xl font-bold">R 1,284,520</div>
-            <div className="mt-1 text-[10px] text-[oklch(0.85_0.18_155)]">
-              +12.4% · This Quarter
+            <div className="mt-1 text-[10px] text-[oklch(0.55_0.18_155)]">
+              {t("app.quarter")}
             </div>
             <svg viewBox="0 0 200 70" className="mt-4 h-16 w-full">
               <defs>
@@ -510,24 +510,24 @@ function MobileAppSection() {
             </svg>
             <div className="mt-4 grid grid-cols-2 gap-2">
               <button className="rounded-full bg-gold py-2 text-[10px] font-semibold text-primary-foreground">
-                Deposit
+                {t("app.deposit")}
               </button>
               <button className="rounded-full border border-border py-2 text-[10px] font-semibold">
-                Withdraw
+                {t("app.withdraw")}
               </button>
             </div>
           </Phone>
 
           <Phone tilt="8deg" scale={0.85}>
             <div className="text-[10px] uppercase tracking-widest text-muted-foreground">
-              Available
+              {t("app.available")}
             </div>
-            <div className="mt-1 font-display text-lg font-bold">Strategies</div>
+            <div className="mt-1 font-display text-lg font-bold">{t("app.strategies")}</div>
             <div className="mt-4 space-y-2">
               {[
-                { n: "Aurum Core", pct: "20%", risk: "Low", tone: "success" },
-                { n: "Aurum Momentum", pct: "25%", risk: "Medium", tone: "gold" },
-                { n: "Sterling Ascend", pct: "35%", risk: "High", tone: "danger" },
+                { n: "Aurum Core", pct: "20%", risk: t("risk.low"), tone: "success" },
+                { n: "Aurum Momentum", pct: "25%", risk: t("risk.medium"), tone: "gold" },
+                { n: "Sterling Ascend", pct: "35%", risk: t("risk.high"), tone: "danger" },
               ].map((r) => (
                 <div
                   key={r.n}
@@ -535,11 +535,11 @@ function MobileAppSection() {
                 >
                   <div className="text-[10px] font-semibold">{r.n}</div>
                   <div className="mt-1 flex items-center justify-between">
-                    <span className="text-[9px] text-muted-foreground">{r.risk} Risk</span>
+                    <span className="text-[9px] text-muted-foreground">{r.risk} {t("app.risk")}</span>
                     <span
                       className={`text-[10px] font-bold ${
                         r.tone === "success"
-                          ? "text-[oklch(0.85_0.18_155)]"
+                          ? "text-[oklch(0.55_0.18_155)]"
                           : r.tone === "danger"
                             ? "text-destructive"
                             : "text-gold"
@@ -556,10 +556,10 @@ function MobileAppSection() {
 
         <div className="mt-12 flex justify-center gap-3">
           <div className="rounded-full border border-border bg-foreground/5 px-5 py-2 text-xs font-semibold">
-            <span className="text-gold">9 Years</span> Track Record
+            <span className="text-gold">9 {t("stats.years").split(" ")[0]}</span> {t("app.badge1")}
           </div>
           <div className="rounded-full border border-border bg-foreground/5 px-5 py-2 text-xs font-semibold">
-            <span className="text-gold">2 Strategy</span> Groups
+            <span className="text-gold">2</span> {t("app.badge2")}
           </div>
         </div>
       </div>
