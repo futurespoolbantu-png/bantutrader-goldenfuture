@@ -52,9 +52,9 @@ function Home() {
             <ShieldCheck className="h-3.5 w-3.5" />
           </span>
           <span>
-            <span className="text-foreground">Bantu Trader Capital</span> operates as a Juristic
-            Representative under <span className="text-foreground">Sovereign Trust Financial</span>,
-            an authorized Category II FSP{" "}
+            <span className="text-foreground">Bantu Trader Capital</span> {t("reg.text")}{" "}
+            <span className="text-foreground">Sovereign Trust Financial</span>,{" "}
+            {t("reg.authorized")}{" "}
             <span className="text-gold">(FSP No. 45219)</span>
           </span>
         </div>
@@ -74,32 +74,30 @@ function Home() {
           <Reveal>
             <span className="inline-flex items-center gap-2 rounded-full border border-border bg-foreground/5 px-4 py-1.5 text-xs font-medium text-muted-foreground backdrop-blur">
               <span className="h-1.5 w-1.5 rounded-full bg-gold" />
-              9 Years in the Forex Industry · FSP 45219
+              {t("hero.badge")}
             </span>
             <h1 className="mt-6 font-display text-5xl font-bold leading-[0.95] tracking-tight md:text-7xl">
-              Precision Trading
+              {t("hero.title1")}
               <br />
-              <span className="text-gradient-gold">Powerful</span>
+              <span className="text-gradient-gold">{t("hero.title2")}</span>
               <br />
-              Results.
+              {t("hero.title3")}
             </h1>
             <p className="mt-6 max-w-lg text-base leading-relaxed text-muted-foreground">
-              Segregated client-owned accounts, professional discretionary management, disciplined
-              execution and institutional-grade risk supervision. Built for investors who demand
-              transparency and results.
+              {t("hero.subtitle")}
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <Link
                 to="/products"
                 className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-gold transition-transform hover:scale-[1.03]"
               >
-                <Lock className="h-4 w-4" /> Book a Consultation
+                <Lock className="h-4 w-4" /> {t("nav.consult")}
               </Link>
               <Link
                 to="/about"
                 className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-gold"
               >
-                Learn More <ArrowRight className="h-4 w-4" />
+                {t("hero.learn")} <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
           </Reveal>
