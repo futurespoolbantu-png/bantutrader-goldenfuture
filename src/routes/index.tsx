@@ -212,31 +212,28 @@ function Home() {
         <div className="grid gap-14 lg:grid-cols-2">
           <Reveal>
             <span className="text-xs font-semibold uppercase tracking-[0.25em] text-gold">
-              About Bantu Trader Capital
+              {t("abtp.eyebrow")}
             </span>
             <h2 className="mt-3 font-display text-4xl font-bold leading-tight md:text-5xl">
-              Where Investors Meet <span className="text-gradient-gold">Results</span> & Capital
-              Runs Deep.
+              {t("abtp.title1")} <span className="text-gradient-gold">{t("abtp.title2")}</span> {t("abtp.title3")}
             </h2>
             <p className="mt-5 text-muted-foreground">
-              We combine nine years of forex market experience with institutional risk frameworks
-              to deliver disciplined, transparent portfolio management. Every account is
-              client-owned. Every trade is monitored.
+              {t("abtp.body")}
             </p>
             <Link
               to="/about"
               className="mt-8 inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:border-gold hover:text-gold"
             >
-              About Us <ArrowRight className="h-4 w-4" />
+              {t("abtp.cta")} <ArrowRight className="h-4 w-4" />
             </Link>
           </Reveal>
           <Reveal delay={0.1}>
             <div className="grid grid-cols-2 gap-4">
               {[
-                { v: 9, s: "", label: "Years Experience" },
-                { v: 2, s: "", label: "Investment Strategies" },
-                { v: 24, s: "/7", label: "Risk Monitoring" },
-                { v: 100, s: "%", label: "Client-Owned Accounts" },
+                { v: 9, s: "", label: t("stats.years") },
+                { v: 2, s: "", label: t("stats.strategies") },
+                { v: 24, s: "/7", label: t("stats.monitoring") },
+                { v: 100, s: "%", label: t("stats.owned") },
               ].map((s, i) => (
                 <div
                   key={i}
@@ -269,25 +266,25 @@ function Home() {
                   <BadgeDollarSign className="h-6 w-6" />
                 </div>
                 <h3 className="mt-5 font-display text-3xl font-bold md:text-4xl">
-                  Zero Management Fees
+                  {t("zf.title")}
                 </h3>
                 <p className="mt-3 max-w-md text-muted-foreground">
-                  Performance-based fee structure with no hidden costs. We only win when you win.
+                  {t("zf.body")}
                 </p>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="rounded-2xl border border-border bg-background/60 p-6 text-center">
-                  <div className="font-display text-4xl font-bold text-[oklch(0.85_0.18_155)]">
+                  <div className="font-display text-4xl font-bold text-[oklch(0.55_0.18_155)]">
                     0%
                   </div>
                   <div className="mt-2 text-xs uppercase tracking-widest text-muted-foreground">
-                    Management Fee
+                    {t("zf.mgmt")}
                   </div>
                 </div>
                 <div className="rounded-2xl border border-border bg-background/60 p-6 text-center">
                   <div className="font-display text-4xl font-bold text-gold">30%</div>
                   <div className="mt-2 text-xs uppercase tracking-widest text-muted-foreground">
-                    Performance Fee
+                    {t("zf.perf")}
                   </div>
                 </div>
               </div>
@@ -300,10 +297,10 @@ function Home() {
       <section className="mx-auto mt-32 max-w-7xl px-4">
         <Reveal className="mb-8 text-center">
           <span className="text-xs font-semibold uppercase tracking-[0.25em] text-gold">
-            Powered By
+            {t("part.eyebrow")}
           </span>
           <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">
-            Global Financial Institutions
+            {t("part.title")}
           </h2>
         </Reveal>
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
@@ -330,17 +327,17 @@ function Home() {
         <Reveal className="mb-10 flex flex-wrap items-end justify-between gap-4">
           <div>
             <span className="text-xs font-semibold uppercase tracking-[0.25em] text-gold">
-              Latest Insights
+              {t("ins.eyebrow")}
             </span>
             <h2 className="mt-3 font-display text-4xl font-bold md:text-5xl">
-              Market Analysis & News
+              {t("ins.title")}
             </h2>
           </div>
           <Link
             to="/blog"
             className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-medium hover:border-gold hover:text-gold"
           >
-            View all <ArrowRight className="h-4 w-4" />
+            {t("ins.viewAll")} <ArrowRight className="h-4 w-4" />
           </Link>
         </Reveal>
         <div className="grid gap-6 md:grid-cols-2">
