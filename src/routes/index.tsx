@@ -609,7 +609,7 @@ function FloatingBadge({
       transition={{ delay, duration: 0.6 }}
       className={`absolute z-10 rounded-full border border-border px-4 py-2 text-xs font-semibold backdrop-blur ${
         tone === "success"
-          ? "bg-[oklch(0.78_0.19_155/0.15)] text-[oklch(0.85_0.18_155)]"
+          ? "bg-[oklch(0.78_0.19_155/0.15)] text-[oklch(0.55_0.18_155)]"
           : "bg-background/70 text-foreground"
       } ${className}`}
     >
@@ -619,18 +619,19 @@ function FloatingBadge({
 }
 
 function LivePerformance() {
+  const { t } = useI18n();
   const strategies = [
-    { n: "Aurum Core", aum: "R 8.2M", risk: "Low", ret: "+21.4%" },
-    { n: "Aurum Momentum", aum: "R 12.5M", risk: "Medium", ret: "+26.8%" },
-    { n: "Sterling Ascend", aum: "R 5.1M", risk: "High", ret: "+38.2%" },
-    { n: "Aurum Balanced", aum: "R 6.4M", risk: "Medium", ret: "+23.9%" },
-    { n: "Sterling Alpha", aum: "R 3.7M", risk: "High", ret: "+41.6%" },
-    { n: "Aurum Conservative", aum: "R 9.0M", risk: "Low", ret: "+19.7%" },
+    { n: "Aurum Core", aum: "R 8.2M", risk: t("risk.low"), ret: "+21.4%" },
+    { n: "Aurum Momentum", aum: "R 12.5M", risk: t("risk.medium"), ret: "+26.8%" },
+    { n: "Sterling Ascend", aum: "R 5.1M", risk: t("risk.high"), ret: "+38.2%" },
+    { n: "Aurum Balanced", aum: "R 6.4M", risk: t("risk.medium"), ret: "+23.9%" },
+    { n: "Sterling Alpha", aum: "R 3.7M", risk: t("risk.high"), ret: "+41.6%" },
+    { n: "Aurum Conservative", aum: "R 9.0M", risk: t("risk.low"), ret: "+19.7%" },
   ];
   const riskClass = (r: string) =>
-    r === "Low"
-      ? "bg-[oklch(0.78_0.19_155/0.15)] text-[oklch(0.85_0.18_155)]"
-      : r === "Medium"
+    r === t("risk.low")
+      ? "bg-[oklch(0.78_0.19_155/0.15)] text-[oklch(0.55_0.18_155)]"
+      : r === t("risk.medium")
         ? "bg-gold/15 text-gold"
         : "bg-destructive/15 text-destructive";
 
@@ -639,10 +640,10 @@ function LivePerformance() {
       <div className="mx-auto max-w-7xl px-4">
         <Reveal className="mb-8 text-center">
           <span className="text-xs font-semibold uppercase tracking-[0.25em] text-gold">
-            Live Performance
+            {t("live.eyebrow")}
           </span>
           <h2 className="mt-3 font-display text-4xl font-bold md:text-5xl">
-            Our Investment Strategies
+            {t("live.title")}
           </h2>
         </Reveal>
       </div>
@@ -663,13 +664,13 @@ function LivePerformance() {
                 </span>
               </div>
               <div className="mt-4 text-[10px] uppercase tracking-widest text-muted-foreground">
-                AUM
+                {t("live.aum")}
               </div>
               <div className="font-display text-lg font-bold">{s.aum}</div>
               <div className="mt-4 text-[10px] uppercase tracking-widest text-muted-foreground">
-                12M Return
+                {t("live.return")}
               </div>
-              <div className="font-display text-3xl font-bold text-[oklch(0.85_0.18_155)]">
+              <div className="font-display text-3xl font-bold text-[oklch(0.55_0.18_155)]">
                 {s.ret}
               </div>
             </div>
@@ -677,7 +678,7 @@ function LivePerformance() {
         </div>
       </div>
       <p className="mx-auto mt-6 max-w-3xl px-4 text-center text-xs text-muted-foreground">
-        Past performance is not indicative of future results. All returns are annualized.
+        {t("live.disclaimer")}
       </p>
     </section>
   );
