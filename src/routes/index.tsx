@@ -19,6 +19,7 @@ import blog3 from "@/assets/blog-3.jpg";
 import blog4 from "@/assets/blog-4.jpg";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
 import { Reveal } from "@/components/Reveal";
+import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -41,6 +42,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
+  const { t, lang } = useI18n();
   return (
     <>
       {/* Regulator bar */}
