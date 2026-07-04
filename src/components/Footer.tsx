@@ -1,5 +1,20 @@
 import { Link } from "@tanstack/react-router";
-import { Instagram, Linkedin, Twitter, Mail, Phone } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
+
+const socials = [
+  {
+    label: "Instagram",
+    path: "M12 2.2c3.2 0 3.6 0 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.25.07 1.62.07 4.85s0 3.6-.07 4.85c-.05 1.17-.25 1.8-.41 2.23a3.7 3.7 0 01-.9 1.38 3.7 3.7 0 01-1.38.9c-.42.16-1.06.36-2.23.41-1.25.06-1.62.07-4.85.07s-3.6 0-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 01-1.38-.9 3.7 3.7 0 01-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.2 15.6 2.2 15.23 2.2 12s0-3.6.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.4 2.21 8.77 2.2 12 2.2zm0 5.6a4.2 4.2 0 100 8.4 4.2 4.2 0 000-8.4zm0 6.93a2.73 2.73 0 110-5.46 2.73 2.73 0 010 5.46zm5.35-7.09a.98.98 0 11-1.96 0 .98.98 0 011.96 0z",
+  },
+  {
+    label: "X",
+    path: "M18.9 2H22l-7.5 8.57L23 22h-6.9l-5.4-7.05L4.5 22H1.4l8-9.15L1 2h7.05l4.88 6.45L18.9 2zm-1.2 18h1.9L6.4 4H4.4l13.3 16z",
+  },
+  {
+    label: "LinkedIn",
+    path: "M19 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2zM8.34 18.34H5.67v-8.66h2.67v8.66zM7 8.44a1.55 1.55 0 110-3.1 1.55 1.55 0 010 3.1zm11.34 9.9h-2.67v-4.2c0-1 0-2.3-1.4-2.3s-1.62 1.1-1.62 2.24v4.26h-2.67v-8.66h2.56v1.18h.04c.36-.68 1.24-1.4 2.55-1.4 2.73 0 3.23 1.8 3.23 4.13v4.75z",
+  },
+];
 import { Logo } from "./Logo";
 
 export function Footer() {
@@ -107,13 +122,16 @@ export function Footer() {
               <Phone className="h-4 w-4" /> +27 11 000 0000
             </a>
             <div className="mt-5 flex gap-2">
-              {[Instagram, Twitter, Linkedin].map((Icon, i) => (
+              {socials.map((s) => (
                 <a
-                  key={i}
+                  key={s.label}
                   href="#"
+                  aria-label={s.label}
                   className="grid h-10 w-10 place-items-center rounded-full border border-border text-muted-foreground transition-colors hover:border-gold hover:text-gold"
                 >
-                  <Icon className="h-4 w-4" />
+                  <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor">
+                    <path d={s.path} />
+                  </svg>
                 </a>
               ))}
             </div>
