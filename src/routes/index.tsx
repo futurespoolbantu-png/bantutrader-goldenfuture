@@ -107,9 +107,9 @@ function Home() {
               <div className="mb-5 flex items-center justify-between">
                 <div>
                   <div className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
-                    Performance Overview
+                    {t("snap.perf")}
                   </div>
-                  <div className="mt-1 font-display text-lg font-semibold">Live Snapshot</div>
+                  <div className="mt-1 font-display text-lg font-semibold">{t("snap.live")}</div>
                 </div>
                 <div className="flex items-center gap-2 rounded-full border border-border bg-background/60 px-3 py-1 text-xs">
                   <span className="relative flex h-2 w-2">
@@ -123,25 +123,25 @@ function Home() {
               {[
                 {
                   Icon: Award,
-                  label: "Industry Experience",
-                  value: "9 Years",
+                  label: t("snap.exp"),
+                  value: t("snap.expVal"),
                   badge: "FOREX",
                   badgeClass: "bg-foreground/10 text-foreground",
                 },
                 {
                   Icon: Layers,
-                  label: "Investment Strategies",
-                  value: "2 Strategies",
+                  label: t("snap.strat"),
+                  value: t("snap.stratVal"),
                   badge: "20–35%",
                   badgeClass: "bg-gold/15 text-gold",
                 },
                 {
                   Icon: ShieldCheck,
-                  label: "Regulation Status",
+                  label: t("snap.reg"),
                   value: "FSP 45219",
                   badge: "FSCA",
                   badgeClass:
-                    "bg-[oklch(0.78_0.19_155/0.15)] text-[oklch(0.85_0.18_155)]",
+                    "bg-[oklch(0.78_0.19_155/0.15)] text-[oklch(0.55_0.18_155)]",
                 },
               ].map((r, i) => (
                 <div
@@ -178,34 +178,18 @@ function Home() {
       <section className="mx-auto mt-32 max-w-7xl px-4">
         <Reveal className="mb-12 max-w-2xl">
           <span className="text-xs font-semibold uppercase tracking-[0.25em] text-gold">
-            Why Investors Choose Us
+            {t("feat.eyebrow")}
           </span>
           <h2 className="mt-3 font-display text-4xl font-bold md:text-5xl">
-            Institutional discipline. Transparent execution.
+            {t("feat.title")}
           </h2>
         </Reveal>
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
           {[
-            {
-              Icon: Award,
-              title: "Verified 9-Year Track Record",
-              body: "Live, audited performance across multiple market cycles.",
-            },
-            {
-              Icon: Layers,
-              title: "Tiered Investment Portfolios",
-              body: "Low, medium and high-risk strategies tailored to your goals and appetite.",
-            },
-            {
-              Icon: Activity,
-              title: "Strategy Oversight & Risk",
-              body: "Daily reviews with strict drawdown limits and controlled risk exposure.",
-            },
-            {
-              Icon: FileBarChart,
-              title: "Investor Reporting",
-              body: "Clear monthly reports and real-time dashboards. Full transparency.",
-            },
+            { Icon: Award, title: t("feat.1t"), body: t("feat.1b") },
+            { Icon: Layers, title: t("feat.2t"), body: t("feat.2b") },
+            { Icon: Activity, title: t("feat.3t"), body: t("feat.3b") },
+            { Icon: FileBarChart, title: t("feat.4t"), body: t("feat.4b") },
           ].map((f, i) => (
             <Reveal key={i} delay={i * 0.08}>
               <div className="surface-card group h-full p-6 transition-colors hover:border-gold/40">
