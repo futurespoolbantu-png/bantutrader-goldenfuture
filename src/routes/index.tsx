@@ -344,42 +344,39 @@ function Home() {
           {[
             {
               img: blog1,
-              cat: "Market Analysis",
+              cat: t("blog.catMarket"),
               catClass: "bg-gold/15 text-gold",
-              title: "Q4 2025 Currency Outlook: Rand Volatility & Global Cycles",
-              excerpt:
-                "How major central bank divergence is reshaping opportunities across emerging FX pairs.",
-              date: "Nov 12, 2025",
-              read: "6 min read",
+              title: t("blog.p1.title"),
+              excerpt: t("blog.p1.exc"),
+              date: lang === "pt" ? "12 Nov, 2025" : "Nov 12, 2025",
+              read: `6 ${t("blog.min")}`,
             },
             {
               img: blog2,
-              cat: "Education",
+              cat: t("blog.catEdu"),
               catClass: "bg-foreground/10 text-foreground",
-              title: "Why Segregated Accounts Matter More Than Ever",
-              excerpt:
-                "A plain-language guide to client-owned account structures and what they protect.",
-              date: "Oct 30, 2025",
-              read: "4 min read",
+              title: t("blog.p2.title"),
+              excerpt: t("blog.p2.exc"),
+              date: lang === "pt" ? "30 Out, 2025" : "Oct 30, 2025",
+              read: `4 ${t("blog.min")}`,
             },
             {
               img: blog3,
-              cat: "Company News",
-              catClass: "bg-[oklch(0.78_0.19_155/0.15)] text-[oklch(0.85_0.18_155)]",
-              title: "Bantu Trader Capital Onboards Institutional Prime Broker",
-              excerpt: "New execution pathways deliver tighter spreads and improved slippage control.",
-              date: "Oct 18, 2025",
-              read: "3 min read",
+              cat: t("blog.catNews"),
+              catClass: "bg-[oklch(0.78_0.19_155/0.15)] text-[oklch(0.55_0.18_155)]",
+              title: t("blog.p3.title"),
+              excerpt: t("blog.p3.exc"),
+              date: lang === "pt" ? "18 Out, 2025" : "Oct 18, 2025",
+              read: `3 ${t("blog.min")}`,
             },
             {
               img: blog4,
-              cat: "Investment Tips",
+              cat: t("blog.catTips"),
               catClass: "bg-destructive/15 text-destructive-foreground",
-              title: "Risk Sizing: The Underrated Edge in Long-Term Compounding",
-              excerpt:
-                "Position sizing frameworks used by disciplined managers to survive drawdowns.",
-              date: "Oct 05, 2025",
-              read: "5 min read",
+              title: t("blog.p4.title"),
+              excerpt: t("blog.p4.exc"),
+              date: lang === "pt" ? "05 Out, 2025" : "Oct 05, 2025",
+              read: `5 ${t("blog.min")}`,
             },
           ].map((a, i) => (
             <Reveal key={i} delay={i * 0.06}>
@@ -411,7 +408,7 @@ function Home() {
                     to="/blog"
                     className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-gold"
                   >
-                    Read More <ArrowRight className="h-3.5 w-3.5" />
+                    {t("ins.readMore")} <ArrowRight className="h-3.5 w-3.5" />
                   </Link>
                 </div>
               </article>
