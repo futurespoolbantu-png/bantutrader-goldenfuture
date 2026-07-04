@@ -1,20 +1,22 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Lock, Menu, X } from "lucide-react";
+import { Lock, Menu, X, Sun, Moon, Languages } from "lucide-react";
 import { Logo } from "./Logo";
-
-const links = [
-  { to: "/", label: "Home" },
-  { to: "/products", label: "Products" },
-  { to: "/about", label: "About" },
-  { to: "/blog", label: "Blog" },
-] as const;
+import { useI18n } from "@/lib/i18n";
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const isHome = pathname === "/";
+  const { t, theme, toggleTheme, lang, toggleLang } = useI18n();
+
+  const links = [
+    { to: "/", label: t("nav.home") },
+    { to: "/products", label: t("nav.products") },
+    { to: "/about", label: t("nav.about") },
+    { to: "/blog", label: t("nav.blog") },
+  ] as const;
 
   useEffect(() => {
     const on = () => setScrolled(window.scrollY > 12);
@@ -46,7 +48,7 @@ export function Nav() {
                     to={l.to}
                     className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
                       active
-                        ? "bg-white/10 text-foreground"
+                        ? "bg-foreground/10 text-foreground"
                         : "text-muted-foreground hover:text-foreground"
                     }`}
                   >
@@ -58,6 +60,23 @@ export function Nav() {
           </ul>
 
           <div className="flex items-center gap-2">
+            <button
+              onClick={toggleLang}
+              aria-label={t("nav.toggleLang")}
+              title={t("nav.toggleLang")}
+              className="hidden md:inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground hover:text-gold hover:border-gold transition-colors"
+            >
+              <Languages className="h-3.5 w-3.5" />
+              {lang === "en" ? "EN" : "PT"}
+            </button>
+            <button
+              onClick={toggleTheme}
+              aria-label={t("nav.toggleTheme")}
+              title={t("nav.toggleTheme")}
+              className="grid h-10 w-10 place-items-center rounded-full border border-border text-muted-foreground hover:text-gold hover:border-gold transition-colors"
+            >
+              {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            </button>
             <Link
               to={isHome ? "/products" : "/about"}
               className="hidden items-center gap-2 rounded-full bg-gold px-4 py-2 text-sm font-semibold text-primary-foreground shadow-gold transition-transform hover:scale-[1.02] md:inline-flex"
@@ -65,16 +84,16 @@ export function Nav() {
               {isHome ? (
                 <>
                   <Lock className="h-3.5 w-3.5" />
-                  Book a Consultation
+                  {t("nav.consult")}
                 </>
               ) : (
-                "Contact"
+                t("nav.contact")
               )}
             </Link>
             <button
               className="grid h-10 w-10 place-items-center rounded-full border border-border md:hidden"
               onClick={() => setOpen((o) => !o)}
-              aria-label="Toggle menu"
+              aria-label={t("nav.toggleMenu")}
             >
               {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
@@ -89,18 +108,34 @@ export function Nav() {
               <li key={l.to}>
                 <Link
                   to={l.to}
-                  className="block rounded-2xl px-4 py-3 text-sm font-medium text-foreground hover:bg-white/5"
+                  className="block rounded-2xl px-4 py-3 text-sm font-medium text-foreground hover:bg-foreground/5"
                 >
                   {l.label}
                 </Link>
               </li>
             ))}
-            <li className="mt-2">
+            <li className="mt-2 flex gap-2">
+              <button
+                onClick={toggleTheme}
+                className="flex flex-1 items-center justify-center gap-2 rounded-full border border-border px-4 py-3 text-xs font-semibold"
+              >
+                {theme === "dark" ? <Sun className="h-3.5 w-3.5" /> : <Moon className="h-3.5 w-3.5" />}
+                {theme === "dark" ? "Light" : "Dark"}
+              </button>
+              <button
+                onClick={toggleLang}
+                className="flex flex-1 items-center justify-center gap-2 rounded-full border border-border px-4 py-3 text-xs font-semibold"
+              >
+                <Languages className="h-3.5 w-3.5" />
+                {lang === "en" ? "EN" : "PT"}
+              </button>
+            </li>
+            <li className="mt-1">
               <Link
                 to="/products"
                 className="flex w-full items-center justify-center gap-2 rounded-full bg-gold px-4 py-3 text-sm font-semibold text-primary-foreground"
               >
-                <Lock className="h-3.5 w-3.5" /> Book a Consultation
+                <Lock className="h-3.5 w-3.5" /> {t("nav.consult")}
               </Link>
             </li>
           </ul>

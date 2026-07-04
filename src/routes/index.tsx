@@ -70,7 +70,7 @@ function Home() {
         />
         <div className="grid items-center gap-14 lg:grid-cols-2">
           <Reveal>
-            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-white/5 px-4 py-1.5 text-xs font-medium text-muted-foreground backdrop-blur">
+            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-foreground/5 px-4 py-1.5 text-xs font-medium text-muted-foreground backdrop-blur">
               <span className="h-1.5 w-1.5 rounded-full bg-gold" />
               9 Years in the Forex Industry · FSP 45219
             </span>
@@ -111,7 +111,7 @@ function Home() {
                   </div>
                   <div className="mt-1 font-display text-lg font-semibold">Live Snapshot</div>
                 </div>
-                <div className="flex items-center gap-2 rounded-full border border-border bg-black/30 px-3 py-1 text-xs">
+                <div className="flex items-center gap-2 rounded-full border border-border bg-background/60 px-3 py-1 text-xs">
                   <span className="relative flex h-2 w-2">
                     <span className="absolute inset-0 animate-pulse-dot rounded-full bg-[oklch(0.78_0.19_155)]" />
                     <span className="relative rounded-full bg-[oklch(0.78_0.19_155)]" />
@@ -126,7 +126,7 @@ function Home() {
                   label: "Industry Experience",
                   value: "9 Years",
                   badge: "FOREX",
-                  badgeClass: "bg-white/10 text-foreground",
+                  badgeClass: "bg-foreground/10 text-foreground",
                 },
                 {
                   Icon: Layers,
@@ -146,7 +146,7 @@ function Home() {
               ].map((r, i) => (
                 <div
                   key={i}
-                  className="mb-3 flex items-center justify-between rounded-2xl border border-border bg-black/20 p-4 last:mb-0"
+                  className="mb-3 flex items-center justify-between rounded-2xl border border-border bg-background/50 p-4 last:mb-0"
                 >
                   <div className="flex items-center gap-4 min-w-0">
                     <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gold/10 text-gold">
@@ -292,7 +292,7 @@ function Home() {
                 </p>
               </div>
               <div className="grid grid-cols-2 gap-4">
-                <div className="rounded-2xl border border-border bg-black/30 p-6 text-center">
+                <div className="rounded-2xl border border-border bg-background/60 p-6 text-center">
                   <div className="font-display text-4xl font-bold text-[oklch(0.85_0.18_155)]">
                     0%
                   </div>
@@ -300,7 +300,7 @@ function Home() {
                     Management Fee
                   </div>
                 </div>
-                <div className="rounded-2xl border border-border bg-black/30 p-6 text-center">
+                <div className="rounded-2xl border border-border bg-background/60 p-6 text-center">
                   <div className="font-display text-4xl font-bold text-gold">30%</div>
                   <div className="mt-2 text-xs uppercase tracking-widest text-muted-foreground">
                     Performance Fee
@@ -374,7 +374,7 @@ function Home() {
             {
               img: blog2,
               cat: "Education",
-              catClass: "bg-white/10 text-foreground",
+              catClass: "bg-foreground/10 text-foreground",
               title: "Why Segregated Accounts Matter More Than Ever",
               excerpt:
                 "A plain-language guide to client-owned account structures and what they protect.",
@@ -446,7 +446,7 @@ function MobileAppSection() {
   return (
     <section className="mx-auto mt-32 max-w-7xl px-4">
       <Reveal className="mb-14 text-center">
-        <span className="inline-flex items-center gap-2 rounded-full border border-border bg-white/5 px-4 py-1.5 text-xs font-medium">
+        <span className="inline-flex items-center gap-2 rounded-full border border-border bg-foreground/5 px-4 py-1.5 text-xs font-medium">
           <Sparkles className="h-3 w-3 text-gold" /> Mobile App Coming Soon
         </span>
         <h2 className="mx-auto mt-5 max-w-2xl font-display text-4xl font-bold md:text-5xl">
@@ -491,7 +491,7 @@ function MobileAppSection() {
                     <span>{s.n}</span>
                     <span className="text-muted-foreground">{s.p}%</span>
                   </div>
-                  <div className="h-1.5 rounded-full bg-white/10">
+                  <div className="h-1.5 rounded-full bg-foreground/10">
                     <div
                       className={`h-full rounded-full ${
                         s.tone === "success" ? "bg-[oklch(0.78_0.19_155)]" : "bg-gold"
@@ -553,7 +553,7 @@ function MobileAppSection() {
               ].map((r) => (
                 <div
                   key={r.n}
-                  className="rounded-xl border border-border bg-black/20 p-2.5"
+                  className="rounded-xl border border-border bg-background/50 p-2.5"
                 >
                   <div className="text-[10px] font-semibold">{r.n}</div>
                   <div className="mt-1 flex items-center justify-between">
@@ -577,10 +577,10 @@ function MobileAppSection() {
         </div>
 
         <div className="mt-12 flex justify-center gap-3">
-          <div className="rounded-full border border-border bg-white/5 px-5 py-2 text-xs font-semibold">
+          <div className="rounded-full border border-border bg-foreground/5 px-5 py-2 text-xs font-semibold">
             <span className="text-gold">9 Years</span> Track Record
           </div>
-          <div className="rounded-full border border-border bg-white/5 px-5 py-2 text-xs font-semibold">
+          <div className="rounded-full border border-border bg-foreground/5 px-5 py-2 text-xs font-semibold">
             <span className="text-gold">2 Strategy</span> Groups
           </div>
         </div>
@@ -603,7 +603,7 @@ function Phone({
       className="relative w-[180px] shrink-0 md:w-[220px]"
       style={{ transform: `rotate(${tilt}) scale(${scale})` }}
     >
-      <div className="rounded-[2rem] border border-border bg-[oklch(0.09_0_0)] p-2 shadow-elegant">
+      <div className="rounded-[2rem] border border-border bg-background p-2 shadow-elegant">
         <div className="rounded-[1.6rem] border border-border bg-surface p-4 aspect-[9/17] overflow-hidden">
           {children}
         </div>
@@ -632,7 +632,7 @@ function FloatingBadge({
       className={`absolute z-10 rounded-full border border-border px-4 py-2 text-xs font-semibold backdrop-blur ${
         tone === "success"
           ? "bg-[oklch(0.78_0.19_155/0.15)] text-[oklch(0.85_0.18_155)]"
-          : "bg-black/50 text-foreground"
+          : "bg-background/70 text-foreground"
       } ${className}`}
     >
       {children}
