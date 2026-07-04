@@ -14,6 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { FloatingWidgets } from "@/components/FloatingWidgets";
+import { I18nProvider } from "@/lib/i18n";
 
 function NotFoundComponent() {
   return (
@@ -126,12 +127,14 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Nav />
-      <main className="min-h-screen pt-24">
-        <Outlet />
-      </main>
-      <Footer />
-      <FloatingWidgets />
+      <I18nProvider>
+        <Nav />
+        <main className="min-h-screen pt-24">
+          <Outlet />
+        </main>
+        <Footer />
+        <FloatingWidgets />
+      </I18nProvider>
     </QueryClientProvider>
   );
 }

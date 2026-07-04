@@ -19,6 +19,7 @@ import blog3 from "@/assets/blog-3.jpg";
 import blog4 from "@/assets/blog-4.jpg";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
 import { Reveal } from "@/components/Reveal";
+import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -41,6 +42,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
+  const { t, lang } = useI18n();
   return (
     <>
       {/* Regulator bar */}
@@ -50,9 +52,9 @@ function Home() {
             <ShieldCheck className="h-3.5 w-3.5" />
           </span>
           <span>
-            <span className="text-foreground">Bantu Trader Capital</span> operates as a Juristic
-            Representative under <span className="text-foreground">Sovereign Trust Financial</span>,
-            an authorized Category II FSP{" "}
+            <span className="text-foreground">Bantu Trader Capital</span> {t("reg.text")}{" "}
+            <span className="text-foreground">Sovereign Trust Financial</span>,{" "}
+            {t("reg.authorized")}{" "}
             <span className="text-gold">(FSP No. 45219)</span>
           </span>
         </div>
@@ -70,34 +72,32 @@ function Home() {
         />
         <div className="grid items-center gap-14 lg:grid-cols-2">
           <Reveal>
-            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-white/5 px-4 py-1.5 text-xs font-medium text-muted-foreground backdrop-blur">
+            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-foreground/5 px-4 py-1.5 text-xs font-medium text-muted-foreground backdrop-blur">
               <span className="h-1.5 w-1.5 rounded-full bg-gold" />
-              9 Years in the Forex Industry · FSP 45219
+              {t("hero.badge")}
             </span>
             <h1 className="mt-6 font-display text-5xl font-bold leading-[0.95] tracking-tight md:text-7xl">
-              Precision Trading
+              {t("hero.title1")}
               <br />
-              <span className="text-gradient-gold">Powerful</span>
+              <span className="text-gradient-gold">{t("hero.title2")}</span>
               <br />
-              Results.
+              {t("hero.title3")}
             </h1>
             <p className="mt-6 max-w-lg text-base leading-relaxed text-muted-foreground">
-              Segregated client-owned accounts, professional discretionary management, disciplined
-              execution and institutional-grade risk supervision. Built for investors who demand
-              transparency and results.
+              {t("hero.subtitle")}
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <Link
                 to="/products"
                 className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-gold transition-transform hover:scale-[1.03]"
               >
-                <Lock className="h-4 w-4" /> Book a Consultation
+                <Lock className="h-4 w-4" /> {t("nav.consult")}
               </Link>
               <Link
                 to="/about"
                 className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-gold"
               >
-                Learn More <ArrowRight className="h-4 w-4" />
+                {t("hero.learn")} <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
           </Reveal>
@@ -107,11 +107,11 @@ function Home() {
               <div className="mb-5 flex items-center justify-between">
                 <div>
                   <div className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
-                    Performance Overview
+                    {t("snap.perf")}
                   </div>
-                  <div className="mt-1 font-display text-lg font-semibold">Live Snapshot</div>
+                  <div className="mt-1 font-display text-lg font-semibold">{t("snap.live")}</div>
                 </div>
-                <div className="flex items-center gap-2 rounded-full border border-border bg-black/30 px-3 py-1 text-xs">
+                <div className="flex items-center gap-2 rounded-full border border-border bg-background/60 px-3 py-1 text-xs">
                   <span className="relative flex h-2 w-2">
                     <span className="absolute inset-0 animate-pulse-dot rounded-full bg-[oklch(0.78_0.19_155)]" />
                     <span className="relative rounded-full bg-[oklch(0.78_0.19_155)]" />
@@ -123,30 +123,30 @@ function Home() {
               {[
                 {
                   Icon: Award,
-                  label: "Industry Experience",
-                  value: "9 Years",
+                  label: t("snap.exp"),
+                  value: t("snap.expVal"),
                   badge: "FOREX",
-                  badgeClass: "bg-white/10 text-foreground",
+                  badgeClass: "bg-foreground/10 text-foreground",
                 },
                 {
                   Icon: Layers,
-                  label: "Investment Strategies",
-                  value: "2 Strategies",
+                  label: t("snap.strat"),
+                  value: t("snap.stratVal"),
                   badge: "20–35%",
                   badgeClass: "bg-gold/15 text-gold",
                 },
                 {
                   Icon: ShieldCheck,
-                  label: "Regulation Status",
+                  label: t("snap.reg"),
                   value: "FSP 45219",
                   badge: "FSCA",
                   badgeClass:
-                    "bg-[oklch(0.78_0.19_155/0.15)] text-[oklch(0.85_0.18_155)]",
+                    "bg-[oklch(0.78_0.19_155/0.15)] text-[oklch(0.55_0.18_155)]",
                 },
               ].map((r, i) => (
                 <div
                   key={i}
-                  className="mb-3 flex items-center justify-between rounded-2xl border border-border bg-black/20 p-4 last:mb-0"
+                  className="mb-3 flex items-center justify-between rounded-2xl border border-border bg-background/50 p-4 last:mb-0"
                 >
                   <div className="flex items-center gap-4 min-w-0">
                     <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gold/10 text-gold">
@@ -178,34 +178,18 @@ function Home() {
       <section className="mx-auto mt-32 max-w-7xl px-4">
         <Reveal className="mb-12 max-w-2xl">
           <span className="text-xs font-semibold uppercase tracking-[0.25em] text-gold">
-            Why Investors Choose Us
+            {t("feat.eyebrow")}
           </span>
           <h2 className="mt-3 font-display text-4xl font-bold md:text-5xl">
-            Institutional discipline. Transparent execution.
+            {t("feat.title")}
           </h2>
         </Reveal>
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
           {[
-            {
-              Icon: Award,
-              title: "Verified 9-Year Track Record",
-              body: "Live, audited performance across multiple market cycles.",
-            },
-            {
-              Icon: Layers,
-              title: "Tiered Investment Portfolios",
-              body: "Low, medium and high-risk strategies tailored to your goals and appetite.",
-            },
-            {
-              Icon: Activity,
-              title: "Strategy Oversight & Risk",
-              body: "Daily reviews with strict drawdown limits and controlled risk exposure.",
-            },
-            {
-              Icon: FileBarChart,
-              title: "Investor Reporting",
-              body: "Clear monthly reports and real-time dashboards. Full transparency.",
-            },
+            { Icon: Award, title: t("feat.1t"), body: t("feat.1b") },
+            { Icon: Layers, title: t("feat.2t"), body: t("feat.2b") },
+            { Icon: Activity, title: t("feat.3t"), body: t("feat.3b") },
+            { Icon: FileBarChart, title: t("feat.4t"), body: t("feat.4b") },
           ].map((f, i) => (
             <Reveal key={i} delay={i * 0.08}>
               <div className="surface-card group h-full p-6 transition-colors hover:border-gold/40">
@@ -228,31 +212,28 @@ function Home() {
         <div className="grid gap-14 lg:grid-cols-2">
           <Reveal>
             <span className="text-xs font-semibold uppercase tracking-[0.25em] text-gold">
-              About Bantu Trader Capital
+              {t("abtp.eyebrow")}
             </span>
             <h2 className="mt-3 font-display text-4xl font-bold leading-tight md:text-5xl">
-              Where Investors Meet <span className="text-gradient-gold">Results</span> & Capital
-              Runs Deep.
+              {t("abtp.title1")} <span className="text-gradient-gold">{t("abtp.title2")}</span> {t("abtp.title3")}
             </h2>
             <p className="mt-5 text-muted-foreground">
-              We combine nine years of forex market experience with institutional risk frameworks
-              to deliver disciplined, transparent portfolio management. Every account is
-              client-owned. Every trade is monitored.
+              {t("abtp.body")}
             </p>
             <Link
               to="/about"
               className="mt-8 inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:border-gold hover:text-gold"
             >
-              About Us <ArrowRight className="h-4 w-4" />
+              {t("abtp.cta")} <ArrowRight className="h-4 w-4" />
             </Link>
           </Reveal>
           <Reveal delay={0.1}>
             <div className="grid grid-cols-2 gap-4">
               {[
-                { v: 9, s: "", label: "Years Experience" },
-                { v: 2, s: "", label: "Investment Strategies" },
-                { v: 24, s: "/7", label: "Risk Monitoring" },
-                { v: 100, s: "%", label: "Client-Owned Accounts" },
+                { v: 9, s: "", label: t("stats.years") },
+                { v: 2, s: "", label: t("stats.strategies") },
+                { v: 24, s: "/7", label: t("stats.monitoring") },
+                { v: 100, s: "%", label: t("stats.owned") },
               ].map((s, i) => (
                 <div
                   key={i}
@@ -285,25 +266,25 @@ function Home() {
                   <BadgeDollarSign className="h-6 w-6" />
                 </div>
                 <h3 className="mt-5 font-display text-3xl font-bold md:text-4xl">
-                  Zero Management Fees
+                  {t("zf.title")}
                 </h3>
                 <p className="mt-3 max-w-md text-muted-foreground">
-                  Performance-based fee structure with no hidden costs. We only win when you win.
+                  {t("zf.body")}
                 </p>
               </div>
               <div className="grid grid-cols-2 gap-4">
-                <div className="rounded-2xl border border-border bg-black/30 p-6 text-center">
-                  <div className="font-display text-4xl font-bold text-[oklch(0.85_0.18_155)]">
+                <div className="rounded-2xl border border-border bg-background/60 p-6 text-center">
+                  <div className="font-display text-4xl font-bold text-[oklch(0.55_0.18_155)]">
                     0%
                   </div>
                   <div className="mt-2 text-xs uppercase tracking-widest text-muted-foreground">
-                    Management Fee
+                    {t("zf.mgmt")}
                   </div>
                 </div>
-                <div className="rounded-2xl border border-border bg-black/30 p-6 text-center">
+                <div className="rounded-2xl border border-border bg-background/60 p-6 text-center">
                   <div className="font-display text-4xl font-bold text-gold">30%</div>
                   <div className="mt-2 text-xs uppercase tracking-widest text-muted-foreground">
-                    Performance Fee
+                    {t("zf.perf")}
                   </div>
                 </div>
               </div>
@@ -316,10 +297,10 @@ function Home() {
       <section className="mx-auto mt-32 max-w-7xl px-4">
         <Reveal className="mb-8 text-center">
           <span className="text-xs font-semibold uppercase tracking-[0.25em] text-gold">
-            Powered By
+            {t("part.eyebrow")}
           </span>
           <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">
-            Global Financial Institutions
+            {t("part.title")}
           </h2>
         </Reveal>
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
@@ -346,59 +327,56 @@ function Home() {
         <Reveal className="mb-10 flex flex-wrap items-end justify-between gap-4">
           <div>
             <span className="text-xs font-semibold uppercase tracking-[0.25em] text-gold">
-              Latest Insights
+              {t("ins.eyebrow")}
             </span>
             <h2 className="mt-3 font-display text-4xl font-bold md:text-5xl">
-              Market Analysis & News
+              {t("ins.title")}
             </h2>
           </div>
           <Link
             to="/blog"
             className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-medium hover:border-gold hover:text-gold"
           >
-            View all <ArrowRight className="h-4 w-4" />
+            {t("ins.viewAll")} <ArrowRight className="h-4 w-4" />
           </Link>
         </Reveal>
         <div className="grid gap-6 md:grid-cols-2">
           {[
             {
               img: blog1,
-              cat: "Market Analysis",
+              cat: t("blog.catMarket"),
               catClass: "bg-gold/15 text-gold",
-              title: "Q4 2025 Currency Outlook: Rand Volatility & Global Cycles",
-              excerpt:
-                "How major central bank divergence is reshaping opportunities across emerging FX pairs.",
-              date: "Nov 12, 2025",
-              read: "6 min read",
+              title: t("blog.p1.title"),
+              excerpt: t("blog.p1.exc"),
+              date: lang === "pt" ? "12 Nov, 2025" : "Nov 12, 2025",
+              read: `6 ${t("blog.min")}`,
             },
             {
               img: blog2,
-              cat: "Education",
-              catClass: "bg-white/10 text-foreground",
-              title: "Why Segregated Accounts Matter More Than Ever",
-              excerpt:
-                "A plain-language guide to client-owned account structures and what they protect.",
-              date: "Oct 30, 2025",
-              read: "4 min read",
+              cat: t("blog.catEdu"),
+              catClass: "bg-foreground/10 text-foreground",
+              title: t("blog.p2.title"),
+              excerpt: t("blog.p2.exc"),
+              date: lang === "pt" ? "30 Out, 2025" : "Oct 30, 2025",
+              read: `4 ${t("blog.min")}`,
             },
             {
               img: blog3,
-              cat: "Company News",
-              catClass: "bg-[oklch(0.78_0.19_155/0.15)] text-[oklch(0.85_0.18_155)]",
-              title: "Bantu Trader Capital Onboards Institutional Prime Broker",
-              excerpt: "New execution pathways deliver tighter spreads and improved slippage control.",
-              date: "Oct 18, 2025",
-              read: "3 min read",
+              cat: t("blog.catNews"),
+              catClass: "bg-[oklch(0.78_0.19_155/0.15)] text-[oklch(0.55_0.18_155)]",
+              title: t("blog.p3.title"),
+              excerpt: t("blog.p3.exc"),
+              date: lang === "pt" ? "18 Out, 2025" : "Oct 18, 2025",
+              read: `3 ${t("blog.min")}`,
             },
             {
               img: blog4,
-              cat: "Investment Tips",
+              cat: t("blog.catTips"),
               catClass: "bg-destructive/15 text-destructive-foreground",
-              title: "Risk Sizing: The Underrated Edge in Long-Term Compounding",
-              excerpt:
-                "Position sizing frameworks used by disciplined managers to survive drawdowns.",
-              date: "Oct 05, 2025",
-              read: "5 min read",
+              title: t("blog.p4.title"),
+              excerpt: t("blog.p4.exc"),
+              date: lang === "pt" ? "05 Out, 2025" : "Oct 05, 2025",
+              read: `5 ${t("blog.min")}`,
             },
           ].map((a, i) => (
             <Reveal key={i} delay={i * 0.06}>
@@ -430,7 +408,7 @@ function Home() {
                     to="/blog"
                     className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-gold"
                   >
-                    Read More <ArrowRight className="h-3.5 w-3.5" />
+                    {t("ins.readMore")} <ArrowRight className="h-3.5 w-3.5" />
                   </Link>
                 </div>
               </article>
@@ -443,43 +421,43 @@ function Home() {
 }
 
 function MobileAppSection() {
+  const { t } = useI18n();
   return (
     <section className="mx-auto mt-32 max-w-7xl px-4">
       <Reveal className="mb-14 text-center">
-        <span className="inline-flex items-center gap-2 rounded-full border border-border bg-white/5 px-4 py-1.5 text-xs font-medium">
-          <Sparkles className="h-3 w-3 text-gold" /> Mobile App Coming Soon
+        <span className="inline-flex items-center gap-2 rounded-full border border-border bg-foreground/5 px-4 py-1.5 text-xs font-medium">
+          <Sparkles className="h-3 w-3 text-gold" /> {t("app.badge")}
         </span>
         <h2 className="mx-auto mt-5 max-w-2xl font-display text-4xl font-bold md:text-5xl">
-          Your portfolio, <span className="text-gradient-gold">in your pocket.</span>
+          {t("app.title1")} <span className="text-gradient-gold">{t("app.title2")}</span>
         </h2>
         <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
-          Our investor portal is being optimized for mobile. Access your portfolio via our secure
-          web dashboard while we prepare a seamless mobile experience.
+          {t("app.subtitle")}
         </p>
       </Reveal>
 
       <div className="relative">
         {/* floating badges */}
         <FloatingBadge className="left-2 top-6 hidden md:block" delay={0.2}>
-          Aurum Core · 20% Annual Target
+          {t("app.floating1")}
         </FloatingBadge>
         <FloatingBadge className="right-2 top-24 hidden md:block" delay={0.4}>
-          Sterling Ascend · 35% High-risk 1yr
+          {t("app.floating2")}
         </FloatingBadge>
         <FloatingBadge
           className="bottom-10 left-16 hidden md:block"
           delay={0.6}
           tone="success"
         >
-          South Africa · Now Available
+          {t("app.floating3")}
         </FloatingBadge>
 
         <div className="mx-auto flex max-w-4xl items-end justify-center gap-4 md:gap-8">
           <Phone tilt="-8deg" scale={0.85}>
             <div className="text-[10px] uppercase tracking-widest text-muted-foreground">
-              Analytics
+              {t("app.analytics")}
             </div>
-            <div className="mt-1 font-display text-lg font-bold">Strategies</div>
+            <div className="mt-1 font-display text-lg font-bold">{t("app.strategies")}</div>
             <div className="mt-4 space-y-3">
               {[
                 { n: "Aurum Core", p: 78, tone: "gold" },
@@ -491,10 +469,10 @@ function MobileAppSection() {
                     <span>{s.n}</span>
                     <span className="text-muted-foreground">{s.p}%</span>
                   </div>
-                  <div className="h-1.5 rounded-full bg-white/10">
+                  <div className="h-1.5 rounded-full bg-foreground/10">
                     <div
                       className={`h-full rounded-full ${
-                        s.tone === "success" ? "bg-[oklch(0.78_0.19_155)]" : "bg-gold"
+                        s.tone === "success" ? "bg-[oklch(0.55_0.18_155)]" : "bg-gold"
                       }`}
                       style={{ width: `${s.p}%` }}
                     />
@@ -506,11 +484,11 @@ function MobileAppSection() {
 
           <Phone>
             <div className="text-[10px] uppercase tracking-widest text-muted-foreground">
-              Portfolio Overview
+              {t("app.portfolio")}
             </div>
             <div className="mt-1 font-display text-2xl font-bold">R 1,284,520</div>
-            <div className="mt-1 text-[10px] text-[oklch(0.85_0.18_155)]">
-              +12.4% · This Quarter
+            <div className="mt-1 text-[10px] text-[oklch(0.55_0.18_155)]">
+              {t("app.quarter")}
             </div>
             <svg viewBox="0 0 200 70" className="mt-4 h-16 w-full">
               <defs>
@@ -532,36 +510,36 @@ function MobileAppSection() {
             </svg>
             <div className="mt-4 grid grid-cols-2 gap-2">
               <button className="rounded-full bg-gold py-2 text-[10px] font-semibold text-primary-foreground">
-                Deposit
+                {t("app.deposit")}
               </button>
               <button className="rounded-full border border-border py-2 text-[10px] font-semibold">
-                Withdraw
+                {t("app.withdraw")}
               </button>
             </div>
           </Phone>
 
           <Phone tilt="8deg" scale={0.85}>
             <div className="text-[10px] uppercase tracking-widest text-muted-foreground">
-              Available
+              {t("app.available")}
             </div>
-            <div className="mt-1 font-display text-lg font-bold">Strategies</div>
+            <div className="mt-1 font-display text-lg font-bold">{t("app.strategies")}</div>
             <div className="mt-4 space-y-2">
               {[
-                { n: "Aurum Core", pct: "20%", risk: "Low", tone: "success" },
-                { n: "Aurum Momentum", pct: "25%", risk: "Medium", tone: "gold" },
-                { n: "Sterling Ascend", pct: "35%", risk: "High", tone: "danger" },
+                { n: "Aurum Core", pct: "20%", risk: t("risk.low"), tone: "success" },
+                { n: "Aurum Momentum", pct: "25%", risk: t("risk.medium"), tone: "gold" },
+                { n: "Sterling Ascend", pct: "35%", risk: t("risk.high"), tone: "danger" },
               ].map((r) => (
                 <div
                   key={r.n}
-                  className="rounded-xl border border-border bg-black/20 p-2.5"
+                  className="rounded-xl border border-border bg-background/50 p-2.5"
                 >
                   <div className="text-[10px] font-semibold">{r.n}</div>
                   <div className="mt-1 flex items-center justify-between">
-                    <span className="text-[9px] text-muted-foreground">{r.risk} Risk</span>
+                    <span className="text-[9px] text-muted-foreground">{r.risk} {t("app.risk")}</span>
                     <span
                       className={`text-[10px] font-bold ${
                         r.tone === "success"
-                          ? "text-[oklch(0.85_0.18_155)]"
+                          ? "text-[oklch(0.55_0.18_155)]"
                           : r.tone === "danger"
                             ? "text-destructive"
                             : "text-gold"
@@ -577,11 +555,11 @@ function MobileAppSection() {
         </div>
 
         <div className="mt-12 flex justify-center gap-3">
-          <div className="rounded-full border border-border bg-white/5 px-5 py-2 text-xs font-semibold">
-            <span className="text-gold">9 Years</span> Track Record
+          <div className="rounded-full border border-border bg-foreground/5 px-5 py-2 text-xs font-semibold">
+            <span className="text-gold">9 {t("stats.years").split(" ")[0]}</span> {t("app.badge1")}
           </div>
-          <div className="rounded-full border border-border bg-white/5 px-5 py-2 text-xs font-semibold">
-            <span className="text-gold">2 Strategy</span> Groups
+          <div className="rounded-full border border-border bg-foreground/5 px-5 py-2 text-xs font-semibold">
+            <span className="text-gold">2</span> {t("app.badge2")}
           </div>
         </div>
       </div>
@@ -603,7 +581,7 @@ function Phone({
       className="relative w-[180px] shrink-0 md:w-[220px]"
       style={{ transform: `rotate(${tilt}) scale(${scale})` }}
     >
-      <div className="rounded-[2rem] border border-border bg-[oklch(0.09_0_0)] p-2 shadow-elegant">
+      <div className="rounded-[2rem] border border-border bg-background p-2 shadow-elegant">
         <div className="rounded-[1.6rem] border border-border bg-surface p-4 aspect-[9/17] overflow-hidden">
           {children}
         </div>
@@ -631,8 +609,8 @@ function FloatingBadge({
       transition={{ delay, duration: 0.6 }}
       className={`absolute z-10 rounded-full border border-border px-4 py-2 text-xs font-semibold backdrop-blur ${
         tone === "success"
-          ? "bg-[oklch(0.78_0.19_155/0.15)] text-[oklch(0.85_0.18_155)]"
-          : "bg-black/50 text-foreground"
+          ? "bg-[oklch(0.78_0.19_155/0.15)] text-[oklch(0.55_0.18_155)]"
+          : "bg-background/70 text-foreground"
       } ${className}`}
     >
       {children}
@@ -641,18 +619,19 @@ function FloatingBadge({
 }
 
 function LivePerformance() {
+  const { t } = useI18n();
   const strategies = [
-    { n: "Aurum Core", aum: "R 8.2M", risk: "Low", ret: "+21.4%" },
-    { n: "Aurum Momentum", aum: "R 12.5M", risk: "Medium", ret: "+26.8%" },
-    { n: "Sterling Ascend", aum: "R 5.1M", risk: "High", ret: "+38.2%" },
-    { n: "Aurum Balanced", aum: "R 6.4M", risk: "Medium", ret: "+23.9%" },
-    { n: "Sterling Alpha", aum: "R 3.7M", risk: "High", ret: "+41.6%" },
-    { n: "Aurum Conservative", aum: "R 9.0M", risk: "Low", ret: "+19.7%" },
+    { n: "Aurum Core", aum: "R 8.2M", risk: t("risk.low"), ret: "+21.4%" },
+    { n: "Aurum Momentum", aum: "R 12.5M", risk: t("risk.medium"), ret: "+26.8%" },
+    { n: "Sterling Ascend", aum: "R 5.1M", risk: t("risk.high"), ret: "+38.2%" },
+    { n: "Aurum Balanced", aum: "R 6.4M", risk: t("risk.medium"), ret: "+23.9%" },
+    { n: "Sterling Alpha", aum: "R 3.7M", risk: t("risk.high"), ret: "+41.6%" },
+    { n: "Aurum Conservative", aum: "R 9.0M", risk: t("risk.low"), ret: "+19.7%" },
   ];
   const riskClass = (r: string) =>
-    r === "Low"
-      ? "bg-[oklch(0.78_0.19_155/0.15)] text-[oklch(0.85_0.18_155)]"
-      : r === "Medium"
+    r === t("risk.low")
+      ? "bg-[oklch(0.78_0.19_155/0.15)] text-[oklch(0.55_0.18_155)]"
+      : r === t("risk.medium")
         ? "bg-gold/15 text-gold"
         : "bg-destructive/15 text-destructive";
 
@@ -661,10 +640,10 @@ function LivePerformance() {
       <div className="mx-auto max-w-7xl px-4">
         <Reveal className="mb-8 text-center">
           <span className="text-xs font-semibold uppercase tracking-[0.25em] text-gold">
-            Live Performance
+            {t("live.eyebrow")}
           </span>
           <h2 className="mt-3 font-display text-4xl font-bold md:text-5xl">
-            Our Investment Strategies
+            {t("live.title")}
           </h2>
         </Reveal>
       </div>
@@ -685,13 +664,13 @@ function LivePerformance() {
                 </span>
               </div>
               <div className="mt-4 text-[10px] uppercase tracking-widest text-muted-foreground">
-                AUM
+                {t("live.aum")}
               </div>
               <div className="font-display text-lg font-bold">{s.aum}</div>
               <div className="mt-4 text-[10px] uppercase tracking-widest text-muted-foreground">
-                12M Return
+                {t("live.return")}
               </div>
-              <div className="font-display text-3xl font-bold text-[oklch(0.85_0.18_155)]">
+              <div className="font-display text-3xl font-bold text-[oklch(0.55_0.18_155)]">
                 {s.ret}
               </div>
             </div>
@@ -699,7 +678,7 @@ function LivePerformance() {
         </div>
       </div>
       <p className="mx-auto mt-6 max-w-3xl px-4 text-center text-xs text-muted-foreground">
-        Past performance is not indicative of future results. All returns are annualized.
+        {t("live.disclaimer")}
       </p>
     </section>
   );

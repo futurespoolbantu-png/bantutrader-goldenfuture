@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { Check, ArrowRight, Lock, FileText, Wallet, LineChart, UserPlus, Target } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
+import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/products")({
   head: () => ({
@@ -61,36 +62,41 @@ const toneClass = (t: "gold" | "success" | "danger") =>
       : "bg-gold/15 text-gold";
 
 function Products() {
+  const { t } = useI18n();
   const [group, setGroup] = useState<Group>("aurum");
   const g = groupData[group];
 
+  const tierLabel = (tier: string) =>
+    tier === "Low" ? t("prod.tierLow") : tier === "Medium" ? t("prod.tierMed") : t("prod.tierHigh");
+  const riskLabel = (r: string) =>
+    r === "Low Risk" ? t("prod.riskLow") : r === "Medium Risk" ? t("prod.riskMed") : t("prod.riskHigh");
+  const focusLabel = (f: string) =>
+    f === "Conservative" ? t("prod.focusCons") : f === "Balanced" ? t("prod.focusBal") : t("prod.focusAgg");
+  const periodLabel = (p: string) =>
+    p === "5 years" ? t("prod.years5") : p === "3 years" ? t("prod.years3") : t("prod.year1");
+
   return (
     <>
-      {/* Hero */}
       <section className="mx-auto max-w-6xl px-4 pt-6 text-center">
         <Reveal>
-          <span className="inline-flex items-center gap-2 rounded-full border border-border bg-white/5 px-4 py-1.5 text-xs font-medium">
-            <span className="h-1.5 w-1.5 rounded-full bg-gold" /> Investment Strategies
+          <span className="inline-flex items-center gap-2 rounded-full border border-border bg-foreground/5 px-4 py-1.5 text-xs font-medium">
+            <span className="h-1.5 w-1.5 rounded-full bg-gold" /> {t("prod.badge")}
           </span>
           <h1 className="mx-auto mt-6 max-w-3xl font-display text-5xl font-bold leading-[1.02] md:text-6xl">
-            Choose Your Path to <span className="text-gradient-gold">Financial Growth</span>
+            {t("prod.title1")} <span className="text-gradient-gold">{t("prod.title2")}</span>
           </h1>
-          <p className="mx-auto mt-5 max-w-2xl text-muted-foreground">
-            Two portfolio families designed for different risk profiles — from steady compounding to
-            aggressive alpha capture, all under institutional risk oversight.
-          </p>
+          <p className="mx-auto mt-5 max-w-2xl text-muted-foreground">{t("prod.subtitle")}</p>
         </Reveal>
       </section>
 
-      {/* Strategy explained */}
       <section className="mx-auto mt-24 max-w-7xl px-4">
         <Reveal className="mb-8 flex flex-wrap items-end justify-between gap-4">
           <div>
             <span className="text-xs font-semibold uppercase tracking-[0.25em] text-gold">
-              Strategy Explained
+              {t("prod.explained")}
             </span>
             <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">
-              Compare tiers side by side
+              {t("prod.compare")}
             </h2>
           </div>
           <div className="inline-flex rounded-full border border-border bg-surface p-1">
@@ -116,66 +122,62 @@ function Products() {
               <thead>
                 <tr className="border-b border-border">
                   <th className="p-5 text-xs uppercase tracking-widest text-muted-foreground">
-                    Feature
+                    {t("prod.feature")}
                   </th>
-                  {g.tiers.map((t) => (
-                    <th key={t.key} className="p-5">
+                  {g.tiers.map((tier) => (
+                    <th key={tier.key} className="p-5">
                       <div className="text-xs uppercase tracking-widest text-muted-foreground">
-                        {t.tier}
+                        {tierLabel(tier.tier)}
                       </div>
-                      <div className="mt-1 font-display text-base font-bold">{t.name}</div>
+                      <div className="mt-1 font-display text-base font-bold">{tier.name}</div>
                     </th>
                   ))}
                 </tr>
               </thead>
               <tbody className="[&_tr]:border-b [&_tr]:border-border [&_tr:last-child]:border-0">
                 <tr>
-                  <td className="p-5 font-medium text-muted-foreground">Target Returns</td>
-                  {g.tiers.map((t) => (
-                    <td key={t.key} className="p-5">
-                      <span
-                        className={`rounded-full px-3 py-1 text-xs font-bold ${toneClass(t.targetTone)}`}
-                      >
-                        {t.target}
+                  <td className="p-5 font-medium text-muted-foreground">{t("prod.target")}</td>
+                  {g.tiers.map((tier) => (
+                    <td key={tier.key} className="p-5">
+                      <span className={`rounded-full px-3 py-1 text-xs font-bold ${toneClass(tier.targetTone)}`}>
+                        {tier.target}
                       </span>
                     </td>
                   ))}
                 </tr>
                 <tr>
-                  <td className="p-5 font-medium text-muted-foreground">Risk Level</td>
-                  {g.tiers.map((t) => (
-                    <td key={t.key} className="p-5">
-                      <span
-                        className={`rounded-full px-3 py-1 text-xs font-semibold ${toneClass(t.riskTone)}`}
-                      >
-                        {t.risk}
+                  <td className="p-5 font-medium text-muted-foreground">{t("prod.riskLvl")}</td>
+                  {g.tiers.map((tier) => (
+                    <td key={tier.key} className="p-5">
+                      <span className={`rounded-full px-3 py-1 text-xs font-semibold ${toneClass(tier.riskTone)}`}>
+                        {riskLabel(tier.risk)}
                       </span>
                     </td>
                   ))}
                 </tr>
                 <tr>
-                  <td className="p-5 font-medium text-muted-foreground">Recommended Period</td>
-                  {g.tiers.map((t) => (
-                    <td key={t.key} className="p-5 font-semibold">{t.period}</td>
+                  <td className="p-5 font-medium text-muted-foreground">{t("prod.period")}</td>
+                  {g.tiers.map((tier) => (
+                    <td key={tier.key} className="p-5 font-semibold">{periodLabel(tier.period)}</td>
                   ))}
                 </tr>
                 <tr>
-                  <td className="p-5 font-medium text-muted-foreground">Strategy Focus</td>
-                  {g.tiers.map((t) => (
-                    <td key={t.key} className="p-5 font-semibold">{t.focus}</td>
+                  <td className="p-5 font-medium text-muted-foreground">{t("prod.focus")}</td>
+                  {g.tiers.map((tier) => (
+                    <td key={tier.key} className="p-5 font-semibold">{focusLabel(tier.focus)}</td>
                   ))}
                 </tr>
                 <tr>
-                  <td className="p-5 font-medium text-muted-foreground">Asset Classes</td>
+                  <td className="p-5 font-medium text-muted-foreground">{t("prod.assets")}</td>
                   <td className="p-5 text-center font-semibold text-gold" colSpan={3}>
-                    CFDs & Commodities
+                    {t("prod.assetsVal")}
                   </td>
                 </tr>
-                {["Monthly Reporting", "Real-time Dashboard", "Dedicated Support"].map((row) => (
+                {[t("prod.monthly"), t("prod.dashboard"), t("prod.support")].map((row) => (
                   <tr key={row}>
                     <td className="p-5 font-medium text-muted-foreground">{row}</td>
-                    {g.tiers.map((t) => (
-                      <td key={t.key} className="p-5">
+                    {g.tiers.map((tier) => (
+                      <td key={tier.key} className="p-5">
                         <span className="grid h-6 w-6 place-items-center rounded-full bg-gold/15 text-gold">
                           <Check className="h-3.5 w-3.5" />
                         </span>
@@ -189,25 +191,21 @@ function Products() {
         </Reveal>
       </section>
 
-      {/* Calculator */}
       <ExposureCalculator />
 
-      {/* 4 Steps */}
       <section className="mx-auto mt-32 max-w-7xl px-4">
         <Reveal className="mb-12 text-center">
           <span className="text-xs font-semibold uppercase tracking-[0.25em] text-gold">
-            Onboarding
+            {t("onb.eyebrow")}
           </span>
-          <h2 className="mt-3 font-display text-4xl font-bold md:text-5xl">
-            Get started in four simple steps
-          </h2>
+          <h2 className="mt-3 font-display text-4xl font-bold md:text-5xl">{t("onb.title")}</h2>
         </Reveal>
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
           {[
-            { Icon: UserPlus, title: "Open Account", body: "Complete KYC and account opening in minutes with digital verification." },
-            { Icon: Target, title: "Choose Strategy", body: "Pick the tier that matches your objectives and risk appetite." },
-            { Icon: Wallet, title: "Fund Account", body: "Transfer capital to your fully segregated, client-owned account." },
-            { Icon: LineChart, title: "Track Performance", body: "Monitor allocations and returns in real time via the investor dashboard." },
+            { Icon: UserPlus, title: t("onb.1t"), body: t("onb.1b") },
+            { Icon: Target, title: t("onb.2t"), body: t("onb.2b") },
+            { Icon: Wallet, title: t("onb.3t"), body: t("onb.3b") },
+            { Icon: LineChart, title: t("onb.4t"), body: t("onb.4b") },
           ].map((s, i) => (
             <Reveal key={i} delay={i * 0.08}>
               <div className="surface-card group h-full p-6">
@@ -215,7 +213,7 @@ function Products() {
                   <div className="grid h-11 w-11 place-items-center rounded-xl bg-gold/10 text-gold transition-transform group-hover:scale-110">
                     <s.Icon className="h-5 w-5" />
                   </div>
-                  <span className="font-display text-3xl font-bold text-white/10">
+                  <span className="font-display text-3xl font-bold text-foreground/10">
                     0{i + 1}
                   </span>
                 </div>
@@ -227,7 +225,6 @@ function Products() {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="mx-auto mt-32 max-w-5xl px-4">
         <Reveal>
           <div className="surface-card relative overflow-hidden p-10 text-center md:p-16">
@@ -235,28 +232,25 @@ function Products() {
               className="pointer-events-none absolute inset-0 -z-10 opacity-30"
               style={{ background: "radial-gradient(circle at 50% 100%, var(--gold), transparent 60%)" }}
             />
-            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-white/5 px-4 py-1.5 text-xs font-medium">
-              <span className="h-1.5 w-1.5 rounded-full bg-gold" /> Ready to Start?
+            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-foreground/5 px-4 py-1.5 text-xs font-medium">
+              <span className="h-1.5 w-1.5 rounded-full bg-gold" /> {t("cta.badge")}
             </span>
             <h2 className="mx-auto mt-6 max-w-2xl font-display text-4xl font-bold leading-tight md:text-6xl">
-              Start Investing <span className="text-gradient-gold">Today</span>
+              {t("cta.title1")} <span className="text-gradient-gold">{t("cta.title2")}</span>
             </h2>
-            <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
-              Speak with our team about which strategy fits your goals. No management fee — only
-              performance-aligned incentives.
-            </p>
+            <p className="mx-auto mt-4 max-w-xl text-muted-foreground">{t("cta.body")}</p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Link
                 to="/about"
                 className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-gold hover:scale-[1.03] transition-transform"
               >
-                <Lock className="h-4 w-4" /> Book a Consultation
+                <Lock className="h-4 w-4" /> {t("nav.consult")}
               </Link>
               <a
                 href="#"
                 className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3.5 text-sm font-semibold hover:border-gold hover:text-gold"
               >
-                <FileText className="h-4 w-4" /> View Brochure
+                <FileText className="h-4 w-4" /> {t("cta.brochure")}
               </a>
             </div>
           </div>
@@ -267,6 +261,7 @@ function Products() {
 }
 
 function ExposureCalculator() {
+  const { t } = useI18n();
   const [amount, setAmount] = useState(100000);
   const [strategy, setStrategy] = useState("aurum-prime");
 
@@ -284,37 +279,34 @@ function ExposureCalculator() {
     "R " + Math.round(n).toLocaleString(undefined, { maximumFractionDigits: 0 });
 
   const rows = [
-    {
-      label: "Low",
-      tone: "success" as const,
-      rate: r.low,
-    },
-    { label: "Medium", tone: "gold" as const, rate: r.med },
-    { label: "High", tone: "danger" as const, rate: r.high },
+    { label: t("risk.low"), tone: "success" as const, rate: r.low },
+    { label: t("risk.medium"), tone: "gold" as const, rate: r.med },
+    { label: t("risk.high"), tone: "danger" as const, rate: r.high },
   ];
 
   return (
     <section className="mx-auto mt-32 max-w-7xl px-4">
       <Reveal className="mb-8">
         <span className="text-xs font-semibold uppercase tracking-[0.25em] text-gold">
-          Interactive Tool
+          {t("calc.eyebrow")}
         </span>
         <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">
-          Strategy Exposure Calculator
+          {t("calc.title")}
         </h2>
         <p className="mt-3 max-w-2xl text-sm text-muted-foreground">
-          Model potential outcomes across risk tiers. Values update in real time.
+          {t("calc.subtitle")}
         </p>
       </Reveal>
+
 
       <Reveal>
         <div className="surface-card p-6 md:p-8">
           <div className="grid gap-4 md:grid-cols-2">
             <label className="block">
               <div className="mb-2 text-xs uppercase tracking-widest text-muted-foreground">
-                Investment Amount
+                {t("calc.amount")}
               </div>
-              <div className="flex items-center gap-2 rounded-full border border-border bg-black/30 px-5 py-3">
+              <div className="flex items-center gap-2 rounded-full border border-border bg-background/60 px-5 py-3">
                 <span className="text-gold">R</span>
                 <input
                   type="number"
@@ -328,12 +320,12 @@ function ExposureCalculator() {
             </label>
             <label className="block">
               <div className="mb-2 text-xs uppercase tracking-widest text-muted-foreground">
-                Strategy
+                {t("calc.strategy")}
               </div>
               <select
                 value={strategy}
                 onChange={(e) => setStrategy(e.target.value)}
-                className="w-full rounded-full border border-border bg-black/30 px-5 py-3 text-sm font-semibold outline-none focus:border-gold"
+                className="w-full rounded-full border border-border bg-background/60 px-5 py-3 text-sm font-semibold outline-none focus:border-gold"
               >
                 <option value="aurum-prime">Aurum Prime</option>
                 <option value="aurum-core">Aurum Core</option>
@@ -347,13 +339,13 @@ function ExposureCalculator() {
               <thead>
                 <tr className="border-b border-border">
                   <th className="p-4 text-xs uppercase tracking-widest text-muted-foreground">
-                    Exposure
+                    {t("calc.exposure")}
                   </th>
                   <th className="p-4 text-xs uppercase tracking-widest text-muted-foreground">
-                    Return p.a. (compounding)
+                    {t("calc.ret")}
                   </th>
                   <th className="p-4 text-xs uppercase tracking-widest text-muted-foreground">
-                    1-Year Projected Value
+                    {t("calc.proj")}
                   </th>
                 </tr>
               </thead>
@@ -388,10 +380,7 @@ function ExposureCalculator() {
             </table>
           </div>
 
-          <p className="mt-6 text-xs text-muted-foreground">
-            *Projected returns are estimates based on historical CAGR and are not guaranteed. Past
-            performance does not guarantee future results.
-          </p>
+          <p className="mt-6 text-xs text-muted-foreground">{t("calc.disc")}</p>
         </div>
       </Reveal>
     </section>
@@ -400,7 +389,7 @@ function ExposureCalculator() {
 
 function toneTextClass(t: "gold" | "success" | "danger") {
   return t === "success"
-    ? "text-[oklch(0.85_0.18_155)]"
+    ? "text-[oklch(0.55_0.18_155)]"
     : t === "danger"
       ? "text-destructive"
       : "text-gold";
