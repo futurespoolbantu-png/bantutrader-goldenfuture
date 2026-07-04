@@ -11,6 +11,9 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { Nav } from "@/components/Nav";
+import { Footer } from "@/components/Footer";
+import { FloatingWidgets } from "@/components/FloatingWidgets";
 
 function NotFoundComponent() {
   return (
@@ -77,20 +80,24 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Bantu Trader Capital — Precision Asset Management" },
+      {
+        name: "description",
+        content:
+          "Bantu Trader Capital Asset Management: institutional-grade portfolio strategies, transparent reporting and client-owned accounts. 9 years in the forex industry.",
+      },
+      { name: "author", content: "Bantu Trader Capital" },
+      { property: "og:title", content: "Bantu Trader Capital — Precision Asset Management" },
+      {
+        property: "og:description",
+        content:
+          "Institutional-grade portfolio strategies with transparent reporting and client-owned accounts.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
+      { rel: "stylesheet", href: appCss },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
   }),
@@ -119,8 +126,12 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <Nav />
+      <main className="min-h-screen pt-24">
+        <Outlet />
+      </main>
+      <Footer />
+      <FloatingWidgets />
     </QueryClientProvider>
   );
 }
