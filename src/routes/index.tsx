@@ -28,7 +28,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "9 years in the forex industry. Tiered investment portfolios, institutional risk oversight, and 100% client-owned accounts.",
+          "4 years of documented track record. Tiered investment portfolios, institutional risk oversight, and 100% client-owned accounts.",
       },
       { property: "og:title", content: "Bantu Trader Capital — Asset Management" },
       {
@@ -45,21 +45,6 @@ function Home() {
   const { t, lang } = useI18n();
   return (
     <>
-      {/* Regulator bar */}
-      <section className="mx-auto max-w-6xl px-4">
-        <div className="surface-card flex flex-wrap items-center justify-center gap-3 px-5 py-3 text-center text-xs text-muted-foreground md:text-sm">
-          <span className="grid h-6 w-6 place-items-center rounded-full bg-gold/15 text-gold">
-            <ShieldCheck className="h-3.5 w-3.5" />
-          </span>
-          <span>
-            <span className="text-foreground">Bantu Trader Capital</span> {t("reg.text")}{" "}
-            <span className="text-foreground">Sovereign Trust Financial</span>,{" "}
-            {t("reg.authorized")}{" "}
-            <span className="text-gold">(FSP No. 45219)</span>
-          </span>
-        </div>
-      </section>
-
       {/* HERO */}
       <section className="relative mx-auto mt-10 max-w-7xl overflow-hidden px-4">
         <div
@@ -138,8 +123,8 @@ function Home() {
                 {
                   Icon: ShieldCheck,
                   label: t("snap.reg"),
-                  value: "FSP 45219",
-                  badge: "FSCA",
+                  value: t("snap.regVal"),
+                  badge: t("snap.regBadge"),
                   badgeClass:
                     "bg-[oklch(0.78_0.19_155/0.15)] text-[oklch(0.55_0.18_155)]",
                 },
@@ -230,7 +215,7 @@ function Home() {
           <Reveal delay={0.1}>
             <div className="grid grid-cols-2 gap-4">
               {[
-                { v: 9, s: "", label: t("stats.years") },
+                { v: 4, s: "", label: t("stats.years") },
                 { v: 2, s: "", label: t("stats.strategies") },
                 { v: 24, s: "/7", label: t("stats.monitoring") },
                 { v: 100, s: "%", label: t("stats.owned") },
@@ -303,10 +288,8 @@ function Home() {
             {t("part.title")}
           </h2>
         </Reveal>
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
           {[
-            "Sovereign Trust",
-            "FSCA",
             "MetaQuotes",
             "Equiti Capital",
             "Interactive Brokers",
@@ -486,8 +469,8 @@ function MobileAppSection() {
             <div className="text-[10px] uppercase tracking-widest text-muted-foreground">
               {t("app.portfolio")}
             </div>
-            <div className="mt-1 font-display text-2xl font-bold">R 1,284,520</div>
-            <div className="mt-1 text-[10px] text-[oklch(0.55_0.18_155)]">
+            <div className="mt-1 font-display text-2xl font-bold text-muted-foreground">R •••,•••</div>
+            <div className="mt-1 text-[10px] text-muted-foreground">
               {t("app.quarter")}
             </div>
             <svg viewBox="0 0 200 70" className="mt-4 h-16 w-full">
@@ -525,9 +508,9 @@ function MobileAppSection() {
             <div className="mt-1 font-display text-lg font-bold">{t("app.strategies")}</div>
             <div className="mt-4 space-y-2">
               {[
-                { n: "Aurum Core", pct: "20%", risk: t("risk.low"), tone: "success" },
-                { n: "Aurum Momentum", pct: "25%", risk: t("risk.medium"), tone: "gold" },
-                { n: "Sterling Ascend", pct: "35%", risk: t("risk.high"), tone: "danger" },
+                { n: "Aurum Core", status: t("app.active"), risk: t("risk.low"), tone: "success" },
+                { n: "Aurum Momentum", status: t("app.active"), risk: t("risk.medium"), tone: "gold" },
+                { n: "Sterling Ascend", status: t("app.active"), risk: t("risk.high"), tone: "danger" },
               ].map((r) => (
                 <div
                   key={r.n}
@@ -545,7 +528,7 @@ function MobileAppSection() {
                             : "text-gold"
                       }`}
                     >
-                      {r.pct}
+                      {r.status}
                     </span>
                   </div>
                 </div>
@@ -556,7 +539,7 @@ function MobileAppSection() {
 
         <div className="mt-12 flex justify-center gap-3">
           <div className="rounded-full border border-border bg-foreground/5 px-5 py-2 text-xs font-semibold">
-            <span className="text-gold">9 {t("stats.years").split(" ")[0]}</span> {t("app.badge1")}
+            <span className="text-gold">4 {t("stats.years").split(" ")[0]}</span> {t("app.badge1")}
           </div>
           <div className="rounded-full border border-border bg-foreground/5 px-5 py-2 text-xs font-semibold">
             <span className="text-gold">2</span> {t("app.badge2")}
@@ -620,20 +603,6 @@ function FloatingBadge({
 
 function LivePerformance() {
   const { t } = useI18n();
-  const strategies = [
-    { n: "Aurum Core", aum: "R 8.2M", risk: t("risk.low"), ret: "+21.4%" },
-    { n: "Aurum Momentum", aum: "R 12.5M", risk: t("risk.medium"), ret: "+26.8%" },
-    { n: "Sterling Ascend", aum: "R 5.1M", risk: t("risk.high"), ret: "+38.2%" },
-    { n: "Aurum Balanced", aum: "R 6.4M", risk: t("risk.medium"), ret: "+23.9%" },
-    { n: "Sterling Alpha", aum: "R 3.7M", risk: t("risk.high"), ret: "+41.6%" },
-    { n: "Aurum Conservative", aum: "R 9.0M", risk: t("risk.low"), ret: "+19.7%" },
-  ];
-  const riskClass = (r: string) =>
-    r === t("risk.low")
-      ? "bg-[oklch(0.78_0.19_155/0.15)] text-[oklch(0.55_0.18_155)]"
-      : r === t("risk.medium")
-        ? "bg-gold/15 text-gold"
-        : "bg-destructive/15 text-destructive";
 
   return (
     <section className="mt-32">
@@ -646,40 +615,28 @@ function LivePerformance() {
             {t("live.title")}
           </h2>
         </Reveal>
-      </div>
 
-      <div className="group relative overflow-hidden [mask-image:linear-gradient(90deg,transparent,black_10%,black_90%,transparent)]">
-        <div className="flex w-max animate-marquee gap-5 group-hover:[animation-play-state:paused]">
-          {[...strategies, ...strategies].map((s, i) => (
-            <div
-              key={i}
-              className="surface-card w-72 shrink-0 p-6"
-            >
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-semibold">{s.n}</span>
-                <span
-                  className={`rounded-full px-2.5 py-0.5 text-[10px] font-semibold uppercase ${riskClass(s.risk)}`}
-                >
-                  {s.risk}
-                </span>
-              </div>
-              <div className="mt-4 text-[10px] uppercase tracking-widest text-muted-foreground">
-                {t("live.aum")}
-              </div>
-              <div className="font-display text-lg font-bold">{s.aum}</div>
-              <div className="mt-4 text-[10px] uppercase tracking-widest text-muted-foreground">
-                {t("live.return")}
-              </div>
-              <div className="font-display text-3xl font-bold text-[oklch(0.55_0.18_155)]">
-                {s.ret}
-              </div>
+        <Reveal delay={0.1}>
+          <div className="surface-card mx-auto max-w-2xl p-10 text-center">
+            <div className="font-display text-3xl font-bold text-gradient-gold">
+              {t("live.trackRecord")}
             </div>
-          ))}
-        </div>
+            <p className="mx-auto mt-4 max-w-lg text-sm text-muted-foreground">
+              {t("live.pending")}
+            </p>
+            <Link
+              to="/about"
+              className="mt-6 inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:border-gold hover:text-gold"
+            >
+              {t("live.cta")} <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </Reveal>
+
+        <p className="mx-auto mt-6 max-w-3xl px-4 text-center text-xs text-muted-foreground">
+          {t("live.disclaimer")}
+        </p>
       </div>
-      <p className="mx-auto mt-6 max-w-3xl px-4 text-center text-xs text-muted-foreground">
-        {t("live.disclaimer")}
-      </p>
     </section>
   );
 }

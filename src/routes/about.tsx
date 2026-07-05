@@ -13,7 +13,7 @@ export const Route = createFileRoute("/about")({
       {
         name: "description",
         content:
-          "Founded 2025. Built by traders, for investors. Discipline, transparency, performance and integrity guide every allocation.",
+          "Founded 2022. Built by traders, for investors. Discipline, transparency, performance and integrity guide every allocation.",
       },
       { property: "og:title", content: "About — Bantu Trader Capital" },
       { property: "og:description", content: "Where capital is managed with precision." },
@@ -145,10 +145,10 @@ function About() {
         <div className="surface-card p-8 md:p-10">
           <div className="grid gap-8 text-center md:grid-cols-4">
             {[
-              { v: 9, s: "", label: t("stats.years") },
+              { v: 4, s: "", label: t("stats.years") },
               { v: 2, s: "", label: t("stats.strategies") },
               { v: 100, s: "%", label: t("abt.owned") },
-              { v: 2025, s: "", label: t("abt.foundedLabel") },
+              { v: 2022, s: "", label: t("abt.foundedLabel") },
             ].map((s) => (
               <div key={s.label}>
                 <div className="font-display text-5xl font-bold text-gradient-gold">

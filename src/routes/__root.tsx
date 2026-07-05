@@ -85,7 +85,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "Bantu Trader Capital Asset Management: institutional-grade portfolio strategies, transparent reporting and client-owned accounts. 9 years in the forex industry.",
+          "Bantu Trader Capital Asset Management: institutional-grade portfolio strategies, transparent reporting and client-owned accounts. 4 years of documented track record.",
       },
       { name: "author", content: "Bantu Trader Capital" },
       { property: "og:title", content: "Bantu Trader Capital — Precision Trading. Powerful Results." },
@@ -97,9 +97,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Bantu Trader Capital — Precision Trading. Powerful Results." },
-      { name: "description", content: "9 years in the forex industry. Tiered investment portfolios, institutional risk oversight, and 100% client-owned accounts." },
-      { property: "og:description", content: "9 years in the forex industry. Tiered investment portfolios, institutional risk oversight, and 100% client-owned accounts." },
-      { name: "twitter:description", content: "9 years in the forex industry. Tiered investment portfolios, institutional risk oversight, and 100% client-owned accounts." },
+      { name: "description", content: "4 years of documented track record. Tiered investment portfolios, institutional risk oversight, and 100% client-owned accounts." },
+      { property: "og:description", content: "4 years of documented track record. Tiered investment portfolios, institutional risk oversight, and 100% client-owned accounts." },
+      { name: "twitter:description", content: "4 years of documented track record. Tiered investment portfolios, institutional risk oversight, and 100% client-owned accounts." },
       { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/8d4e67a2-306e-4c22-8bcc-6e87876a9c18/id-preview-60b127e0--ff58bd43-620e-4776-8621-fd162ddedd82.lovable.app-1783176812930.png" },
       { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/8d4e67a2-306e-4c22-8bcc-6e87876a9c18/id-preview-60b127e0--ff58bd43-620e-4776-8621-fd162ddedd82.lovable.app-1783176812930.png" },
     ],

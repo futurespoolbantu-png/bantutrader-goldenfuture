@@ -19,17 +19,17 @@ export const dict = {
 
   // Regulator bar / hero
   "reg.text": {
-    en: "operates as a Juristic Representative under",
-    pt: "opera como Representante Jurídico sob",
+    en: "is currently completing its licensing process with",
+    pt: "encontra-se atualmente em processo de licenciamento junto de",
   },
-  "reg.principal": { en: "Sovereign Trust Financial", pt: "Sovereign Trust Financial" },
+  "reg.principal": { en: "the relevant regulatory authority", pt: "a entidade reguladora competente" },
   "reg.authorized": {
-    en: "an authorized Category II FSP",
-    pt: "um FSP autorizado de Categoria II",
+    en: "in Dubai, UAE",
+    pt: "no Dubai, EAU",
   },
   "hero.badge": {
-    en: "9 Years in the Forex Industry · FSP 45219",
-    pt: "9 Anos na Indústria Forex · FSP 45219",
+    en: "4 Years of Documented Track Record",
+    pt: "4 Anos de Track Record Documentado",
   },
   "hero.title1": { en: "Precision Trading", pt: "Trading de Precisão" },
   "hero.title2": { en: "Powerful", pt: "Resultados" },
@@ -43,11 +43,13 @@ export const dict = {
   // Snapshot
   "snap.perf": { en: "Performance Overview", pt: "Visão de Desempenho" },
   "snap.live": { en: "Live Snapshot", pt: "Painel ao Vivo" },
-  "snap.exp": { en: "Industry Experience", pt: "Experiência no Setor" },
-  "snap.expVal": { en: "9 Years", pt: "9 Anos" },
+  "snap.exp": { en: "Track Record", pt: "Track Record" },
+  "snap.expVal": { en: "4 Years", pt: "4 Anos" },
   "snap.strat": { en: "Investment Strategies", pt: "Estratégias de Investimento" },
   "snap.stratVal": { en: "2 Strategies", pt: "2 Estratégias" },
   "snap.reg": { en: "Regulation Status", pt: "Status Regulatório" },
+  "snap.regVal": { en: "In Progress", pt: "Em Curso" },
+  "snap.regBadge": { en: "DUBAI", pt: "DUBAI" },
 
   // Mobile app section
   "app.badge": { en: "Mobile App Coming Soon", pt: "App Mobile em Breve" },
@@ -60,21 +62,22 @@ export const dict = {
   "app.analytics": { en: "Analytics", pt: "Análises" },
   "app.strategies": { en: "Strategies", pt: "Estratégias" },
   "app.portfolio": { en: "Portfolio Overview", pt: "Visão do Portfólio" },
-  "app.quarter": { en: "+12.4% · This Quarter", pt: "+12,4% · Este Trimestre" },
+  "app.quarter": { en: "Illustrative preview", pt: "Pré-visualização ilustrativa" },
   "app.deposit": { en: "Deposit", pt: "Depositar" },
   "app.withdraw": { en: "Withdraw", pt: "Sacar" },
   "app.available": { en: "Available", pt: "Disponível" },
-  "app.risk": { en: "Risk", pt: "Risco" },
+  "app.risk": { en: "Risk Profile", pt: "Perfil de Risco" },
+  "app.active": { en: "Active", pt: "Ativa" },
   "app.badge1": { en: "Track Record", pt: "de Histórico" },
   "app.badge2": { en: "Groups", pt: "Grupos de Estratégia" },
-  "app.floating1": { en: "Aurum Core · 20% Annual Target", pt: "Aurum Core · Meta Anual 20%" },
+  "app.floating1": { en: "Aurum Core · Institutional Strategy", pt: "Aurum Core · Estratégia Institucional" },
   "app.floating2": {
-    en: "Sterling Ascend · 35% High-risk 1yr",
-    pt: "Sterling Ascend · 35% Alto Risco 1a",
+    en: "Sterling Ascend · High-Risk Strategy",
+    pt: "Sterling Ascend · Estratégia de Alto Risco",
   },
   "app.floating3": {
-    en: "South Africa · Now Available",
-    pt: "África do Sul · Disponível Agora",
+    en: "Coming Soon",
+    pt: "Brevemente Disponível",
   },
 
   // Features
@@ -105,10 +108,16 @@ export const dict = {
   },
 
   // Live performance
-  "live.eyebrow": { en: "Live Performance", pt: "Desempenho ao Vivo" },
+  "live.eyebrow": { en: "Track Record", pt: "Track Record" },
   "live.title": { en: "Our Investment Strategies", pt: "Nossas Estratégias de Investimento" },
   "live.aum": { en: "AUM", pt: "AUM" },
   "live.return": { en: "12M Return", pt: "Retorno 12M" },
+  "live.trackRecord": { en: "4 Years Documented", pt: "4 Anos Documentados" },
+  "live.pending": {
+    en: "We have been documenting every operation since inception. Full audited performance reports are being prepared and will be published here for qualified investors.",
+    pt: "Documentamos todas as operações desde o início. Relatórios de performance auditados estão a ser preparados e serão publicados aqui para investidores qualificados.",
+  },
+  "live.cta": { en: "Learn About Our Approach", pt: "Conheça a Nossa Abordagem" },
   "live.disclaimer": {
     en: "Past performance is not indicative of future results. All returns are annualized.",
     pt: "Desempenho passado não indica resultados futuros. Todos os retornos são anualizados.",
@@ -127,7 +136,7 @@ export const dict = {
     pt: "Combinamos nove anos de experiência no mercado forex com frameworks institucionais de risco para entregar gestão disciplinada e transparente. Cada conta é do cliente. Cada operação é monitorada.",
   },
   "abtp.cta": { en: "About Us", pt: "Sobre Nós" },
-  "stats.years": { en: "Years Experience", pt: "Anos de Experiência" },
+  "stats.years": { en: "Years Track Record", pt: "Anos de Track Record" },
   "stats.strategies": { en: "Investment Strategies", pt: "Estratégias de Investimento" },
   "stats.monitoring": { en: "Risk Monitoring", pt: "Monitoramento de Risco" },
   "stats.owned": { en: "Client-Owned Accounts", pt: "Contas do Cliente" },
@@ -243,10 +252,10 @@ export const dict = {
   "abt.title1": { en: "Where Capital Is Managed", pt: "Onde o Capital é Gerido" },
   "abt.title2": { en: "With Precision.", pt: "Com Precisão." },
   "abt.subtitle": {
-    en: "Bantu Trader Capital Asset Management operates as a Juristic Representative of Sovereign Trust Financial, delivering disciplined portfolio management under institutional standards.",
-    pt: "A Bantu Trader Capital Asset Management opera como Representante Jurídico da Sovereign Trust Financial, entregando gestão de portfólio disciplinada sob padrões institucionais.",
+    en: "Bantu Trader Capital Asset Management is currently completing its licensing process in Dubai, UAE, delivering disciplined portfolio management under institutional standards.",
+    pt: "A Bantu Trader Capital Asset Management encontra-se atualmente em processo de licenciamento no Dubai, EAU, entregando gestão de portfólio disciplinada sob padrões institucionais.",
   },
-  "abt.founded": { en: "2025 · Founded", pt: "2025 · Fundada" },
+  "abt.founded": { en: "2022 · Founded", pt: "2022 · Fundada" },
   "abt.mission": { en: "Our Mission", pt: "Nossa Missão" },
   "abt.missionBody": {
     en: "To deliver institutional-grade portfolio management to sophisticated investors — combining discipline, transparency and technology so every rand of capital is stewarded with intent.",
@@ -372,8 +381,8 @@ export const dict = {
   // Footer
   "ft.regTitle": { en: "Regulatory Disclosure", pt: "Divulgação Regulatória" },
   "ft.regBody": {
-    en: "Bantu Trader Capital Asset Management does not operate its own strategies or collect client capital. All investment activities are conducted under the authority of our principal, Sovereign Trust Financial (Category II FSP no. 45219).",
-    pt: "A Bantu Trader Capital Asset Management não opera estratégias próprias nem coleta capital de clientes. Todas as atividades de investimento são conduzidas sob a autoridade do nosso principal, Sovereign Trust Financial (FSP Categoria II nº 45219).",
+    en: "Bantu Trader Capital Asset Management is currently completing its licensing process with the relevant regulatory authority in Dubai, UAE. Full regulatory disclosures will be published here once the process is finalized.",
+    pt: "A Bantu Trader Capital Asset Management encontra-se atualmente em processo de licenciamento junto da entidade reguladora competente no Dubai, EAU. As divulgações regulatórias completas serão publicadas aqui assim que o processo for finalizado.",
   },
   "ft.riskTitle": { en: "Risk Disclosure", pt: "Divulgação de Risco" },
   "ft.riskBody": {

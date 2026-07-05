@@ -91,7 +91,6 @@ export function Footer() {
               <li><a href="#" className="hover:text-foreground">{t("ft.privacy")}</a></li>
               <li><a href="#" className="hover:text-foreground">{t("ft.terms")}</a></li>
               <li><a href="#" className="hover:text-foreground">{t("ft.disc")}</a></li>
-              <li><a href="#" className="hover:text-foreground">Sovereign Trust</a></li>
               <li><a href="#" className="hover:text-foreground">{t("ft.paia")}</a></li>
             </ul>
           </div>
