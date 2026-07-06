@@ -52,7 +52,7 @@ function About() {
                 <div className="grid h-12 w-12 place-items-center rounded-2xl bg-gold/15 text-gold">
                   <b.Icon className="h-6 w-6" />
                 </div>
-                <h3 className="mt-5 font-display text-2xl font-bold">{b.title}</h3>
+                <h2 className="mt-5 font-display text-2xl font-bold">{b.title}</h2>
                 <p className="mt-3 text-muted-foreground">{b.body}</p>
               </div>
             </Reveal>

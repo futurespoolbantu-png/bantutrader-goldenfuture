@@ -159,7 +159,7 @@ export const dict = {
   "ins.eyebrow": { en: "Latest Insights", pt: "Últimas Análises" },
   "ins.title": { en: "Market Analysis & News", pt: "Análise de Mercado e Notícias" },
   "ins.viewAll": { en: "View all", pt: "Ver tudo" },
-  "ins.readMore": { en: "Read More", pt: "Leia Mais" },
+  "ins.readMore": { en: "Read the full market analysis", pt: "Ler a análise completa" },
 
   // Products
   "prod.badge": { en: "Investment Strategies", pt: "Estratégias de Investimento" },
@@ -317,7 +317,7 @@ export const dict = {
   },
   "blog.featured": { en: "Featured", pt: "Destaque" },
   "blog.read": { en: "Read Article", pt: "Ler Artigo" },
-  "blog.readMore": { en: "Read More", pt: "Leia Mais" },
+  "blog.readMore": { en: "Read the full article", pt: "Ler o artigo completo" },
   "blog.min": { en: "min read", pt: "min de leitura" },
   "blog.catAll": { en: "All", pt: "Todos" },
   "blog.catMarket": { en: "Market Analysis", pt: "Análise de Mercado" },
