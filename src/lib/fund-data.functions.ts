@@ -151,9 +151,16 @@ export const getFundData = createServerFn({ method: "GET" }).handler(async (): P
           .filter(Boolean) as Array<Record<string, unknown>>;
 
         if (updates.length > 0) {
-          // Only patch the changing fields per symbol.
           for (const u of updates) {
-            const { symbol, ...patch } = u as { symbol: string } & Record<string, unknown>;
+            const symbol = u.symbol as string;
+            const patch = {
+              prev_return_1y: u.prev_return_1y as number | null,
+              return_1y: u.return_1y as number | null,
+              return_3y: u.return_3y as number | null,
+              aum: u.aum as number | null,
+              sparkline_7d: u.sparkline_7d as unknown as number[] | null,
+              last_updated: u.last_updated as string,
+            };
             await supabaseAdmin.from("fund_performance").update(patch).eq("symbol", symbol);
           }
         }
