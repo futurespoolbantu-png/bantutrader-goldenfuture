@@ -317,7 +317,7 @@ export const dict = {
   },
   "blog.featured": { en: "Featured", pt: "Destaque" },
   "blog.read": { en: "Read Article", pt: "Ler Artigo" },
-  "blog.readMore": { en: "Read More", pt: "Leia Mais" },
+  "blog.readMore": { en: "Read the full article", pt: "Ler o artigo completo" },
   "blog.min": { en: "min read", pt: "min de leitura" },
   "blog.catAll": { en: "All", pt: "Todos" },
   "blog.catMarket": { en: "Market Analysis", pt: "Análise de Mercado" },
