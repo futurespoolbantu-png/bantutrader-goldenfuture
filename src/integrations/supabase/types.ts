@@ -19,43 +19,76 @@ export type Database = {
           aum: number | null
           category: string
           created_at: string
+          currency: string | null
+          description: string | null
+          dividend_frequency: string | null
           expense_ratio: number | null
           fund_name: string
+          history_5y: Json | null
           id: string
           last_updated: string
+          min_investment: number | null
+          prev_return_1y: number | null
+          product_type: string | null
           provider: string
           region: string
           return_1y: number | null
           return_3y: number | null
+          share_classes: string | null
+          sparkline_7d: Json | null
           symbol: string
+          ticker_symbol: string | null
+          top_holdings: Json | null
         }
         Insert: {
           aum?: number | null
           category: string
           created_at?: string
+          currency?: string | null
+          description?: string | null
+          dividend_frequency?: string | null
           expense_ratio?: number | null
           fund_name: string
+          history_5y?: Json | null
           id?: string
           last_updated?: string
+          min_investment?: number | null
+          prev_return_1y?: number | null
+          product_type?: string | null
           provider: string
           region: string
           return_1y?: number | null
           return_3y?: number | null
+          share_classes?: string | null
+          sparkline_7d?: Json | null
           symbol: string
+          ticker_symbol?: string | null
+          top_holdings?: Json | null
         }
         Update: {
           aum?: number | null
           category?: string
           created_at?: string
+          currency?: string | null
+          description?: string | null
+          dividend_frequency?: string | null
           expense_ratio?: number | null
           fund_name?: string
+          history_5y?: Json | null
           id?: string
           last_updated?: string
+          min_investment?: number | null
+          prev_return_1y?: number | null
+          product_type?: string | null
           provider?: string
           region?: string
           return_1y?: number | null
           return_3y?: number | null
+          share_classes?: string | null
+          sparkline_7d?: Json | null
           symbol?: string
+          ticker_symbol?: string | null
+          top_holdings?: Json | null
         }
         Relationships: []
       }
