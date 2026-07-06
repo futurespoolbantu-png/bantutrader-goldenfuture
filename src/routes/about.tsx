@@ -107,6 +107,7 @@ function About() {
                 <div className="p-6">
                   <div className="text-xs uppercase tracking-[0.25em] text-gold">{m.role}</div>
                   <div className="mt-2 font-display text-2xl font-bold">{m.name}</div>
+                  <p className="mt-3 text-sm text-muted-foreground">{m.bio}</p>
                 </div>
               </div>
             </Reveal>
