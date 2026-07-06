@@ -159,7 +159,7 @@ export const dict = {
   "ins.eyebrow": { en: "Latest Insights", pt: "Últimas Análises" },
   "ins.title": { en: "Market Analysis & News", pt: "Análise de Mercado e Notícias" },
   "ins.viewAll": { en: "View all", pt: "Ver tudo" },
-  "ins.readMore": { en: "Read More", pt: "Leia Mais" },
+  "ins.readMore": { en: "Read the full market analysis", pt: "Ler a análise completa" },
 
   // Products
   "prod.badge": { en: "Investment Strategies", pt: "Estratégias de Investimento" },
