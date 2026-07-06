@@ -1,40 +1,84 @@
-## Global Markets page + live FMP proxy
+# Global Markets — Full Build
 
-### New route
-- `src/routes/global-markets.tsx` — inserted between Products and About in `Nav.tsx` links.
-- Head metadata: title "Global Markets — Bantu Trader Capital", matching og/twitter tags.
+## 1. Database schema (migration)
 
-### Page structure (dark theme, gold accents, existing tokens/fonts/spacing)
-1. **Hero** — headline "Global Fund Performance, at a Glance", subheading, small muted disclaimer with dynamic "Last refreshed" timestamp from API response.
-2. **3 stat cards** (reusing homepage stat-card styling + `AnimatedCounter` where numeric): Best 1-Year Return, Lowest Expense Ratio, Largest AUM — each shows fund name + value, computed from live data.
-3. **Bar chart** — Recharts `BarChart`, 1-year return for the 5 funds, single flat gold (`hsl(var(--gold))`) bars, no gradient/shadow, responsive container.
-4. **Filters + sortable table** — two `<Select>` dropdowns (Category, Region) with "All" option; table columns Fund Name, Category, Region, 1Y, 3Y, Expense Ratio, AUM, Provider. Click header to sort asc/desc (client-side `useState`). Fully responsive: horizontal scroll on mobile, condensed padding.
-5. **Footer disclaimer block** above global `<Footer />`.
+Extend `fund_performance` with:
+- `product_type text` (ETF | Mutual Fund | Index Fund)
+- `min_investment numeric`
+- `share_classes text`
+- `dividend_frequency text`
+- `currency text default 'USD'`
+- `ticker_symbol text`
+- `description text`
+- `top_holdings jsonb` (array of `{ name, weight }`)
+- `history_5y jsonb` (array of `{ date, value }`)
+- `sparkline_7d jsonb` (array of numbers)
+- `prev_return_1y numeric` (to compute up/down arrow vs last refresh)
 
-### i18n
-- Add EN/PT keys for nav label ("Global Markets" / "Mercados Globais") and page copy in `src/lib/i18n.tsx`.
+Keep existing RLS + grants unchanged.
 
-### Data flow (Lovable Cloud)
-- Enable Lovable Cloud (Supabase).
-- Secret: `FMP_API_KEY` (requested via add_secret — user obtains from financialmodelingprep.com).
-- Table `public.fund_performance` (fund_name, provider, category, region, return_1y, return_3y, expense_ratio, aum, last_updated). RLS enabled; `GRANT SELECT ... TO anon, authenticated`; policy allowing public SELECT (public read-only reference data). `GRANT ALL ... TO service_role` for the edge function upsert.
-- **Edge Function `get-fund-data`** (Supabase Edge Function per user's explicit request):
-  - Tickers: `VOO, IVV, FCNTX, PONAX, SGENX` (Schroder Global Equity proxy).
-  - Static metadata map (category, region, provider, friendly name) per ticker.
-  - In-memory cache with 10-minute TTL keyed per function instance.
-  - Fetch FMP `/api/v3/quote/{tickers}` for price + `/api/v3/etf-info/{symbol}` (or `/api/v3/mutual-fund-holder` fallback) for expense ratio/AUM; compute 1Y and 3Y return from historical price endpoint. Aggregate into DTO array.
-  - On success: upsert rows into `fund_performance` via service-role client; return `{ funds, source: "live", last_updated }`.
-  - On failure (network/rate limit/missing key): SELECT latest cached rows from `fund_performance`, return `{ funds, source: "cache", last_updated }`. If cache also empty, return 503.
-- Frontend fetches ONLY the edge function URL (never FMP directly). Loader-less: use `useQuery` with 5-min staleTime to keep it simple and avoid SSR-time secret access.
+## 2. Seed data
 
-### Constraints honored
-- No projected/forward-looking data — only historical 1Y/3Y and current AUM/expense.
-- API key stays server-side (never in `VITE_*`, never in client bundle).
-- Fully responsive; mobile uses stacked stat cards + scrollable table + resized chart.
+Insert the 13 new funds plus keep the existing 5 (upsert by `symbol`):
 
-### Files touched
-- New: `src/routes/global-markets.tsx`, `supabase/functions/get-fund-data/index.ts`, migration for `fund_performance`.
-- Edited: `src/components/Nav.tsx` (nav order + i18n key), `src/lib/i18n.tsx` (new keys), `src/routeTree.gen.ts` (auto).
+```text
+SPY, QQQ, VTI, EEM, VWO, IEUR, BND, LQD, TPINX, VBIAX,
+RPGAX, IAU, VNQ + VOO, IVV, FCNTX, PONAX, SGENX
+```
 
-### What I'll need from you afterwards
-- Paste your FMP API key when the secret prompt opens.
+Each row gets category, region, product_type, ticker_symbol, currency, min_investment, dividend_frequency, share_classes (null for ETFs), description, and reasonable historical/holdings snapshot. Live returns/prices still refresh via the server function.
+
+## 3. Server function (`src/lib/fund-data.functions.ts`)
+
+- Batch FMP call: single `/quote/{comma-list}` for all tickers (1 request).
+- Single `/historical-price-full/{comma-list}?serietype=line` batched where supported; fall back to per-ticker with 10-min cache.
+- Compute 1y / 3y returns + 7-day sparkline from historical series.
+- Upsert into Supabase; preserve static metadata (product_type, min_investment, share_classes, dividend_frequency, currency, description, top_holdings).
+- Store previous `return_1y` into `prev_return_1y` before writing new value.
+- On failure, return cached table rows with `source: "cache"`.
+
+## 4. Page (`src/routes/global-markets.tsx`)
+
+Sections:
+1. Hero (unchanged) + collapsible explainer line "What is a fund?" with "Learn more" → `/blog`.
+2. Stats cards (unchanged).
+3. Goal quick filters: `Growth`, `Stable income`, `Low cost` (segmented buttons above dropdowns).
+4. Search + Category + Region + Product Type dropdowns.
+5. Table columns: `☐ | Type | Fund | Ticker | Category | Region | 1Y ▲ | 3Y | Trend (sparkline) | Expense ● | AUM | Min.`
+   - Sortable headers, 10 rows/page, click row → drawer.
+   - Info tooltips on Expense/AUM/Min headers.
+   - Color-dot legend below table.
+6. Bar chart (1Y returns, existing) — keep.
+7. Disclaimer footer (existing).
+
+Interactions:
+- Compare checkboxes (max 3) → floating pill "Compare selected (n)" → modal.
+- Row click → right drawer (Sheet) with 5Y line chart, top holdings bars, product details, description, close button. Full-screen on mobile.
+- Compare modal: side-by-side columns on desktop, stacked on mobile.
+
+## 5. UI details
+
+- Reuse shadcn `Sheet`, `Dialog`, `Tooltip`, `Badge`, `Checkbox`, `Select`, `Input`, `Table`.
+- Sparkline: inline SVG polyline (no library), gold stroke.
+- Expense dot: `<span>` colored by threshold.
+- 1Y arrow: compare `return_1y` vs `prev_return_1y`.
+- Type badge colors: ETF=gold, Mutual Fund=blue-ish muted, Index Fund=green muted (all using existing tokens/opacity).
+- All tooltips also open on tap (Radix Tooltip already supports focus/tap on touch).
+
+## 6. i18n
+
+Add EN/PT keys for new labels (Type, Growth, Stable income, Low cost, Compare selected, Product details, Ticker, Min. investment, Dividend frequency, Currency, Share classes, "What is a fund?", "Learn more", tooltip strings).
+
+## 7. Files
+
+- Migration: alter table + columns.
+- Insert: seed 13 new + update 5 existing with product metadata + sample holdings/history.
+- Edit `src/lib/fund-data.functions.ts` — batch fetch, sparkline, prev_return.
+- Rewrite `src/routes/global-markets.tsx`.
+- New `src/components/FundDrawer.tsx`, `src/components/CompareModal.tsx`, `src/components/Sparkline.tsx`.
+- Extend `src/lib/i18n.tsx`.
+
+## Notes / trade-offs
+
+- 5Y history and top holdings are seeded (static curated data) — FMP paid tier required for true 5Y + holdings, so we render from the seeded jsonb columns and only refresh returns/prices live. This keeps the UI complete and never shows projected data.
+- Sparkline uses last 7 daily closes from the same historical fetch when available, else from seeded fallback.
