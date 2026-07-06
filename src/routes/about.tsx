@@ -96,13 +96,13 @@ function About() {
         </Reveal>
         <div className="grid gap-6 md:grid-cols-2">
           {[
-            { img: samuelson.url, name: "Samuelson Gomes", role: "CEO", bio: t("abt.teamBio") },
-            { img: paulo.url, name: "Paulo Domingos", role: "CIO", bio: t("abt.teamBio") },
+            { img: samuelson.url, name: "Samuelson Gomes", role: "CEO", bio: t("abt.teamBio"), pos: "center 20%" },
+            { img: paulo.url, name: "Paulo Domingos", role: "CIO", bio: t("abt.teamBio"), pos: "70% 25%" },
           ].map((m) => (
             <Reveal key={m.name}>
               <div className="surface-card overflow-hidden">
-                <div className="aspect-[4/3] overflow-hidden bg-surface-2">
-                  <img src={m.img} alt={m.name} loading="lazy" className="h-full w-full object-cover" />
+                <div className="aspect-[4/5] overflow-hidden bg-surface-2 md:aspect-[4/4]">
+                  <img src={m.img} alt={m.name} loading="lazy" className="h-full w-full object-cover" style={{ objectPosition: m.pos }} />
                 </div>
                 <div className="p-6">
                   <div className="text-xs uppercase tracking-[0.25em] text-gold">{m.role}</div>
