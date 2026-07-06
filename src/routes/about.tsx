@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Zap, Eye, ShieldCheck, Sparkles, TrendingUp, Scale } from "lucide-react";
-import team1 from "@/assets/team-1.jpg";
-import team2 from "@/assets/team-2.jpg";
+import samuelson from "@/assets/samuelson-gomes.jpg.asset.json";
+import paulo from "@/assets/paulo-domingos.jpg.asset.json";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
 import { Reveal } from "@/components/Reveal";
 import { useI18n } from "@/lib/i18n";
