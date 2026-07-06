@@ -273,10 +273,11 @@ export const dict = {
   },
   "abt.built1": { en: "Built by Traders,", pt: "Feito por Traders," },
   "abt.built2": { en: "For Investors", pt: "para Investidores" },
-  "abt.founded2": { en: "Founded 2025", pt: "Fundada em 2025" },
+  "abt.founded2": { en: "Founded 2022", pt: "Fundada em 2022" },
   "abt.leadership": { en: "Leadership", pt: "Liderança" },
   "abt.meet": { en: "Meet the team", pt: "Conheça a equipe" },
   "abt.ceo": { en: "Founder & CEO", pt: "Fundador & CEO" },
+  "abt.cio": { en: "Chief Investment Officer", pt: "Chief Investment Officer" },
   "abt.analyst": { en: "Analyst & Strategist", pt: "Analista & Estrategista" },
   "abt.values": { en: "Our Core Values", pt: "Nossos Valores" },
   "abt.stand": { en: "What we stand for", pt: "No que acreditamos" },
@@ -302,7 +303,7 @@ export const dict = {
   },
   "abt.owned": { en: "Client Owned", pt: "Contas do Cliente" },
   "abt.foundedLabel": { en: "Founded", pt: "Fundada" },
-  "abt.est": { en: "Est. 2025 · Johannesburg", pt: "Est. 2025 · Joanesburgo" },
+  "abt.est": { en: "Est. 2022", pt: "Fundada em 2022" },
 
   // Blog
   "blog.badge": { en: "Investment Insights", pt: "Análises de Investimento" },
