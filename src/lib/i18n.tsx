@@ -279,6 +279,7 @@ export const dict = {
   "abt.meet": { en: "Meet the team", pt: "Conheça a equipe" },
   "abt.ceo": { en: "Founder & CEO", pt: "Fundador & CEO" },
   "abt.analyst": { en: "Analyst & Strategist", pt: "Analista & Estrategista" },
+  "abt.teamBio": { en: "Manager and trader with over 5 years of experience in the financial markets.", pt: "Gestor e trader com mais de 5 anos de experiência no mercado financeiro." },
   "abt.values": { en: "Our Core Values", pt: "Nossos Valores" },
   "abt.stand": { en: "What we stand for", pt: "No que acreditamos" },
   "abt.v1t": { en: "Discipline", pt: "Disciplina" },

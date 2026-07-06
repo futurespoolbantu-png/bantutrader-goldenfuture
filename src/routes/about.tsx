@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Zap, Eye, ShieldCheck, Sparkles, TrendingUp, Scale } from "lucide-react";
-import team1 from "@/assets/team-1.jpg";
-import team2 from "@/assets/team-2.jpg";
+import samuelson from "@/assets/samuelson-gomes.jpg.asset.json";
+import paulo from "@/assets/paulo-domingos.jpg.asset.json";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
 import { Reveal } from "@/components/Reveal";
 import { useI18n } from "@/lib/i18n";
@@ -96,8 +96,8 @@ function About() {
         </Reveal>
         <div className="grid gap-6 md:grid-cols-2">
           {[
-            { img: team1, name: "Thabo Mokoena", role: t("abt.ceo") },
-            { img: team2, name: "Naledi Dlamini", role: t("abt.analyst") },
+            { img: samuelson.url, name: "Samuelson Gomes", role: "CEO", bio: t("abt.teamBio") },
+            { img: paulo.url, name: "Paulo Domingos", role: "CIO", bio: t("abt.teamBio") },
           ].map((m) => (
             <Reveal key={m.name}>
               <div className="surface-card overflow-hidden">
@@ -107,6 +107,7 @@ function About() {
                 <div className="p-6">
                   <div className="text-xs uppercase tracking-[0.25em] text-gold">{m.role}</div>
                   <div className="mt-2 font-display text-2xl font-bold">{m.name}</div>
+                  <p className="mt-3 text-sm text-muted-foreground">{m.bio}</p>
                 </div>
               </div>
             </Reveal>
