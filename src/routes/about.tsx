@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Zap, Eye, ShieldCheck, Sparkles, TrendingUp, Scale } from "lucide-react";
-import team1 from "@/assets/team-ceo.jpg";
+import samuelson from "@/assets/samuelson-gomes.jpg.asset.json";
+import paulo from "@/assets/paulo-domingos.jpg.asset.json";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
 import { Reveal } from "@/components/Reveal";
 import { useI18n } from "@/lib/i18n";
@@ -95,28 +96,18 @@ function About() {
         </Reveal>
         <div className="mx-auto grid max-w-2xl gap-6 md:grid-cols-2">
           {[
-            { img: team1, name: "Samuelson Gomes", role: t("abt.ceo") },
-            { img: null, name: "Paulo Domingos", role: t("abt.cio") },
+            { img: samuelson.url, name: "Samuelson Gomes", role: "CEO", bio: t("abt.teamBio"), pos: "center 20%", bw: false },
+            { img: paulo.url, name: "Paulo Domingos", role: "CIO", bio: t("abt.teamBio"), pos: "70% 25%", bw: true },
           ].map((m) => (
             <Reveal key={m.name}>
               <div className="surface-card overflow-hidden">
-                <div className="aspect-[4/3] overflow-hidden bg-surface-2">
-                  {m.img ? (
-                    <img src={m.img} alt={m.name} loading="lazy" className="h-full w-full object-cover" />
-                  ) : (
-                    <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-surface-2 to-background">
-                      <span className="font-display text-5xl font-bold text-gold/40">
-                        {m.name
-                          .split(" ")
-                          .map((w) => w[0])
-                          .join("")}
-                      </span>
-                    </div>
-                  )}
+                <div className="aspect-[4/5] overflow-hidden bg-surface-2 md:aspect-[4/4]">
+                  <img src={m.img} alt={m.name} loading="lazy" className={`h-full w-full object-cover ${m.bw ? "grayscale" : ""}`} style={{ objectPosition: m.pos }} />
                 </div>
                 <div className="p-6">
                   <div className="text-xs uppercase tracking-[0.25em] text-gold">{m.role}</div>
                   <div className="mt-2 font-display text-2xl font-bold">{m.name}</div>
+                  <p className="mt-3 text-sm text-muted-foreground">{m.bio}</p>
                 </div>
               </div>
             </Reveal>
