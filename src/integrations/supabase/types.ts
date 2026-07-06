@@ -14,7 +14,51 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      fund_performance: {
+        Row: {
+          aum: number | null
+          category: string
+          created_at: string
+          expense_ratio: number | null
+          fund_name: string
+          id: string
+          last_updated: string
+          provider: string
+          region: string
+          return_1y: number | null
+          return_3y: number | null
+          symbol: string
+        }
+        Insert: {
+          aum?: number | null
+          category: string
+          created_at?: string
+          expense_ratio?: number | null
+          fund_name: string
+          id?: string
+          last_updated?: string
+          provider: string
+          region: string
+          return_1y?: number | null
+          return_3y?: number | null
+          symbol: string
+        }
+        Update: {
+          aum?: number | null
+          category?: string
+          created_at?: string
+          expense_ratio?: number | null
+          fund_name?: string
+          id?: string
+          last_updated?: string
+          provider?: string
+          region?: string
+          return_1y?: number | null
+          return_3y?: number | null
+          symbol?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

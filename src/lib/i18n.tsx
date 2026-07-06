@@ -11,6 +11,7 @@ export const dict = {
   "nav.products": { en: "Products", pt: "Produtos" },
   "nav.about": { en: "About", pt: "Sobre" },
   "nav.blog": { en: "Blog", pt: "Blog" },
+  "nav.markets": { en: "Global Markets", pt: "Mercados Globais" },
   "nav.consult": { en: "Book a Consultation", pt: "Agendar Consulta" },
   "nav.contact": { en: "Contact", pt: "Contato" },
   "nav.toggleMenu": { en: "Toggle menu", pt: "Abrir menu" },

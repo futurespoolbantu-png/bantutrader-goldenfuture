@@ -14,6 +14,7 @@ export function Nav() {
   const links = [
     { to: "/", label: t("nav.home") },
     { to: "/products", label: t("nav.products") },
+    { to: "/global-markets", label: t("nav.markets") },
     { to: "/about", label: t("nav.about") },
     { to: "/blog", label: t("nav.blog") },
   ] as const;
