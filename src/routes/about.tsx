@@ -96,8 +96,8 @@ function About() {
         </Reveal>
         <div className="grid gap-6 md:grid-cols-2">
           {[
-            { img: team1, name: "Thabo Mokoena", role: t("abt.ceo") },
-            { img: team2, name: "Naledi Dlamini", role: t("abt.analyst") },
+            { img: samuelson.url, name: "Samuelson Gomes", role: "CEO", bio: t("abt.teamBio") },
+            { img: paulo.url, name: "Paulo Domingos", role: "CIO", bio: t("abt.teamBio") },
           ].map((m) => (
             <Reveal key={m.name}>
               <div className="surface-card overflow-hidden">
