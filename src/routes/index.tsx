@@ -7,7 +7,6 @@ import {
   Activity,
   FileBarChart,
   Award,
-  Sparkles,
   BadgeDollarSign,
   Calendar,
 } from "lucide-react";
@@ -20,21 +19,22 @@ import blog4 from "@/assets/blog-4.jpg";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
 import { Reveal } from "@/components/Reveal";
 import { useI18n } from "@/lib/i18n";
+import { AfricanPattern } from "@/components/AfricanPattern";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Bantu Trader Capital — Precision Trading. Powerful Results." },
+      { title: "Bantu Trade Capital — Gestão de Capital Institucional" },
       {
         name: "description",
         content:
-          "4 years of documented track record. Tiered investment portfolios, institutional risk oversight, and 100% client-owned accounts.",
+          "4 anos de track record documentado. Portefólios em escalões, supervisão de risco institucional e contas 100% em nome do cliente.",
       },
-      { property: "og:title", content: "Bantu Trader Capital — Asset Management" },
+      { property: "og:title", content: "Bantu Trade Capital — Gestão de Capital" },
       {
         property: "og:description",
         content:
-          "Precision trading, transparent reporting, and institutional oversight for serious investors.",
+          "Gestão discricionária, execução disciplinada e relatórios transparentes para investidores exigentes.",
       },
     ],
   }),
@@ -46,7 +46,7 @@ function Home() {
   return (
     <>
       {/* HERO */}
-      <section className="relative mx-auto mt-10 max-w-7xl overflow-hidden px-4">
+      <section className="relative mx-auto mt-16 max-w-7xl overflow-hidden px-4 md:mt-24 md:px-6">
         <div
           className="pointer-events-none absolute inset-0 -z-10 opacity-30 [mask-image:radial-gradient(60%_60%_at_60%_50%,black,transparent)]"
           style={{
@@ -74,7 +74,7 @@ function Home() {
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <Link
                 to="/products"
-                className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-gold transition-transform hover:scale-[1.03]"
+                className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-gold transition-colors hover:bg-gold-dark"
               >
                 <Lock className="h-4 w-4" /> {t("nav.consult")}
               </Link>
@@ -200,7 +200,7 @@ function Home() {
               {t("abtp.eyebrow")}
             </span>
             <h2 className="mt-3 font-display text-4xl font-bold leading-tight md:text-5xl">
-              {t("abtp.title1")} <span className="text-gradient-gold">{t("abtp.title2")}</span> {t("abtp.title3")}
+              {t("abtp.title1")} <span className="text-gold">{t("abtp.title2")}</span> {t("abtp.title3")}
             </h2>
             <p className="mt-5 text-muted-foreground">
               {t("abtp.body")}
@@ -222,9 +222,9 @@ function Home() {
               ].map((s, i) => (
                 <div
                   key={i}
-                  className="surface-card p-6 transition-transform hover:-translate-y-1"
+                  className="surface-card p-6"
                 >
-                  <div className="font-display text-4xl font-bold text-gradient-gold">
+                  <div className="font-display text-4xl font-bold text-gold">
                     <AnimatedCounter value={s.v} suffix={s.s} />
                   </div>
                   <div className="mt-2 text-xs uppercase tracking-widest text-muted-foreground">
@@ -241,10 +241,9 @@ function Home() {
       <section className="mx-auto mt-32 max-w-7xl px-4">
         <Reveal>
           <div className="surface-card relative overflow-hidden p-8 md:p-12">
-            <div
-              className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full opacity-40 blur-3xl"
-              style={{ background: "var(--gradient-gold)" }}
-            />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 text-gold" aria-hidden="true">
+              <AfricanPattern variant="stripe" opacity={0.35} />
+            </div>
             <div className="grid items-center gap-10 md:grid-cols-2">
               <div>
                 <div className="grid h-12 w-12 place-items-center rounded-2xl bg-gold/15 text-gold">
