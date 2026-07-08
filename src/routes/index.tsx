@@ -55,6 +55,7 @@ function Home() {
             backgroundPosition: "center",
           }}
         />
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-african-pattern" aria-hidden="true" />
         <div className="grid items-center gap-14 lg:grid-cols-2">
           <Reveal>
             <span className="inline-flex items-center gap-2 rounded-full border border-border bg-foreground/5 px-4 py-1.5 text-xs font-medium text-muted-foreground backdrop-blur">
@@ -160,8 +161,9 @@ function Home() {
       <MobileAppSection />
 
       {/* Feature grid */}
-      <section className="mx-auto mt-32 max-w-7xl px-4">
-        <Reveal className="mb-12 max-w-2xl">
+      <section className="relative mx-auto mt-32 max-w-7xl overflow-hidden px-4">
+        <div className="pointer-events-none absolute inset-0 bg-african-pattern" aria-hidden="true" />
+        <Reveal className="relative mb-12 max-w-2xl">
           <span className="text-xs font-semibold uppercase tracking-[0.25em] text-gold">
             {t("feat.eyebrow")}
           </span>
@@ -169,7 +171,7 @@ function Home() {
             {t("feat.title")}
           </h2>
         </Reveal>
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+        <div className="relative grid gap-5 md:grid-cols-2 lg:grid-cols-4">
           {[
             { Icon: Award, title: t("feat.1t"), body: t("feat.1b") },
             { Icon: Layers, title: t("feat.2t"), body: t("feat.2b") },
@@ -193,8 +195,9 @@ function Home() {
       <LivePerformance />
 
       {/* About preview */}
-      <section className="mx-auto mt-32 max-w-7xl px-4">
-        <div className="grid gap-14 lg:grid-cols-2">
+      <section className="relative mx-auto mt-32 max-w-7xl overflow-hidden px-4">
+        <div className="pointer-events-none absolute inset-0 bg-african-pattern" aria-hidden="true" />
+        <div className="relative grid gap-14 lg:grid-cols-2">
           <Reveal>
             <span className="text-xs font-semibold uppercase tracking-[0.25em] text-gold">
               {t("abtp.eyebrow")}
