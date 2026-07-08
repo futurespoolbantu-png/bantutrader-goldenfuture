@@ -81,14 +81,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Bantu Trader Capital — Precision Trading. Powerful Results." },
+      { title: "Bantu Trade Capital" },
       {
         name: "description",
         content:
           "Bantu Trader Capital Asset Management: institutional-grade portfolio strategies, transparent reporting and client-owned accounts. 4 years of documented track record.",
       },
       { name: "author", content: "Bantu Trader Capital" },
-      { property: "og:title", content: "Bantu Trader Capital — Precision Trading. Powerful Results." },
+      { property: "og:title", content: "Bantu Trade Capital" },
       {
         property: "og:description",
         content:
@@ -96,7 +96,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Bantu Trader Capital — Precision Trading. Powerful Results." },
+      { name: "twitter:title", content: "Bantu Trade Capital" },
       { name: "description", content: "4 years of documented track record. Tiered investment portfolios, institutional risk oversight, and 100% client-owned accounts." },
       { property: "og:description", content: "4 years of documented track record. Tiered investment portfolios, institutional risk oversight, and 100% client-owned accounts." },
       { name: "twitter:description", content: "4 years of documented track record. Tiered investment portfolios, institutional risk oversight, and 100% client-owned accounts." },
@@ -105,7 +105,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", type: "image/png", href: "/favicon.png" },
+      { rel: "apple-touch-icon", href: "/favicon.png" },
     ],
   }),
   shellComponent: RootShell,
