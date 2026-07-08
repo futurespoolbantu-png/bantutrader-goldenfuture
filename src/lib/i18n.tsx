@@ -259,8 +259,8 @@ export const dict = {
   "abt.founded": { en: "2022 · Founded", pt: "2022 · Fundada" },
   "abt.mission": { en: "Our Mission", pt: "Nossa Missão" },
   "abt.missionBody": {
-    en: "To deliver institutional-grade portfolio management to sophisticated investors — combining discipline, transparency and technology so every rand of capital is stewarded with intent.",
-    pt: "Entregar gestão de portfólio de nível institucional a investidores sofisticados — combinando disciplina, transparência e tecnologia para que cada rand de capital seja administrado com propósito.",
+    en: "To deliver institutional-grade portfolio management to sophisticated investors\u00a0 combining discipline, transparency and technology so every rand of capital is stewarded with intent.",
+    pt: "Entregar gestão de portfólio de nível institucional a investidores sofisticados\u00a0 combinando disciplina, transparência e tecnologia para que cada rand de capital seja administrado com propósito.",
   },
   "abt.vision": { en: "Our Vision", pt: "Nossa Visão" },
   "abt.visionBody": {
