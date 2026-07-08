@@ -22,11 +22,9 @@ import { Logo } from "./Logo";
 export function Footer() {
   const { t } = useI18n();
   return (
-    <footer className="mt-32 border-t border-border bg-surface">
-      <div className="text-gold" aria-hidden="true">
-        <AfricanPattern variant="band" opacity={0.28} />
-      </div>
-      <div className="mx-auto max-w-7xl px-6 pb-16 pt-10">
+    <footer className="relative mt-32 overflow-hidden border-t border-border bg-surface">
+      <div className="pointer-events-none absolute inset-0 bg-african-pattern" aria-hidden="true" />
+      <div className="relative mx-auto max-w-7xl px-6 pb-16 pt-14">
         <div className="grid gap-6 md:grid-cols-2">
           <p className="text-xs leading-relaxed text-muted-foreground">
             <span className="mb-1 block font-semibold uppercase tracking-widest text-foreground/80">
