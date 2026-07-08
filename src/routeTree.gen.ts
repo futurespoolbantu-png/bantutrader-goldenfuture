@@ -10,7 +10,6 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ProductsRouteImport } from './routes/products'
-import { Route as PatternPreviewRouteImport } from './routes/pattern-preview'
 import { Route as GlobalMarketsRouteImport } from './routes/global-markets'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AboutRouteImport } from './routes/about'
@@ -19,11 +18,6 @@ import { Route as IndexRouteImport } from './routes/index'
 const ProductsRoute = ProductsRouteImport.update({
   id: '/products',
   path: '/products',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PatternPreviewRoute = PatternPreviewRouteImport.update({
-  id: '/pattern-preview',
-  path: '/pattern-preview',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GlobalMarketsRoute = GlobalMarketsRouteImport.update({
@@ -52,7 +46,6 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/blog': typeof BlogRoute
   '/global-markets': typeof GlobalMarketsRoute
-  '/pattern-preview': typeof PatternPreviewRoute
   '/products': typeof ProductsRoute
 }
 export interface FileRoutesByTo {
@@ -60,7 +53,6 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/blog': typeof BlogRoute
   '/global-markets': typeof GlobalMarketsRoute
-  '/pattern-preview': typeof PatternPreviewRoute
   '/products': typeof ProductsRoute
 }
 export interface FileRoutesById {
@@ -69,34 +61,14 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/blog': typeof BlogRoute
   '/global-markets': typeof GlobalMarketsRoute
-  '/pattern-preview': typeof PatternPreviewRoute
   '/products': typeof ProductsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/about'
-    | '/blog'
-    | '/global-markets'
-    | '/pattern-preview'
-    | '/products'
+  fullPaths: '/' | '/about' | '/blog' | '/global-markets' | '/products'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/about'
-    | '/blog'
-    | '/global-markets'
-    | '/pattern-preview'
-    | '/products'
-  id:
-    | '__root__'
-    | '/'
-    | '/about'
-    | '/blog'
-    | '/global-markets'
-    | '/pattern-preview'
-    | '/products'
+  to: '/' | '/about' | '/blog' | '/global-markets' | '/products'
+  id: '__root__' | '/' | '/about' | '/blog' | '/global-markets' | '/products'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -104,7 +76,6 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   BlogRoute: typeof BlogRoute
   GlobalMarketsRoute: typeof GlobalMarketsRoute
-  PatternPreviewRoute: typeof PatternPreviewRoute
   ProductsRoute: typeof ProductsRoute
 }
 
@@ -115,13 +86,6 @@ declare module '@tanstack/react-router' {
       path: '/products'
       fullPath: '/products'
       preLoaderRoute: typeof ProductsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/pattern-preview': {
-      id: '/pattern-preview'
-      path: '/pattern-preview'
-      fullPath: '/pattern-preview'
-      preLoaderRoute: typeof PatternPreviewRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/global-markets': {
@@ -160,7 +124,6 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   BlogRoute: BlogRoute,
   GlobalMarketsRoute: GlobalMarketsRoute,
-  PatternPreviewRoute: PatternPreviewRoute,
   ProductsRoute: ProductsRoute,
 }
 export const routeTree = rootRouteImport

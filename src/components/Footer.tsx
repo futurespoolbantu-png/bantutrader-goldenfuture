@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Mail, Phone } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
+import { AfricanPattern } from "./AfricanPattern";
 
 const socials = [
   {
@@ -22,7 +23,10 @@ export function Footer() {
   const { t } = useI18n();
   return (
     <footer className="mt-32 border-t border-border bg-surface">
-      <div className="mx-auto max-w-7xl px-6 py-16">
+      <div className="text-gold" aria-hidden="true">
+        <AfricanPattern variant="band" opacity={0.28} />
+      </div>
+      <div className="mx-auto max-w-7xl px-6 pb-16 pt-10">
         <div className="grid gap-6 md:grid-cols-2">
           <p className="text-xs leading-relaxed text-muted-foreground">
             <span className="mb-1 block font-semibold uppercase tracking-widest text-foreground/80">
