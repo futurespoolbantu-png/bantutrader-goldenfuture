@@ -395,8 +395,8 @@ export const dict = {
   "ft.stay": { en: "Stay Informed", pt: "Fique Informado" },
   "ft.join": { en: "Join Our Mailing List", pt: "Junte-se à Nossa Lista" },
   "ft.joinBody": {
-    en: "Market insights and portfolio commentary — straight to your inbox.",
-    pt: "Análises de mercado e comentários de portfólio — direto na sua caixa de entrada.",
+    en: "Market insights and portfolio commentary\u00a0 straight to your inbox.",
+    pt: "Análises de mercado e comentários de portfólio\u00a0 direto na sua caixa de entrada.",
   },
   "ft.subscribe": { en: "Subscribe", pt: "Inscrever" },
   "ft.tagline": {
