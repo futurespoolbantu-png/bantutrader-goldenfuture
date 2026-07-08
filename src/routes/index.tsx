@@ -407,11 +407,11 @@ function MobileAppSection() {
   return (
     <section className="mx-auto mt-32 max-w-7xl px-4">
       <Reveal className="mb-14 text-center">
-        <span className="inline-flex items-center gap-2 rounded-full border border-border bg-foreground/5 px-4 py-1.5 text-xs font-medium">
-          <Sparkles className="h-3 w-3 text-gold" /> {t("app.badge")}
+        <span className="inline-flex items-center gap-2 rounded-full border border-border bg-foreground/5 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
+          <span className="h-1.5 w-1.5 rounded-full bg-gold" /> {t("app.badge")}
         </span>
         <h2 className="mx-auto mt-5 max-w-2xl font-display text-4xl font-bold md:text-5xl">
-          {t("app.title1")} <span className="text-gradient-gold">{t("app.title2")}</span>
+          {t("app.title1")} <span className="text-gold">{t("app.title2")}</span>
         </h2>
         <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
           {t("app.subtitle")}
