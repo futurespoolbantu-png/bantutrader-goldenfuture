@@ -37,13 +37,13 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 export const Route = createFileRoute("/global-markets")({
   head: () => ({
     meta: [
-      { title: "Global Markets — Bantu Trader Capital" },
+      { title: "Global Markets — Bantu Trade Capital" },
       {
         name: "description",
         content:
           "Live comparison of major global investment funds — ETFs, mutual funds and index funds — with returns, expense ratios, AUM and product details.",
       },
-      { property: "og:title", content: "Global Markets — Bantu Trader Capital" },
+      { property: "og:title", content: "Global Markets — Bantu Trade Capital" },
       {
         property: "og:description",
         content: "Compare 18 leading global funds side by side: 1Y & 3Y returns, expense ratios, AUM and product info.",
@@ -570,8 +570,8 @@ function GlobalMarkets() {
         <div className="rounded-2xl border border-border bg-foreground/[0.02] p-6 text-xs leading-relaxed text-muted-foreground md:text-sm">
           <Wallet className="mb-2 inline h-4 w-4 text-gold" />{" "}
           {lang === "pt"
-            ? "Esta comparação tem finalidade exclusivamente educacional e não constitui recomendação de investimento. A Bantu Trader Capital não é afiliada a nenhum dos fundos listados acima."
-            : "This comparison is for educational purposes only and does not constitute investment advice. Bantu Trader Capital is not affiliated with the funds listed above."}
+            ? "Esta comparação tem finalidade exclusivamente educacional e não constitui recomendação de investimento. A Bantu Trade Capital não é afiliada a nenhum dos fundos listados acima."
+            : "This comparison is for educational purposes only and does not constitute investment advice. Bantu Trade Capital is not affiliated with the funds listed above."}
         </div>
       </section>
 

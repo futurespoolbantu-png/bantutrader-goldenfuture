@@ -85,9 +85,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "Bantu Trader Capital Asset Management: institutional-grade portfolio strategies, transparent reporting and client-owned accounts. 4 years of documented track record.",
+          "Bantu Trade Capital Asset Management: institutional-grade portfolio strategies, transparent reporting and client-owned accounts. 4 years of documented track record.",
       },
-      { name: "author", content: "Bantu Trader Capital" },
+      { name: "author", content: "Bantu Trade Capital" },
       { property: "og:title", content: "Bantu Trade Capital" },
       {
         property: "og:description",

@@ -66,10 +66,10 @@ export function Footer() {
             <Logo />
             <p className="mt-4 text-sm text-muted-foreground">{t("ft.tagline")}</p>
             <a
-              href="mailto:invest@bantutradercapital.com"
+              href="mailto:invest@bantutradecapital.com"
               className="mt-4 inline-flex items-center gap-2 text-sm text-foreground hover:text-gold"
             >
-              <Mail className="h-4 w-4" /> invest@bantutradercapital.com
+              <Mail className="h-4 w-4" /> invest@bantutradecapital.com
             </a>
           </div>
 
@@ -126,7 +126,7 @@ export function Footer() {
         </div>
 
         <div className="mt-12 border-t border-border pt-6 text-center text-xs text-muted-foreground">
-          © {new Date().getFullYear()} Bantu Trader Capital Asset Management. {t("ft.rights")}
+          © {new Date().getFullYear()} Bantu Trade Capital Asset Management. {t("ft.rights")}
         </div>
       </div>
     </footer>

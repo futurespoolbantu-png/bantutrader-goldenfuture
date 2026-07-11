@@ -376,8 +376,8 @@ export const dict = {
     pt: "Um guia em linguagem simples sobre estruturas de conta em nome do cliente e o que protegem.",
   },
   "blog.p3.title": {
-    en: "Bantu Trader Capital Onboards Institutional Prime Broker",
-    pt: "Bantu Trader Capital Integra Prime Broker Institucional",
+    en: "Bantu Trade Capital Onboards Institutional Prime Broker",
+    pt: "Bantu Trade Capital Integra Prime Broker Institucional",
   },
   "blog.p3.exc": {
     en: "New execution pathways deliver tighter spreads and improved slippage control.",
@@ -411,8 +411,8 @@ export const dict = {
   // Footer
   "ft.regTitle": { en: "Regulatory Disclosure", pt: "Divulgação Regulatória" },
   "ft.regBody": {
-    en: "Bantu Trader Capital Asset Management is currently completing its licensing process with the relevant regulatory authority in Dubai, UAE. Full regulatory disclosures will be published here once the process is finalized.",
-    pt: "A Bantu Trader Capital Asset Management encontra-se atualmente em processo de licenciamento junto da entidade reguladora competente no Dubai, EAU. As divulgações regulatórias completas serão publicadas aqui assim que o processo for finalizado.",
+    en: "Bantu Trade Capital Asset Management is currently completing its licensing process with the relevant regulatory authority in Dubai, UAE. Full regulatory disclosures will be published here once the process is finalized.",
+    pt: "A Bantu Trade Capital Asset Management encontra-se atualmente em processo de licenciamento junto da entidade reguladora competente no Dubai, EAU. As divulgações regulatórias completas serão publicadas aqui assim que o processo for finalizado.",
   },
   "ft.riskTitle": { en: "Risk Disclosure", pt: "Divulgação de Risco" },
   "ft.riskBody": {

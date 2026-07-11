@@ -12,13 +12,13 @@ import { useI18n } from "@/lib/i18n";
 export const Route = createFileRoute("/blog")({
   head: () => ({
     meta: [
-      { title: "Insights — Bantu Trader Capital" },
+      { title: "Insights — Bantu Trade Capital" },
       {
         name: "description",
         content:
-          "Market analysis, investment education, and company updates from Bantu Trader Capital Asset Management.",
+          "Market analysis, investment education, and company updates from Bantu Trade Capital Asset Management.",
       },
-      { property: "og:title", content: "Insights — Bantu Trader Capital" },
+      { property: "og:title", content: "Insights — Bantu Trade Capital" },
       { property: "og:description", content: "News & insights from our team of managers and analysts." },
     ],
   }),
