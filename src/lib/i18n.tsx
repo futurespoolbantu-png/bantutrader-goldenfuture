@@ -211,7 +211,34 @@ export const dict = {
     pt: "*Retornos projetados são estimativas baseadas no CAGR histórico e não são garantidos. Desempenho passado não garante resultados futuros.",
   },
 
-  // Onboarding
+  // Investor Profile Quiz
+  "quiz.eyebrow": { en: "Interactive tool", pt: "Ferramenta interativa" },
+  "quiz.title": { en: "Investor Profile", pt: "Perfil de Investidor" },
+  "quiz.subtitle": {
+    en: "Answer three quick questions to help us understand your goals. Our team will follow up with a personalised assessment.",
+    pt: "Responde a três perguntas rápidas para nos ajudares a entender os teus objetivos. A nossa equipa fará uma avaliação personalizada.",
+  },
+  "quiz.q1": { en: "What is your time horizon?", pt: "Qual é o teu horizonte temporal?" },
+  "quiz.q1.a": { en: "Short term", pt: "Curto prazo" },
+  "quiz.q1.b": { en: "Medium term", pt: "Médio prazo" },
+  "quiz.q1.c": { en: "Long term", pt: "Longo prazo" },
+  "quiz.q2": { en: "What is your risk tolerance?", pt: "Qual é a tua tolerância a risco?" },
+  "quiz.q2.a": { en: "Conservative", pt: "Conservador" },
+  "quiz.q2.b": { en: "Balanced", pt: "Equilibrado" },
+  "quiz.q2.c": { en: "Aggressive", pt: "Agressivo" },
+  "quiz.q3": { en: "What is your main objective?", pt: "Qual é o teu objetivo principal?" },
+  "quiz.q3.a": { en: "Preserve capital", pt: "Preservar capital" },
+  "quiz.q3.b": { en: "Steady growth", pt: "Crescimento constante" },
+  "quiz.q3.c": { en: "Maximise returns", pt: "Maximizar retorno" },
+  "quiz.resultTitle": { en: "Thank you", pt: "Obrigado" },
+  "quiz.result": {
+    en: "Based on your answers, one of our strategies may be suitable for you. Speak with our team for a personalised assessment.",
+    pt: "Com base nas tuas respostas, uma das nossas estratégias pode ser adequada para ti. Fala com a nossa equipa para uma avaliação personalizada.",
+  },
+  "quiz.cta": { en: "Book a consultation", pt: "Marcar consultoria" },
+  "quiz.restart": { en: "Restart", pt: "Recomeçar" },
+  "quiz.progress": { en: "Question", pt: "Pergunta" },
+
   "onb.eyebrow": { en: "Onboarding", pt: "Início" },
   "onb.title": {
     en: "Get started in four simple steps",
