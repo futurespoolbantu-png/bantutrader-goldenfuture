@@ -240,7 +240,7 @@ function Products() {
             <p className="mx-auto mt-4 max-w-xl text-muted-foreground">{t("cta.body")}</p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Link
-                to="/about"
+                to="/contact"
                 className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-gold hover:scale-[1.03] transition-transform"
               >
                 <Lock className="h-4 w-4" /> {t("nav.consult")}
@@ -346,7 +346,7 @@ function InvestorProfileQuiz() {
               <p className="mx-auto mt-3 max-w-xl text-muted-foreground">{t("quiz.result")}</p>
               <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
                 <Link
-                  to="/about"
+                  to="/contact"
                   className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-gold transition-transform hover:scale-[1.03]"
                 >
                   <Lock className="h-4 w-4" /> {t("quiz.cta")}

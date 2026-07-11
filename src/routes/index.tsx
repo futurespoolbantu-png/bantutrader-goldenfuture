@@ -74,7 +74,7 @@ function Home() {
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <Link
-                to="/products"
+                to="/contact"
                 className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-gold transition-colors hover:bg-gold-dark"
               >
                 <Lock className="h-4 w-4" /> {t("nav.consult")}

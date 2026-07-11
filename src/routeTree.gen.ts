@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ProductsRouteImport } from './routes/products'
 import { Route as GlobalMarketsRouteImport } from './routes/global-markets'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
@@ -23,6 +24,11 @@ const ProductsRoute = ProductsRouteImport.update({
 const GlobalMarketsRoute = GlobalMarketsRouteImport.update({
   id: '/global-markets',
   path: '/global-markets',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogRoute = BlogRouteImport.update({
@@ -45,6 +51,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/blog': typeof BlogRoute
+  '/contact': typeof ContactRoute
   '/global-markets': typeof GlobalMarketsRoute
   '/products': typeof ProductsRoute
 }
@@ -52,6 +59,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/blog': typeof BlogRoute
+  '/contact': typeof ContactRoute
   '/global-markets': typeof GlobalMarketsRoute
   '/products': typeof ProductsRoute
 }
@@ -60,21 +68,31 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/blog': typeof BlogRoute
+  '/contact': typeof ContactRoute
   '/global-markets': typeof GlobalMarketsRoute
   '/products': typeof ProductsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/blog' | '/global-markets' | '/products'
+  fullPaths:
+    '/' | '/about' | '/blog' | '/contact' | '/global-markets' | '/products'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/blog' | '/global-markets' | '/products'
-  id: '__root__' | '/' | '/about' | '/blog' | '/global-markets' | '/products'
+  to: '/' | '/about' | '/blog' | '/contact' | '/global-markets' | '/products'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/blog'
+    | '/contact'
+    | '/global-markets'
+    | '/products'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   BlogRoute: typeof BlogRoute
+  ContactRoute: typeof ContactRoute
   GlobalMarketsRoute: typeof GlobalMarketsRoute
   ProductsRoute: typeof ProductsRoute
 }
@@ -93,6 +111,13 @@ declare module '@tanstack/react-router' {
       path: '/global-markets'
       fullPath: '/global-markets'
       preLoaderRoute: typeof GlobalMarketsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blog': {
@@ -123,6 +148,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   BlogRoute: BlogRoute,
+  ContactRoute: ContactRoute,
   GlobalMarketsRoute: GlobalMarketsRoute,
   ProductsRoute: ProductsRoute,
 }

@@ -8,7 +8,6 @@ export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const isHome = pathname === "/";
   const { t, theme, toggleTheme, lang, toggleLang } = useI18n();
 
   const links = [
@@ -79,17 +78,11 @@ export function Nav() {
               {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             </button>
             <Link
-              to={isHome ? "/products" : "/about"}
+              to="/contact"
               className="hidden items-center gap-2 rounded-full bg-gold px-4 py-2 text-sm font-semibold text-primary-foreground shadow-gold transition-transform hover:scale-[1.02] md:inline-flex"
             >
-              {isHome ? (
-                <>
-                  <Lock className="h-3.5 w-3.5" />
-                  {t("nav.consult")}
-                </>
-              ) : (
-                t("nav.contact")
-              )}
+              <Lock className="h-3.5 w-3.5" />
+              {t("nav.consult")}
             </Link>
             <button
               className="grid h-10 w-10 place-items-center rounded-full border border-border md:hidden"
@@ -133,7 +126,7 @@ export function Nav() {
             </li>
             <li className="mt-1">
               <Link
-                to="/products"
+                to="/contact"
                 className="flex w-full items-center justify-center gap-2 rounded-full bg-gold px-4 py-3 text-sm font-semibold text-primary-foreground"
               >
                 <Lock className="h-3.5 w-3.5" /> {t("nav.consult")}

@@ -441,9 +441,43 @@ export const dict = {
     en: "8:00 – 17:00\nMonday – Friday",
     pt: "08:00 – 17:00\nSegunda a sexta",
   },
+  "ft.location": { en: "Dubai, United Arab Emirates", pt: "Dubai, Emirados Árabes Unidos" },
   "ft.rights": {
     en: "All rights reserved.",
     pt: "Todos os direitos reservados.",
+  },
+
+  // Contact page
+  "contact.badge": { en: "Get in touch", pt: "Fala connosco" },
+  "contact.title1": { en: "Let's start a", pt: "Vamos começar uma" },
+  "contact.title2": { en: "conversation.", pt: "conversa." },
+  "contact.subtitle": {
+    en: "Whether you're an investor, a partner, or just curious about Bantu Trade Capital — we'd like to hear from you.",
+    pt: "Seja investidor, parceiro, ou apenas curioso sobre a Bantu Trade Capital — gostaríamos de ouvir de ti.",
+  },
+  "contact.detailsTitle": { en: "Contact details", pt: "Dados de contacto" },
+  "contact.emailLabel": { en: "Email", pt: "Email" },
+  "contact.locationLabel": { en: "Location", pt: "Localização" },
+  "contact.responseNote": {
+    en: "We aim to respond to all inquiries within 2 business days.",
+    pt: "Procuramos responder a todos os pedidos em até 2 dias úteis.",
+  },
+  "contact.formName": { en: "Full name", pt: "Nome completo" },
+  "contact.formNamePh": { en: "Your name", pt: "O teu nome" },
+  "contact.formEmail": { en: "Email", pt: "Email" },
+  "contact.formProfile": { en: "I am a...", pt: "Eu sou..." },
+  "contact.profileInst": { en: "Institutional investor", pt: "Investidor institucional" },
+  "contact.profilePriv": { en: "Private / qualified investor", pt: "Investidor privado / qualificado" },
+  "contact.profilePartner": { en: "Partner / introducer", pt: "Parceiro / introdutor" },
+  "contact.profileOther": { en: "Other", pt: "Outro" },
+  "contact.formMsg": { en: "Message", pt: "Mensagem" },
+  "contact.formMsgPh": { en: "Tell us briefly about your interest", pt: "Conta-nos brevemente o teu interesse" },
+  "contact.formSubmit": { en: "Send message", pt: "Enviar mensagem" },
+  "contact.mailSubject": { en: "New inquiry from bantutradecapital.com", pt: "Novo pedido de bantutradecapital.com" },
+  "contact.sentTitle": { en: "Your email app is opening", pt: "A tua app de email está a abrir" },
+  "contact.sentBody": {
+    en: "We've prepared your message in your default email app. Just hit send from there to reach us.",
+    pt: "Preparámos a tua mensagem na tua app de email padrão. Basta enviares a partir de lá para nos contactares.",
   },
 } satisfies Dict;
 
