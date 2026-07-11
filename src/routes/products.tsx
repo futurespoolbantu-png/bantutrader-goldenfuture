@@ -1,19 +1,30 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
-import { Check, ArrowRight, Lock, FileText, Wallet, LineChart, UserPlus, Target } from "lucide-react";
+import { useState } from "react";
+import {
+  Check,
+  Lock,
+  FileText,
+  Wallet,
+  LineChart,
+  UserPlus,
+  Target,
+  ArrowRight,
+  RotateCcw,
+  Sparkles,
+} from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/products")({
   head: () => ({
     meta: [
-      { title: "Investment Strategies — Bantu Trader Capital" },
+      { title: "Investment Strategies — Bantu Trade Capital" },
       {
         name: "description",
         content:
-          "Explore the Aurum and Sterling investment portfolios. Compare risk levels, target returns, and use our exposure calculator.",
+          "Explore the Aurum and Sterling investment portfolios. Compare risk levels and discover your investor profile.",
       },
-      { property: "og:title", content: "Investment Strategies — Bantu Trader Capital" },
+      { property: "og:title", content: "Investment Strategies — Bantu Trade Capital" },
       { property: "og:description", content: "Two strategy families designed for different risk profiles." },
     ],
   }),
@@ -28,8 +39,6 @@ const groupData: Record<Group, {
     key: string;
     name: string;
     tier: string;
-    target: string;
-    targetTone: "gold" | "success" | "danger";
     risk: string;
     riskTone: "success" | "gold" | "danger";
     period: string;
@@ -39,17 +48,17 @@ const groupData: Record<Group, {
   aurum: {
     label: "Aurum",
     tiers: [
-      { key: "core", name: "Aurum Core", tier: "Low", target: "20%", targetTone: "gold", risk: "Low Risk", riskTone: "success", period: "5 years", focus: "Conservative" },
-      { key: "mom", name: "Aurum Momentum", tier: "Medium", target: "25%", targetTone: "gold", risk: "Medium Risk", riskTone: "gold", period: "3 years", focus: "Balanced" },
-      { key: "asc", name: "Aurum Ascend", tier: "High", target: "35%", targetTone: "success", risk: "Higher Risk", riskTone: "danger", period: "1 year", focus: "Aggressive" },
+      { key: "core", name: "Aurum Core", tier: "Low", risk: "Low Risk", riskTone: "success", period: "5 years", focus: "Conservative" },
+      { key: "mom", name: "Aurum Momentum", tier: "Medium", risk: "Medium Risk", riskTone: "gold", period: "3 years", focus: "Balanced" },
+      { key: "asc", name: "Aurum Ascend", tier: "High", risk: "Higher Risk", riskTone: "danger", period: "1 year", focus: "Aggressive" },
     ],
   },
   sterling: {
     label: "Sterling",
     tiers: [
-      { key: "sc", name: "Sterling Core", tier: "Low", target: "18%", targetTone: "gold", risk: "Low Risk", riskTone: "success", period: "5 years", focus: "Conservative" },
-      { key: "sm", name: "Sterling Momentum", tier: "Medium", target: "28%", targetTone: "gold", risk: "Medium Risk", riskTone: "gold", period: "3 years", focus: "Balanced" },
-      { key: "sa", name: "Sterling Alpha", tier: "High", target: "38%", targetTone: "success", risk: "Higher Risk", riskTone: "danger", period: "1 year", focus: "Aggressive" },
+      { key: "sc", name: "Sterling Core", tier: "Low", risk: "Low Risk", riskTone: "success", period: "5 years", focus: "Conservative" },
+      { key: "sm", name: "Sterling Momentum", tier: "Medium", risk: "Medium Risk", riskTone: "gold", period: "3 years", focus: "Balanced" },
+      { key: "sa", name: "Sterling Alpha", tier: "High", risk: "Higher Risk", riskTone: "danger", period: "1 year", focus: "Aggressive" },
     ],
   },
 };
@@ -136,16 +145,6 @@ function Products() {
               </thead>
               <tbody className="[&_tr]:border-b [&_tr]:border-border [&_tr:last-child]:border-0">
                 <tr>
-                  <td className="p-5 font-medium text-muted-foreground">{t("prod.target")}</td>
-                  {g.tiers.map((tier) => (
-                    <td key={tier.key} className="p-5">
-                      <span className={`rounded-full px-3 py-1 text-xs font-bold ${toneClass(tier.targetTone)}`}>
-                        {tier.target}
-                      </span>
-                    </td>
-                  ))}
-                </tr>
-                <tr>
                   <td className="p-5 font-medium text-muted-foreground">{t("prod.riskLvl")}</td>
                   {g.tiers.map((tier) => (
                     <td key={tier.key} className="p-5">
@@ -191,7 +190,7 @@ function Products() {
         </Reveal>
       </section>
 
-      <ExposureCalculator />
+      <InvestorProfileQuiz />
 
       <section className="mx-auto mt-32 max-w-7xl px-4">
         <Reveal className="mb-12 text-center">
@@ -260,137 +259,110 @@ function Products() {
   );
 }
 
-function ExposureCalculator() {
+function InvestorProfileQuiz() {
   const { t } = useI18n();
-  const [amount, setAmount] = useState(100000);
-  const [strategy, setStrategy] = useState("aurum-prime");
-
-  const rates = useMemo(
-    () => ({
-      "aurum-prime": { low: 0.26, med: 0.4, high: 0.7 },
-      "aurum-core": { low: 0.2, med: 0.32, high: 0.55 },
-      "sterling-alpha": { low: 0.28, med: 0.45, high: 0.75 },
-    }),
-    [],
-  );
-
-  const r = rates[strategy as keyof typeof rates];
-  const fmt = (n: number) =>
-    "R " + Math.round(n).toLocaleString(undefined, { maximumFractionDigits: 0 });
-
-  const rows = [
-    { label: t("risk.low"), tone: "success" as const, rate: r.low },
-    { label: t("risk.medium"), tone: "gold" as const, rate: r.med },
-    { label: t("risk.high"), tone: "danger" as const, rate: r.high },
+  const questions = [
+    {
+      q: t("quiz.q1"),
+      options: [t("quiz.q1.a"), t("quiz.q1.b"), t("quiz.q1.c")],
+    },
+    {
+      q: t("quiz.q2"),
+      options: [t("quiz.q2.a"), t("quiz.q2.b"), t("quiz.q2.c")],
+    },
+    {
+      q: t("quiz.q3"),
+      options: [t("quiz.q3.a"), t("quiz.q3.b"), t("quiz.q3.c")],
+    },
   ];
 
+  const [step, setStep] = useState(0);
+  const [answers, setAnswers] = useState<number[]>([]);
+  const done = step >= questions.length;
+
+  const pick = (i: number) => {
+    setAnswers((a) => [...a, i]);
+    setStep((s) => s + 1);
+  };
+
+  const restart = () => {
+    setStep(0);
+    setAnswers([]);
+  };
+
   return (
-    <section className="mx-auto mt-32 max-w-7xl px-4">
-      <Reveal className="mb-8">
+    <section className="mx-auto mt-32 max-w-4xl px-4">
+      <Reveal className="mb-8 text-center">
         <span className="text-xs font-semibold uppercase tracking-[0.25em] text-gold">
-          {t("calc.eyebrow")}
+          {t("quiz.eyebrow")}
         </span>
-        <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">
-          {t("calc.title")}
-        </h2>
-        <p className="mt-3 max-w-2xl text-sm text-muted-foreground">
-          {t("calc.subtitle")}
-        </p>
+        <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">{t("quiz.title")}</h2>
+        <p className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground">{t("quiz.subtitle")}</p>
       </Reveal>
 
-
       <Reveal>
-        <div className="surface-card p-6 md:p-8">
-          <div className="grid gap-4 md:grid-cols-2">
-            <label className="block">
-              <div className="mb-2 text-xs uppercase tracking-widest text-muted-foreground">
-                {t("calc.amount")}
+        <div className="surface-card p-6 md:p-10">
+          {!done ? (
+            <div>
+              <div className="mb-6 flex items-center justify-between text-xs uppercase tracking-widest text-muted-foreground">
+                <span>
+                  {t("quiz.progress")} {step + 1} / {questions.length}
+                </span>
+                <div className="flex gap-1.5">
+                  {questions.map((_, i) => (
+                    <span
+                      key={i}
+                      className={`h-1.5 w-8 rounded-full transition-colors ${
+                        i <= step ? "bg-gold" : "bg-border"
+                      }`}
+                    />
+                  ))}
+                </div>
               </div>
-              <div className="flex items-center gap-2 rounded-full border border-border bg-background/60 px-5 py-3">
-                <span className="text-gold">R</span>
-                <input
-                  type="number"
-                  min={0}
-                  step={1000}
-                  value={amount}
-                  onChange={(e) => setAmount(Number(e.target.value) || 0)}
-                  className="min-w-0 flex-1 bg-transparent text-lg font-semibold outline-none"
-                />
+              <h3 className="font-display text-2xl font-bold md:text-3xl">
+                {questions[step].q}
+              </h3>
+              <div className="mt-6 grid gap-3 md:grid-cols-3">
+                {questions[step].options.map((opt, i) => (
+                  <button
+                    key={i}
+                    onClick={() => pick(i)}
+                    className="group flex items-center justify-between gap-3 rounded-2xl border border-border bg-background/60 px-5 py-4 text-left text-sm font-semibold transition-colors hover:border-gold hover:text-gold"
+                  >
+                    <span>{opt}</span>
+                    <ArrowRight className="h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100" />
+                  </button>
+                ))}
               </div>
-            </label>
-            <label className="block">
-              <div className="mb-2 text-xs uppercase tracking-widest text-muted-foreground">
-                {t("calc.strategy")}
+            </div>
+          ) : (
+            <div className="text-center">
+              <div className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-gold/15 text-gold">
+                <Sparkles className="h-6 w-6" />
               </div>
-              <select
-                value={strategy}
-                onChange={(e) => setStrategy(e.target.value)}
-                className="w-full rounded-full border border-border bg-background/60 px-5 py-3 text-sm font-semibold outline-none focus:border-gold"
-              >
-                <option value="aurum-prime">Aurum Prime</option>
-                <option value="aurum-core">Aurum Core</option>
-                <option value="sterling-alpha">Sterling Alpha</option>
-              </select>
-            </label>
-          </div>
-
-          <div className="mt-8 overflow-x-auto">
-            <table className="w-full min-w-[520px] text-left text-sm">
-              <thead>
-                <tr className="border-b border-border">
-                  <th className="p-4 text-xs uppercase tracking-widest text-muted-foreground">
-                    {t("calc.exposure")}
-                  </th>
-                  <th className="p-4 text-xs uppercase tracking-widest text-muted-foreground">
-                    {t("calc.ret")}
-                  </th>
-                  <th className="p-4 text-xs uppercase tracking-widest text-muted-foreground">
-                    {t("calc.proj")}
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="[&_tr]:border-b [&_tr]:border-border [&_tr:last-child]:border-0">
-                {rows.map((row) => {
-                  const gain = amount * row.rate;
-                  const total = amount + gain;
-                  return (
-                    <tr key={row.label}>
-                      <td className="p-4">
-                        <span
-                          className={`rounded-full px-3 py-1 text-xs font-semibold ${toneClass(row.tone)}`}
-                        >
-                          {row.label}
-                        </span>
-                      </td>
-                      <td className="p-4 font-display text-lg font-bold">
-                        <span className={toneTextClass(row.tone)}>
-                          {(row.rate * 100).toFixed(0)}%
-                        </span>
-                      </td>
-                      <td className="p-4">
-                        <div className="font-display text-lg font-bold">{fmt(total)}</div>
-                        <div className={`text-xs ${toneTextClass(row.tone)}`}>
-                          +{fmt(gain)}
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-
-          <p className="mt-6 text-xs text-muted-foreground">{t("calc.disc")}</p>
+              <h3 className="mt-5 font-display text-2xl font-bold md:text-3xl">
+                {t("quiz.resultTitle")}
+              </h3>
+              <p className="mx-auto mt-3 max-w-xl text-muted-foreground">{t("quiz.result")}</p>
+              <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+                <Link
+                  to="/about"
+                  className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-gold transition-transform hover:scale-[1.03]"
+                >
+                  <Lock className="h-4 w-4" /> {t("quiz.cta")}
+                </Link>
+                <button
+                  onClick={restart}
+                  className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3.5 text-sm font-semibold hover:border-gold hover:text-gold"
+                >
+                  <RotateCcw className="h-4 w-4" /> {t("quiz.restart")}
+                </button>
+              </div>
+              <p className="sr-only">answers: {answers.join(",")}</p>
+            </div>
+          )}
         </div>
       </Reveal>
     </section>
   );
-}
-
-function toneTextClass(t: "gold" | "success" | "danger") {
-  return t === "success"
-    ? "text-[oklch(0.55_0.18_155)]"
-    : t === "danger"
-      ? "text-destructive"
-      : "text-gold";
 }
