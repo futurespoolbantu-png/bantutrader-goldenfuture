@@ -94,10 +94,9 @@ export function Footer() {
               {t("ft.useful")}
             </h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><a href="#" className="hover:text-foreground">{t("ft.privacy")}</a></li>
-              <li><a href="#" className="hover:text-foreground">{t("ft.terms")}</a></li>
-              <li><a href="#" className="hover:text-foreground">{t("ft.disc")}</a></li>
-              <li><a href="#" className="hover:text-foreground">{t("ft.paia")}</a></li>
+              <li><Link to="/privacy" className="hover:text-foreground">{t("ft.privacy")}</Link></li>
+              <li><Link to="/terms" className="hover:text-foreground">{t("ft.terms")}</Link></li>
+              <li><Link to="/disclaimer" className="hover:text-foreground">{t("ft.disc")}</Link></li>
             </ul>
           </div>
 
