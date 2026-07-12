@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Zap, Eye, ShieldCheck, Sparkles, TrendingUp, Scale } from "lucide-react";
 import samuelson from "@/assets/samuelson-gomes.jpg.asset.json";
-import paulo from "@/assets/paulo-domingos.jpg.asset.json";
+import paulo from "@/assets/paulo-domingos.jpg";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
 import { Reveal } from "@/components/Reveal";
 import { useI18n } from "@/lib/i18n";
@@ -97,7 +97,7 @@ function About() {
         <div className="mx-auto grid max-w-2xl gap-6 md:grid-cols-2">
           {[
             { img: samuelson.url, name: "Samuelson Gomes", role: "CEO", bio: t("abt.teamBio"), pos: "center 20%", bw: false },
-            { img: paulo.url, name: "Paulo Domingos", role: "CIO", bio: t("abt.teamBio"), pos: "70% 25%", bw: true },
+            { img: paulo, name: "Paulo Domingos", role: "CIO", bio: t("abt.teamBio"), pos: "center 12%", bw: true },
           ].map((m) => (
             <Reveal key={m.name}>
               <div className="surface-card overflow-hidden">
