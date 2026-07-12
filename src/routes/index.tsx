@@ -46,7 +46,24 @@ function Home() {
     <>
       {/* HERO */}
       <section className="relative mx-auto mt-16 max-w-7xl overflow-hidden px-4 md:mt-24 md:px-6">
+        {/* Soft overhead spotlight, like a single museum light source falling on the scene */}
+        <div
+          className="pointer-events-none absolute -top-32 right-[8%] -z-10 h-[560px] w-[560px] rounded-full opacity-[0.16] blur-[110px]"
+          style={{ background: "radial-gradient(circle, var(--gold) 0%, transparent 70%)" }}
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-none absolute bottom-0 left-[10%] -z-10 h-[380px] w-[380px] rounded-full opacity-[0.08] blur-[100px]"
+          style={{ background: "radial-gradient(circle, oklch(0.55 0.16 155) 0%, transparent 70%)" }}
+          aria-hidden="true"
+        />
         <div className="pointer-events-none absolute inset-0 -z-10 bg-african-pattern" aria-hidden="true" />
+        {/* Vignette for depth, edges recede into black */}
+        <div
+          className="pointer-events-none absolute inset-0 -z-10"
+          style={{ boxShadow: "inset 0 0 180px 40px oklch(0 0 0 / 0.55)" }}
+          aria-hidden="true"
+        />
         <div className="grid items-center gap-14 lg:grid-cols-2">
           <Reveal>
             <span className="inline-flex items-center gap-2 rounded-full border border-border bg-foreground/5 px-4 py-1.5 text-xs font-medium text-muted-foreground backdrop-blur">
@@ -81,7 +98,11 @@ function Home() {
           </Reveal>
 
           <Reveal delay={0.15}>
-            <div className="surface-card relative overflow-hidden p-6 shadow-elegant">
+            <div className="surface-card relative overflow-hidden p-6 shadow-elegant before:pointer-events-none before:absolute before:-top-24 before:left-1/2 before:-z-10 before:h-48 before:w-[120%] before:-translate-x-1/2 before:rounded-full before:bg-gold/10 before:blur-3xl before:content-['']">
+              <div
+                className="pointer-events-none absolute inset-x-0 top-0 h-px opacity-60"
+                style={{ background: "linear-gradient(90deg, transparent, var(--gold), transparent)" }}
+              />
               <div className="mb-5 flex items-center justify-between">
                 <div>
                   <div className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
