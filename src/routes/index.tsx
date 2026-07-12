@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useRef } from "react";
 import {
   Lock,
   ArrowRight,
@@ -42,13 +43,29 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   const { t, lang } = useI18n();
+  const spotlightRef = useRef<HTMLDivElement>(null);
+
+  const handleHeroMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    if (spotlightRef.current) {
+      spotlightRef.current.style.left = `${x}%`;
+      spotlightRef.current.style.top = `${y}%`;
+    }
+  };
+
   return (
     <>
       {/* HERO */}
-      <section className="relative mx-auto mt-16 max-w-7xl overflow-hidden px-4 md:mt-24 md:px-6">
-        {/* Soft overhead spotlight, like a single museum light source falling on the scene */}
+      <section
+        className="relative mx-auto mt-16 max-w-7xl overflow-hidden px-4 md:mt-24 md:px-6"
+        onMouseMove={handleHeroMouseMove}
+      >
+        {/* Overhead spotlight that gently follows the cursor, like a tracked museum light */}
         <div
-          className="pointer-events-none absolute -top-32 right-[8%] -z-10 h-[560px] w-[560px] rounded-full opacity-[0.16] blur-[110px]"
+          ref={spotlightRef}
+          className="pointer-events-none absolute left-[68%] top-[10%] -z-10 h-[560px] w-[560px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-[0.18] blur-[110px] transition-[left,top] duration-500 ease-out"
           style={{ background: "radial-gradient(circle, var(--gold) 0%, transparent 70%)" }}
           aria-hidden="true"
         />
