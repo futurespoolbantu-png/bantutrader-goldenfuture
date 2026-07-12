@@ -11,7 +11,6 @@ import {
   Calendar,
 } from "lucide-react";
 import { motion } from "framer-motion";
-import heroBg from "@/assets/hero-bg.jpg";
 import blog1 from "@/assets/blog-1.jpg";
 import blog2 from "@/assets/blog-2.jpg";
 import blog3 from "@/assets/blog-3.jpg";
@@ -47,14 +46,6 @@ function Home() {
     <>
       {/* HERO */}
       <section className="relative mx-auto mt-16 max-w-7xl overflow-hidden px-4 md:mt-24 md:px-6">
-        <div
-          className="pointer-events-none absolute inset-0 -z-10 opacity-30 [mask-image:radial-gradient(60%_60%_at_60%_50%,black,transparent)]"
-          style={{
-            backgroundImage: `url(${heroBg})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
         <div className="pointer-events-none absolute inset-0 -z-10 bg-african-pattern" aria-hidden="true" />
         <div className="grid items-center gap-14 lg:grid-cols-2">
           <Reveal>
@@ -62,6 +53,7 @@ function Home() {
               <span className="h-1.5 w-1.5 rounded-full bg-gold" />
               {t("hero.badge")}
             </span>
+            <div className="mt-5 h-px w-24 bg-gradient-to-r from-gold to-transparent" />
             <h1 className="mt-6 font-display text-5xl font-bold leading-[0.95] tracking-tight md:text-7xl">
               {t("hero.title1")}
               <br />
