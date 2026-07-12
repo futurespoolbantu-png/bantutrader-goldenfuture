@@ -327,8 +327,8 @@ export const dict = {
   },
   "abt.v4t": { en: "Integrity", pt: "Integridade" },
   "abt.v4b": {
-    en: "Regulated, audited and accountable to every investor.",
-    pt: "Regulados, auditados e responsáveis perante cada investidor.",
+    en: "Committed to full regulatory compliance and accountable to every investor.",
+    pt: "Comprometidos com a conformidade regulatória total e responsáveis perante cada investidor.",
   },
   "abt.owned": { en: "Client-Owned", pt: "Contas do Cliente" },
   "abt.foundedLabel": { en: "Founded", pt: "Fundada" },
