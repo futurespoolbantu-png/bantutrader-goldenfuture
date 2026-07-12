@@ -79,7 +79,7 @@ export function Nav() {
             </button>
             <Link
               to="/contact"
-              className="hidden items-center gap-2 rounded-full bg-gold px-4 py-2 text-sm font-semibold text-primary-foreground shadow-gold transition-transform hover:scale-[1.02] md:inline-flex"
+              className="hidden items-center gap-2 rounded-full bg-gold px-4 py-2 text-sm font-semibold text-primary-foreground shadow-gold transition-colors hover:bg-[oklch(0.55_0_0)] md:inline-flex"
             >
               <Lock className="h-3.5 w-3.5" />
               {t("nav.consult")}
@@ -127,7 +127,7 @@ export function Nav() {
             <li className="mt-1">
               <Link
                 to="/contact"
-                className="flex w-full items-center justify-center gap-2 rounded-full bg-gold px-4 py-3 text-sm font-semibold text-primary-foreground"
+                className="flex w-full items-center justify-center gap-2 rounded-full bg-gold px-4 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-[oklch(0.55_0_0)]"
               >
                 <Lock className="h-3.5 w-3.5" /> {t("nav.consult")}
               </Link>

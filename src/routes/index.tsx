@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import {
   Lock,
   ArrowRight,
@@ -44,23 +44,31 @@ export const Route = createFileRoute("/")({
 function Home() {
   const { t, lang } = useI18n();
   const spotlightRef = useRef<HTMLDivElement>(null);
+  const heroSectionRef = useRef<HTMLElement>(null);
 
-  const handleHeroMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    if (spotlightRef.current) {
-      spotlightRef.current.style.left = `${x}%`;
-      spotlightRef.current.style.top = `${y}%`;
-    }
-  };
+  useEffect(() => {
+    const handleMove = (e: MouseEvent) => {
+      const section = heroSectionRef.current;
+      const spotlight = spotlightRef.current;
+      if (!section || !spotlight) return;
+      const rect = section.getBoundingClientRect();
+      // Only animate while the cursor is within (or just above) the hero section
+      if (e.clientY < rect.top - 200 || e.clientY > rect.bottom + 200) return;
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      spotlight.style.left = `${x}%`;
+      spotlight.style.top = `${y}%`;
+    };
+    window.addEventListener("mousemove", handleMove);
+    return () => window.removeEventListener("mousemove", handleMove);
+  }, []);
 
   return (
     <>
       {/* HERO */}
       <section
+        ref={heroSectionRef}
         className="relative mx-auto mt-16 max-w-7xl overflow-hidden px-4 md:mt-24 md:px-6"
-        onMouseMove={handleHeroMouseMove}
       >
         {/* Overhead spotlight that gently follows the cursor, like a tracked museum light */}
         <div
@@ -101,7 +109,7 @@ function Home() {
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-gold transition-colors hover:bg-gold-dark"
+                className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-gold transition-colors hover:bg-[oklch(0.55_0_0)]"
               >
                 <Lock className="h-4 w-4" /> {t("nav.consult")}
               </Link>

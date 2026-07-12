@@ -241,7 +241,7 @@ function Products() {
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-gold hover:scale-[1.03] transition-transform"
+                className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-gold transition-colors hover:bg-[oklch(0.55_0_0)]"
               >
                 <Lock className="h-4 w-4" /> {t("nav.consult")}
               </Link>
@@ -347,7 +347,7 @@ function InvestorProfileQuiz() {
               <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
                 <Link
                   to="/contact"
-                  className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-gold transition-transform hover:scale-[1.03]"
+                  className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-gold transition-colors hover:bg-[oklch(0.55_0_0)]"
                 >
                   <Lock className="h-4 w-4" /> {t("quiz.cta")}
                 </Link>
