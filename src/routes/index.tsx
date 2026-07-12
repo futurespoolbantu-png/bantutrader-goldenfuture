@@ -109,7 +109,7 @@ function Home() {
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-gold transition-colors hover:bg-[oklch(0.55_0_0)]"
+                className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-gold btn-silver"
               >
                 <Lock className="h-4 w-4" /> {t("nav.consult")}
               </Link>

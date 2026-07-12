@@ -204,3 +204,22 @@
 @utility animate-marquee {
   animation: marquee 40s linear infinite;
 }
+
+/* Silver / brushed-metal hover state for primary CTA buttons */
+@utility btn-silver {
+  transition: background 0.35s ease, box-shadow 0.35s ease, transform 0.2s ease, color 0.35s ease;
+
+  &:hover {
+    background-image: linear-gradient(
+      120deg,
+      oklch(0.62 0 0) 0%,
+      oklch(0.88 0 0) 22%,
+      oklch(0.7 0 0) 40%,
+      oklch(0.93 0 0) 55%,
+      oklch(0.6 0 0) 75%,
+      oklch(0.8 0 0) 100%
+    );
+    box-shadow: 0 8px 28px -6px oklch(0 0 0 / 45%), inset 0 1px 0 oklch(1 0 0 / 40%);
+    color: oklch(0.15 0 0);
+  }
+}
