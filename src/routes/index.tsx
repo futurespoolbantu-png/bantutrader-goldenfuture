@@ -65,7 +65,7 @@ function Home() {
         {/* Overhead spotlight that gently follows the cursor, like a tracked museum light */}
         <div
           ref={spotlightRef}
-          className="pointer-events-none absolute left-[68%] top-[10%] -z-10 h-[560px] w-[560px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-[0.18] blur-[110px] transition-[left,top] duration-500 ease-out"
+          className="pointer-events-none absolute left-[68%] top-[10%] -z-10 h-[560px] w-[560px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-[0.32] blur-[90px] transition-[left,top] duration-500 ease-out"
           style={{ background: "radial-gradient(circle, var(--gold) 0%, transparent 70%)" }}
           aria-hidden="true"
         />
