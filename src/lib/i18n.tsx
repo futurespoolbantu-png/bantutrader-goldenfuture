@@ -47,6 +47,7 @@ export const dict = {
   "snap.exp": { en: "Track Record", pt: "Track Record" },
   "snap.expVal": { en: "4 Years", pt: "4 Anos" },
   "snap.strat": { en: "Investment Strategies", pt: "Estratégias de Investimento" },
+  "snap.stratBadge": { en: "MULTI-ASSET", pt: "MULTI-ATIVOS" },
   "snap.stratVal": { en: "2 Strategies", pt: "2 Estratégias" },
   "snap.reg": { en: "Regulation Status", pt: "Estado Regulatório" },
   "snap.regVal": { en: "In Progress", pt: "Em Curso" },

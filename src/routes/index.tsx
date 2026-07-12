@@ -118,7 +118,7 @@ function Home() {
                   Icon: Layers,
                   label: t("snap.strat"),
                   value: t("snap.stratVal"),
-                  badge: "20–35%",
+                  badge: t("snap.stratBadge"),
                   badgeClass: "bg-gold/15 text-gold",
                 },
                 {
