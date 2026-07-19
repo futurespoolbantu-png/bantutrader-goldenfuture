@@ -29,6 +29,7 @@ function Contact() {
   const [sent, setSent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(false);
+  const [errorDetail, setErrorDetail] = useState("");
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,6 +39,8 @@ function Contact() {
       .from("contact_submissions")
       .insert({ name, email, profile, message });
     if (insertError) {
+      console.error("Contact form insert error:", insertError);
+      setErrorDetail(`${insertError.message} (code: ${insertError.code ?? "n/a"})`);
       setSubmitting(false);
       setError(true);
       return;
@@ -166,7 +169,10 @@ function Contact() {
                 {error && (
                   <div className="flex items-start gap-2 rounded-2xl border border-destructive/30 bg-destructive/10 p-4 text-sm text-destructive">
                     <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
-                    {t("contact.errorMsg")}
+                    <div>
+                      {t("contact.errorMsg")}
+                      {errorDetail && <div className="mt-1 font-mono text-xs opacity-80">{errorDetail}</div>}
+                    </div>
                   </div>
                 )}
 
