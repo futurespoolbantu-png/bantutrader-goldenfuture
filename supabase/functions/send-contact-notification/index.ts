@@ -9,9 +9,7 @@ const corsHeaders = {
 };
 
 const NOTIFY_TO = "invest@bantutradecapital.com";
-// Use Resend's shared test sender until the bantutradecapital.com domain
-// is verified in Resend, then switch to e.g. "Bantu Trade Capital <notifications@bantutradecapital.com>".
-const FROM_ADDRESS = "Bantu Trade Capital <onboarding@resend.dev>";
+const FROM_ADDRESS = "Bantu Trade Capital <notifications@bantutradecapital.com>";
 
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") {
