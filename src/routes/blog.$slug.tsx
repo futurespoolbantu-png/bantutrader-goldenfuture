@@ -96,7 +96,7 @@ function BlogPost() {
 
         <Reveal delay={0.15}>
           <div className="prose-legal mt-10 space-y-5 text-[16px] leading-relaxed text-muted-foreground">
-            {post.body[lang].map((para, i) => (
+            {post.body[lang].map((para: string, i: number) => (
             <p key={i}>{para}</p>
           ))}
         </div>
