@@ -47,42 +47,56 @@ function BlogPost() {
   const relatedPosts = related.length > 0 ? related : fallbackRelated;
 
   return (
-    <article className="mx-auto max-w-3xl px-4 pb-32 pt-6">
-      <Reveal>
-        <Link
-          to="/blog"
-          className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-gold"
-        >
-          <ArrowLeft className="h-4 w-4" /> {t("blog.back")}
-        </Link>
-
-        <div className="mt-6 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
-          <span className={`rounded-full px-3 py-1 font-semibold uppercase ${catClass(post.cat)}`}>
-            {t(`blog.cat${post.cat[0].toUpperCase()}${post.cat.slice(1)}`)}
-          </span>
-          <span className="inline-flex items-center gap-1">
-            <Calendar className="h-3.5 w-3.5" /> {post.date[lang]}
-          </span>
-          <span className="inline-flex items-center gap-1">
-            <Clock className="h-3.5 w-3.5" /> {post.read} {t("blog.min")}
-          </span>
+    <article className="pb-32">
+      {/* Full-width editorial banner */}
+      <div className="relative -mt-[1px] h-[46vh] min-h-[320px] w-full overflow-hidden md:h-[58vh]">
+        <img src={post.img} alt="" className="absolute inset-0 h-full w-full object-cover" />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.25) 35%, rgba(0,0,0,0.75) 100%)",
+          }}
+        />
+        <div className="absolute inset-x-0 top-0 p-4 md:p-6">
+          <Link
+            to="/blog"
+            className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/30 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm transition-colors hover:border-white/40"
+          >
+            <ArrowLeft className="h-4 w-4" /> {t("blog.back")}
+          </Link>
         </div>
 
-        <h1 className="mt-5 font-display text-3xl font-bold leading-tight md:text-5xl">
-          {post.title[lang]}
-        </h1>
-        <p className="mt-5 text-lg leading-relaxed text-muted-foreground">{post.excerpt[lang]}</p>
-      </Reveal>
-
-      <Reveal delay={0.1}>
-        <div className="mt-10 aspect-[16/9] overflow-hidden rounded-2xl">
-          <img src={post.img} alt="" className="h-full w-full object-cover" />
+        <div className="absolute inset-x-0 bottom-0 p-4 pb-8 md:p-10">
+          <Reveal>
+            <div className="mx-auto max-w-3xl">
+              <div className="flex flex-wrap items-center gap-3 text-xs text-white/70">
+                <span className={`rounded-full px-3 py-1 font-semibold uppercase ${catClass(post.cat)}`}>
+                  {t(`blog.cat${post.cat[0].toUpperCase()}${post.cat.slice(1)}`)}
+                </span>
+                <span className="inline-flex items-center gap-1">
+                  <Calendar className="h-3.5 w-3.5" /> {post.date[lang]}
+                </span>
+                <span className="inline-flex items-center gap-1">
+                  <Clock className="h-3.5 w-3.5" /> {post.read} {t("blog.min")}
+                </span>
+              </div>
+              <h1 className="mt-4 font-display text-3xl font-bold leading-tight text-white md:text-6xl">
+                {post.title[lang]}
+              </h1>
+            </div>
+          </Reveal>
         </div>
-      </Reveal>
+      </div>
 
-      <Reveal delay={0.15}>
-        <div className="prose-legal mt-10 space-y-5 text-[16px] leading-relaxed text-muted-foreground">
-          {post.body[lang].map((para, i) => (
+      <div className="mx-auto max-w-3xl px-4 pt-10">
+        <Reveal>
+          <p className="text-lg leading-relaxed text-muted-foreground">{post.excerpt[lang]}</p>
+        </Reveal>
+
+        <Reveal delay={0.15}>
+          <div className="prose-legal mt-10 space-y-5 text-[16px] leading-relaxed text-muted-foreground">
+            {post.body[lang].map((para, i) => (
             <p key={i}>{para}</p>
           ))}
         </div>
@@ -122,6 +136,7 @@ function BlogPost() {
           </div>
         </Reveal>
       )}
+      </div>
     </article>
   );
 }
