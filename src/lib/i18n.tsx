@@ -352,6 +352,12 @@ export const dict = {
   "blog.catTips": { en: "Investment Tips", pt: "Dicas de Investimento" },
   "blog.catNews": { en: "Company News", pt: "Notícias" },
   "blog.catEdu": { en: "Education", pt: "Educação" },
+  "blog.back": { en: "Back to Insights", pt: "Voltar aos Insights" },
+  "blog.related": { en: "Related Articles", pt: "Artigos Relacionados" },
+  "blog.disclaimer": {
+    en: "This article is for educational and informational purposes only and does not constitute financial, investment, or trading advice. It does not reflect the performance of any specific Bantu Trade Capital strategy. Always seek independent, qualified advice before making investment decisions.",
+    pt: "Este artigo é apenas para fins educativos e informativos e não constitui aconselhamento financeiro, de investimento ou de trading. Não reflete o desempenho de nenhuma estratégia específica da Bantu Trade Capital. Procura sempre aconselhamento independente e qualificado antes de tomar decisões de investimento.",
+  },
   "blog.f.title": {
     en: "The 2026 Macro Setup: Positioning for Divergent Rate Regimes",
     pt: "O Cenário Macro de 2026: Posicionando-se para Regimes de Juros Divergentes",
