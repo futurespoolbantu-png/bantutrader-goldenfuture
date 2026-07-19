@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Mail, MapPin, Send, CheckCircle2 } from "lucide-react";
+import { Mail, MapPin, Send, CheckCircle2, AlertCircle } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { useI18n } from "@/lib/i18n";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -26,14 +27,21 @@ function Contact() {
   const [profile, setProfile] = useState(t("contact.profileInst"));
   const [message, setMessage] = useState("");
   const [sent, setSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState(false);
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`${t("contact.mailSubject")} — ${name}`);
-    const body = encodeURIComponent(
-      `${t("contact.formName")}: ${name}\n${t("contact.formEmail")}: ${email}\n${t("contact.formProfile")}: ${profile}\n\n${message}`,
-    );
-    window.location.href = `mailto:invest@bantutradecapital.com?subject=${subject}&body=${body}`;
+    setSubmitting(true);
+    setError(false);
+    const { error: insertError } = await supabase
+      .from("contact_submissions")
+      .insert({ name, email, profile, message });
+    setSubmitting(false);
+    if (insertError) {
+      setError(true);
+      return;
+    }
     setSent(true);
   };
 
@@ -149,11 +157,19 @@ function Contact() {
                   />
                 </label>
 
+                {error && (
+                  <div className="flex items-start gap-2 rounded-2xl border border-destructive/30 bg-destructive/10 p-4 text-sm text-destructive">
+                    <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
+                    {t("contact.errorMsg")}
+                  </div>
+                )}
+
                 <button
                   type="submit"
-                  className="inline-flex w-fit items-center gap-2 rounded-full bg-gold px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-gold transition-transform hover:scale-[1.03]"
+                  disabled={submitting}
+                  className="inline-flex w-fit items-center gap-2 rounded-full bg-gold px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-gold transition-transform hover:scale-[1.03] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:scale-100"
                 >
-                  <Send className="h-4 w-4" /> {t("contact.formSubmit")}
+                  <Send className="h-4 w-4" /> {submitting ? t("contact.formSending") : t("contact.formSubmit")}
                 </button>
               </form>
             ) : (

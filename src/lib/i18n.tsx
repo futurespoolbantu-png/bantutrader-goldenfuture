@@ -481,10 +481,15 @@ export const dict = {
   "contact.formMsgPh": { en: "Tell us briefly about your interest", pt: "Conta-nos brevemente o teu interesse" },
   "contact.formSubmit": { en: "Send message", pt: "Enviar mensagem" },
   "contact.mailSubject": { en: "New inquiry from bantutradecapital.com", pt: "Novo pedido de bantutradecapital.com" },
-  "contact.sentTitle": { en: "Your email app is opening", pt: "A tua app de email está a abrir" },
+  "contact.sentTitle": { en: "Message received", pt: "Mensagem recebida" },
   "contact.sentBody": {
-    en: "We've prepared your message in your default email app. Just hit send from there to reach us.",
-    pt: "Preparámos a tua mensagem na tua app de email padrão. Basta enviares a partir de lá para nos contactares.",
+    en: "Thank you for reaching out. Our team will review your message and get back to you shortly.",
+    pt: "Obrigado pelo contacto. A nossa equipa vai rever a tua mensagem e responder em breve.",
+  },
+  "contact.formSending": { en: "Sending...", pt: "A enviar..." },
+  "contact.errorMsg": {
+    en: "Something went wrong sending your message. Please try again, or email us directly at invest@bantutradecapital.com.",
+    pt: "Algo correu mal ao enviar a tua mensagem. Tenta outra vez, ou envia-nos um email diretamente para invest@bantutradecapital.com.",
   },
 } satisfies Dict;
 
