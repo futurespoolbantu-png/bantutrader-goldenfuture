@@ -37,11 +37,17 @@ function Contact() {
     const { error: insertError } = await supabase
       .from("contact_submissions")
       .insert({ name, email, profile, message });
-    setSubmitting(false);
     if (insertError) {
+      setSubmitting(false);
       setError(true);
       return;
     }
+    // Best-effort email notification — the submission is already safely stored
+    // above, so we don't block success on this call.
+    supabase.functions.invoke("send-contact-notification", {
+      body: { name, email, profile, message },
+    }).catch((err) => console.error("Notification email failed:", err));
+    setSubmitting(false);
     setSent(true);
   };
 
