@@ -72,7 +72,7 @@ function BlogPost() {
             <div className="mx-auto max-w-3xl">
               <div className="flex flex-wrap items-center gap-3 text-xs text-white/70">
                 <span className={`rounded-full px-3 py-1 font-semibold uppercase ${catClass(post.cat)}`}>
-                  {t(`blog.cat${post.cat[0].toUpperCase()}${post.cat.slice(1)}`)}
+                  {t(`blog.cat${post.cat[0].toUpperCase()}${post.cat.slice(1)}` as Parameters<typeof t>[0])}
                 </span>
                 <span className="inline-flex items-center gap-1">
                   <Calendar className="h-3.5 w-3.5" /> {post.date[lang]}
@@ -96,7 +96,7 @@ function BlogPost() {
 
         <Reveal delay={0.15}>
           <div className="prose-legal mt-10 space-y-5 text-[16px] leading-relaxed text-muted-foreground">
-            {post.body[lang].map((para, i) => (
+            {post.body[lang].map((para: string, i: number) => (
             <p key={i}>{para}</p>
           ))}
         </div>
