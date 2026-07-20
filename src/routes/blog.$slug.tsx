@@ -113,7 +113,7 @@ function BlogPost() {
             <div className="mx-auto max-w-3xl">
               <div className="flex flex-wrap items-center gap-3 text-xs text-white/70">
                 <span className={`rounded-full px-3 py-1 font-semibold uppercase ${catClass(post.category)}`}>
-                  {t(`blog.cat${post.category[0].toUpperCase()}${post.category.slice(1)}`)}
+                  {t(`blog.cat${post.category[0].toUpperCase()}${post.category.slice(1)}` as Parameters<typeof t>[0])}
                 </span>
                 <span className="inline-flex items-center gap-1">
                   <Calendar className="h-3.5 w-3.5" /> {fmtDate(post.published_at, lang)}
