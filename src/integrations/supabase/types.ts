@@ -14,54 +14,6 @@ export type Database = {
   }
   public: {
     Tables: {
-      blog_posts: {
-        Row: {
-          author_id: string | null
-          body: Json
-          category: string
-          created_at: string
-          excerpt: Json
-          id: string
-          image_url: string | null
-          published: boolean
-          published_at: string | null
-          read_minutes: number
-          slug: string
-          title: Json
-          updated_at: string
-        }
-        Insert: {
-          author_id?: string | null
-          body?: Json
-          category?: string
-          created_at?: string
-          excerpt?: Json
-          id?: string
-          image_url?: string | null
-          published?: boolean
-          published_at?: string | null
-          read_minutes?: number
-          slug: string
-          title?: Json
-          updated_at?: string
-        }
-        Update: {
-          author_id?: string | null
-          body?: Json
-          category?: string
-          created_at?: string
-          excerpt?: Json
-          id?: string
-          image_url?: string | null
-          published?: boolean
-          published_at?: string | null
-          read_minutes?: number
-          slug?: string
-          title?: Json
-          updated_at?: string
-        }
-        Relationships: []
-      }
       contact_submissions: {
         Row: {
           created_at: string
