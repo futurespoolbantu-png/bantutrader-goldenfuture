@@ -136,15 +136,13 @@ function BlogPost() {
           <p className="text-lg leading-relaxed text-muted-foreground">{excerpt[lang]}</p>
         </Reveal>
 
-        <Reveal delay={0.15}>
-          <div className="prose-legal mt-10 space-y-5 text-[16px] leading-relaxed text-muted-foreground">
-            {body[lang].map((block, i) => renderBodyBlock(block, i))}
-          </div>
+        <div className="prose-legal mt-10 space-y-5 text-[16px] leading-relaxed text-muted-foreground">
+          {body[lang].map((block, i) => renderBodyBlock(block, i))}
+        </div>
 
-          <div className="mt-10 rounded-2xl border border-border bg-foreground/5 p-5 text-xs leading-relaxed text-muted-foreground">
-            {t("blog.disclaimer")}
-          </div>
-        </Reveal>
+        <div className="mt-10 rounded-2xl border border-border bg-foreground/5 p-5 text-xs leading-relaxed text-muted-foreground">
+          {t("blog.disclaimer")}
+        </div>
 
         {relatedPosts.length > 0 && (
           <Reveal delay={0.2}>
