@@ -459,8 +459,8 @@ export const dict = {
   "contact.title1": { en: "Let's start a", pt: "Vamos começar uma" },
   "contact.title2": { en: "conversation.", pt: "conversa." },
   "contact.subtitle": {
-    en: "Whether you're an investor, a partner, or just curious about Bantu Trade Capital — we'd like to hear from you.",
-    pt: "Seja investidor, parceiro, ou apenas curioso sobre a Bantu Trade Capital — gostaríamos de ouvir de ti.",
+    en: "Whether you're an investor, a partner, or just curious about Bantu Trade Capital\u00a0 we'd like to hear from you.",
+    pt: "Seja investidor, parceiro, ou apenas curioso sobre a Bantu Trade Capital\u00a0 gostaríamos de ouvir de ti.",
   },
   "contact.detailsTitle": { en: "Contact details", pt: "Dados de contacto" },
   "contact.emailLabel": { en: "Email", pt: "Email" },
