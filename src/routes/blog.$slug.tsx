@@ -137,9 +137,22 @@ function BlogPost() {
 
         <Reveal delay={0.15}>
           <div className="prose-legal mt-10 space-y-5 text-[16px] leading-relaxed text-muted-foreground">
-            {body[lang].map((para, i) => (
-              <p key={i}>{para}</p>
-            ))}
+            {body[lang].map((para, i) => {
+              const imgMatch = para.match(/^!\[(.*?)\]\((.*?)\)$/);
+              if (imgMatch) {
+                const [, alt, src] = imgMatch;
+                return (
+                  <img
+                    key={i}
+                    src={src}
+                    alt={alt}
+                    loading="lazy"
+                    className="!mt-8 w-full rounded-2xl border border-border"
+                  />
+                );
+              }
+              return <p key={i}>{para}</p>;
+            })}
           </div>
 
           <div className="mt-10 rounded-2xl border border-border bg-foreground/5 p-5 text-xs leading-relaxed text-muted-foreground">

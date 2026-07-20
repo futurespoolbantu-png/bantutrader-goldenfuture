@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import { Save, AlertCircle, Globe } from "lucide-react";
+import { Save, AlertCircle, Globe, Image as ImageIcon, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 export type EditorInitial = {
@@ -40,12 +40,62 @@ export function BlogPostEditor({ initial }: { initial: EditorInitial }) {
   const [excerptPt, setExcerptPt] = useState(initial.excerpt.pt);
   const [bodyEn, setBodyEn] = useState(initial.body.en.join("\n\n"));
   const [bodyPt, setBodyPt] = useState(initial.body.pt.join("\n\n"));
+  const bodyEnRef = useRef<HTMLTextAreaElement>(null);
+  const bodyPtRef = useRef<HTMLTextAreaElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState("");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
   const onTitleEnChange = (v: string) => {
     setTitleEn(v);
     if (!slugTouched) setSlug(slugify(v));
+  };
+
+  const insertAtCursor = (ref: React.RefObject<HTMLTextAreaElement>, setter: (v: string) => void, current: string, snippet: string) => {
+    const el = ref.current;
+    if (!el) {
+      setter(current + (current ? "\n\n" : "") + snippet);
+      return;
+    }
+    const start = el.selectionStart ?? current.length;
+    const end = el.selectionEnd ?? current.length;
+    const before = current.slice(0, start);
+    const after = current.slice(end);
+    const needsBreakBefore = before && !before.endsWith("\n\n") ? "\n\n" : "";
+    const needsBreakAfter = after && !after.startsWith("\n\n") ? "\n\n" : "";
+    const next = before + needsBreakBefore + snippet + needsBreakAfter + after;
+    setter(next);
+    requestAnimationFrame(() => {
+      el.focus();
+      const pos = (before + needsBreakBefore + snippet).length;
+      el.setSelectionRange(pos, pos);
+    });
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+    setUploading(true);
+    setUploadError("");
+    const ext = file.name.split(".").pop() || "jpg";
+    const path = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+    const { error: uploadErr } = await supabase.storage.from("blog-images").upload(path, file);
+    if (uploadErr) {
+      setUploading(false);
+      setUploadError(uploadErr.message);
+      return;
+    }
+    const { data } = supabase.storage.from("blog-images").getPublicUrl(path);
+    const snippet = `![](${data.publicUrl})`;
+    if (lang === "en") {
+      insertAtCursor(bodyEnRef, setBodyEn, bodyEn, snippet);
+    } else {
+      insertAtCursor(bodyPtRef, setBodyPt, bodyPt, snippet);
+    }
+    setUploading(false);
   };
 
   const save = async () => {
@@ -110,9 +160,29 @@ export function BlogPostEditor({ initial }: { initial: EditorInitial }) {
           <Field label="Excerpt (English)">
             <textarea rows={2} value={excerptEn} onChange={(e) => setExcerptEn(e.target.value)} className={inputCls} />
           </Field>
-          <Field label="Body (English) — separate paragraphs with a blank line">
-            <textarea rows={14} value={bodyEn} onChange={(e) => setBodyEn(e.target.value)} className={`${inputCls} font-mono text-sm`} />
-          </Field>
+          <div>
+            <div className="mb-2 flex items-center justify-between">
+              <div className="text-xs uppercase tracking-widest text-muted-foreground">
+                Body (English) — separate paragraphs with a blank line
+              </div>
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                disabled={uploading}
+                className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-xs font-medium text-muted-foreground hover:border-gold hover:text-gold disabled:opacity-60"
+              >
+                {uploading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <ImageIcon className="h-3.5 w-3.5" />}
+                {uploading ? "Uploading..." : "Insert image"}
+              </button>
+            </div>
+            <textarea
+              ref={bodyEnRef}
+              rows={14}
+              value={bodyEn}
+              onChange={(e) => setBodyEn(e.target.value)}
+              className={`${inputCls} font-mono text-sm`}
+            />
+          </div>
         </>
       ) : (
         <>
@@ -122,10 +192,37 @@ export function BlogPostEditor({ initial }: { initial: EditorInitial }) {
           <Field label="Resumo (Português)">
             <textarea rows={2} value={excerptPt} onChange={(e) => setExcerptPt(e.target.value)} className={inputCls} />
           </Field>
-          <Field label="Texto (Português) — separa parágrafos com uma linha em branco">
-            <textarea rows={14} value={bodyPt} onChange={(e) => setBodyPt(e.target.value)} className={`${inputCls} font-mono text-sm`} />
-          </Field>
+          <div>
+            <div className="mb-2 flex items-center justify-between">
+              <div className="text-xs uppercase tracking-widest text-muted-foreground">
+                Texto (Português) — separa parágrafos com uma linha em branco
+              </div>
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                disabled={uploading}
+                className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-xs font-medium text-muted-foreground hover:border-gold hover:text-gold disabled:opacity-60"
+              >
+                {uploading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <ImageIcon className="h-3.5 w-3.5" />}
+                {uploading ? "A carregar..." : "Inserir imagem"}
+              </button>
+            </div>
+            <textarea
+              ref={bodyPtRef}
+              rows={14}
+              value={bodyPt}
+              onChange={(e) => setBodyPt(e.target.value)}
+              className={`${inputCls} font-mono text-sm`}
+            />
+          </div>
         </>
+      )}
+
+      <input ref={fileInputRef} type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
+      {uploadError && (
+        <div className="flex items-start gap-2 rounded-xl border border-destructive/30 bg-destructive/10 p-3 text-xs text-destructive">
+          <AlertCircle className="mt-0.5 h-3.5 w-3.5 shrink-0" /> {uploadError}
+        </div>
       )}
 
       <div className="grid gap-4 sm:grid-cols-2">
