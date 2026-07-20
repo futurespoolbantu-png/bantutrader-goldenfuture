@@ -184,7 +184,7 @@ export function BlogPostEditor({ initial }: { initial: EditorInitial }) {
           <div>
             <div className="mb-2 flex items-center justify-between">
               <div className="text-xs uppercase tracking-widest text-muted-foreground">
-                Body (English) — separate paragraphs with a blank line
+                Body (English) — blank line = new paragraph. # Heading, * bullet, --- divider, **bold**
               </div>
               <button
                 type="button"
@@ -216,7 +216,7 @@ export function BlogPostEditor({ initial }: { initial: EditorInitial }) {
           <div>
             <div className="mb-2 flex items-center justify-between">
               <div className="text-xs uppercase tracking-widest text-muted-foreground">
-                Texto (Português) — separa parágrafos com uma linha em branco
+                Texto (Português) — linha em branco = novo parágrafo. # Título, * item de lista, --- divisória, **negrito**
               </div>
               <button
                 type="button"

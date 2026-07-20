@@ -4,6 +4,7 @@ import { ArrowLeft, Calendar, Clock } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { useI18n } from "@/lib/i18n";
 import { supabase } from "@/integrations/supabase/client";
+import { renderBodyBlock } from "@/lib/renderBody";
 
 export const Route = createFileRoute("/blog/$slug")({
   loader: async ({ params }) => {
@@ -137,22 +138,7 @@ function BlogPost() {
 
         <Reveal delay={0.15}>
           <div className="prose-legal mt-10 space-y-5 text-[16px] leading-relaxed text-muted-foreground">
-            {body[lang].map((para, i) => {
-              const imgMatch = para.match(/^!\[(.*?)\]\((.*?)\)$/);
-              if (imgMatch) {
-                const [, alt, src] = imgMatch;
-                return (
-                  <img
-                    key={i}
-                    src={src}
-                    alt={alt}
-                    loading="lazy"
-                    className="!mt-8 w-full rounded-2xl border border-border"
-                  />
-                );
-              }
-              return <p key={i}>{para}</p>;
-            })}
+            {body[lang].map((block, i) => renderBodyBlock(block, i))}
           </div>
 
           <div className="mt-10 rounded-2xl border border-border bg-foreground/5 p-5 text-xs leading-relaxed text-muted-foreground">
