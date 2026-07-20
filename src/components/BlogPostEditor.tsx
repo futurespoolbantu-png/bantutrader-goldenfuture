@@ -53,7 +53,7 @@ export function BlogPostEditor({ initial }: { initial: EditorInitial }) {
     if (!slugTouched) setSlug(slugify(v));
   };
 
-  const insertAtCursor = (ref: React.RefObject<HTMLTextAreaElement>, setter: (v: string) => void, current: string, snippet: string) => {
+  const insertAtCursor = (ref: React.RefObject<HTMLTextAreaElement | null>, setter: (v: string) => void, current: string, snippet: string) => {
     const el = ref.current;
     if (!el) {
       setter(current + (current ? "\n\n" : "") + snippet);
