@@ -45,6 +45,8 @@ export function BlogPostEditor({ initial }: { initial: EditorInitial }) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState("");
+  const coverInputRef = useRef<HTMLInputElement>(null);
+  const [coverUploading, setCoverUploading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
@@ -72,6 +74,25 @@ export function BlogPostEditor({ initial }: { initial: EditorInitial }) {
       const pos = (before + needsBreakBefore + snippet).length;
       el.setSelectionRange(pos, pos);
     });
+  };
+
+  const handleCoverUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+    setCoverUploading(true);
+    setUploadError("");
+    const ext = file.name.split(".").pop() || "jpg";
+    const path = `cover-${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+    const { error: uploadErr } = await supabase.storage.from("blog-images").upload(path, file);
+    if (uploadErr) {
+      setCoverUploading(false);
+      setUploadError(uploadErr.message);
+      return;
+    }
+    const { data } = supabase.storage.from("blog-images").getPublicUrl(path);
+    setImageUrl(data.publicUrl);
+    setCoverUploading(false);
   };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -240,8 +261,28 @@ export function BlogPostEditor({ initial }: { initial: EditorInitial }) {
             ))}
           </select>
         </Field>
-        <Field label="Cover image URL">
-          <input value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} placeholder="/src/assets/blog-1.jpg or https://..." className={inputCls} />
+        <Field label="Cover image">
+          <div className="flex items-center gap-3">
+            <input
+              value={imageUrl}
+              onChange={(e) => setImageUrl(e.target.value)}
+              placeholder="/src/assets/blog-1.jpg or https://..."
+              className={inputCls}
+            />
+            <button
+              type="button"
+              onClick={() => coverInputRef.current?.click()}
+              disabled={coverUploading}
+              className="inline-flex shrink-0 items-center gap-1.5 rounded-xl border border-border px-3 py-3 text-xs font-medium text-muted-foreground hover:border-gold hover:text-gold disabled:opacity-60"
+            >
+              {coverUploading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <ImageIcon className="h-3.5 w-3.5" />}
+              Upload
+            </button>
+          </div>
+          {imageUrl && (
+            <img src={imageUrl} alt="" className="mt-3 h-28 w-full rounded-xl border border-border object-cover" />
+          )}
+          <input ref={coverInputRef} type="file" accept="image/*" onChange={handleCoverUpload} className="hidden" />
         </Field>
         <Field label="Read time (minutes)">
           <input type="number" min={1} value={readMinutes} onChange={(e) => setReadMinutes(Number(e.target.value))} className={inputCls} />
