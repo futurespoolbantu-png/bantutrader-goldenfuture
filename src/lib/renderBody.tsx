@@ -48,13 +48,70 @@ export function renderBodyBlock(block: string, key: number): ReactNode {
   }
 
   const lines = trimmed.split("\n").map((l) => l.trim()).filter(Boolean);
-  const isList = lines.length > 0 && lines.every((l) => /^[*-]\s+/.test(l));
+
+  // Markdown table: header row, separator row (---|---|...), then data rows
+  const isTable =
+    lines.length >= 2 &&
+    lines[0].includes("|") &&
+    /^\|?\s*:?-+:?\s*(\|\s*:?-+:?\s*)+\|?$/.test(lines[1]);
+  if (isTable) {
+    const splitRow = (row: string) =>
+      row
+        .replace(/^\|/, "")
+        .replace(/\|$/, "")
+        .split("|")
+        .map((c) => c.trim());
+    const header = splitRow(lines[0]);
+    const dataRows = lines.slice(2).map(splitRow);
+    return (
+      <div key={key} className="!mt-8 overflow-x-auto rounded-2xl border border-border">
+        <table className="w-full border-collapse text-sm">
+          <thead>
+            <tr className="bg-foreground/5">
+              {header.map((h, i) => (
+                <th key={i} className="border-b border-border px-4 py-3 text-left font-display font-bold text-foreground">
+                  {renderInline(h)}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {dataRows.map((row, ri) => (
+              <tr key={ri} className="border-b border-border last:border-b-0">
+                {row.map((cell, ci) => (
+                  <td key={ci} className="px-4 py-3">
+                    {renderInline(cell)}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    );
+  }
+
+  const isList = lines.length > 0 && lines.every((l) => /^[*✓✗-]\s+/.test(l));
   if (isList) {
     return (
-      <ul key={key} className="list-disc space-y-2 pl-5">
-        {lines.map((l, i) => (
-          <li key={i}>{renderInline(l.replace(/^[*-]\s+/, ""))}</li>
-        ))}
+      <ul key={key} className="space-y-2 pl-1">
+        {lines.map((l, i) => {
+          const isCheck = /^✓\s+/.test(l);
+          const isCross = /^✗\s+/.test(l);
+          const text = l.replace(/^[*✓✗-]\s+/, "");
+          return (
+            <li key={i} className="flex items-start gap-2">
+              {isCheck ? (
+                <span className="mt-0.5 text-[oklch(0.55_0.18_155)]">✓</span>
+              ) : isCross ? (
+                <span className="mt-0.5 text-destructive">✗</span>
+              ) : (
+                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-gold" />
+              )}
+              <span>{renderInline(text)}</span>
+            </li>
+          );
+        })}
       </ul>
     );
   }
