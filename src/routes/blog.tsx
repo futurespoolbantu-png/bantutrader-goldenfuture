@@ -1,9 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ArrowRight, Calendar, Clock } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { useI18n } from "@/lib/i18n";
-import { blogPosts, type CatKey } from "@/lib/blog-posts";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/blog")({
   head: () => ({
@@ -21,7 +21,18 @@ export const Route = createFileRoute("/blog")({
   component: Blog,
 });
 
-type FilterKey = "all" | CatKey;
+type Post = {
+  id: string;
+  slug: string;
+  category: string;
+  image_url: string | null;
+  read_minutes: number;
+  published_at: string | null;
+  title: { en: string; pt: string };
+  excerpt: { en: string; pt: string };
+};
+
+type FilterKey = "all" | "market" | "tips" | "news" | "edu";
 const catKeys: FilterKey[] = ["all", "market", "tips", "news", "edu"];
 
 const catClass = (c: string) => {
@@ -39,9 +50,29 @@ const catClass = (c: string) => {
   }
 };
 
+const fmtDate = (iso: string | null, lang: "en" | "pt") => {
+  if (!iso) return "";
+  const d = new Date(iso);
+  return d.toLocaleDateString(lang === "pt" ? "pt-PT" : "en-US", { day: "2-digit", month: "short", year: "numeric" });
+};
+
 function Blog() {
   const { t, lang } = useI18n();
   const [filter, setFilter] = useState<FilterKey>("all");
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    supabase
+      .from("blog_posts")
+      .select("id, slug, category, image_url, read_minutes, published_at, title, excerpt")
+      .eq("published", true)
+      .order("published_at", { ascending: false })
+      .then(({ data }) => {
+        setPosts((data as unknown as Post[]) ?? []);
+        setLoading(false);
+      });
+  }, []);
 
   const catLabel = (c: FilterKey) =>
     c === "all" ? t("blog.catAll")
@@ -50,12 +81,29 @@ function Blog() {
     : c === "news" ? t("blog.catNews")
     : t("blog.catEdu");
 
-  const [featured, ...rest] = blogPosts;
+  const featured = posts[0];
+  const rest = posts.slice(1);
 
   const filtered = useMemo(
-    () => (filter === "all" ? rest : rest.filter((p) => p.cat === filter)),
+    () => (filter === "all" ? rest : rest.filter((p) => p.category === filter)),
     [filter, rest],
   );
+
+  if (loading) {
+    return (
+      <div className="mx-auto flex min-h-[40vh] max-w-6xl items-center justify-center px-4 text-sm text-muted-foreground">
+        Loading...
+      </div>
+    );
+  }
+
+  if (!featured) {
+    return (
+      <div className="mx-auto flex min-h-[40vh] max-w-6xl items-center justify-center px-4 text-sm text-muted-foreground">
+        No articles published yet.
+      </div>
+    );
+  }
 
   return (
     <>
@@ -77,7 +125,7 @@ function Blog() {
             <article className="surface-card group grid overflow-hidden md:grid-cols-2">
               <div className="relative aspect-[16/10] overflow-hidden md:aspect-auto">
                 <img
-                  src={featured.img}
+                  src={featured.image_url ?? ""}
                   alt=""
                   className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
@@ -87,14 +135,14 @@ function Blog() {
               </div>
               <div className="flex flex-col justify-center p-8 md:p-12">
                 <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
-                  <span className={`rounded-full px-3 py-1 font-semibold uppercase ${catClass(featured.cat)}`}>
-                    {catLabel(featured.cat)}
+                  <span className={`rounded-full px-3 py-1 font-semibold uppercase ${catClass(featured.category)}`}>
+                    {catLabel(featured.category as FilterKey)}
                   </span>
                   <span className="inline-flex items-center gap-1">
-                    <Calendar className="h-3.5 w-3.5" /> {featured.date[lang]}
+                    <Calendar className="h-3.5 w-3.5" /> {fmtDate(featured.published_at, lang)}
                   </span>
                   <span className="inline-flex items-center gap-1">
-                    <Clock className="h-3.5 w-3.5" /> {featured.read} {t("blog.min")}
+                    <Clock className="h-3.5 w-3.5" /> {featured.read_minutes} {t("blog.min")}
                   </span>
                 </div>
                 <h2 className="mt-5 font-display text-3xl font-bold leading-tight md:text-4xl">
@@ -129,25 +177,25 @@ function Blog() {
 
         <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {filtered.map((p, i) => (
-            <Reveal key={p.slug} delay={(i % 3) * 0.06}>
+            <Reveal key={p.id} delay={(i % 3) * 0.06}>
               <Link to="/blog/$slug" params={{ slug: p.slug }} className="block h-full">
                 <article className="surface-card group h-full overflow-hidden">
                   <div className="relative aspect-[16/10] overflow-hidden">
                     <img
-                      src={p.img}
+                      src={p.image_url ?? ""}
                       alt=""
                       loading="lazy"
                       className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
-                    <span className={`absolute left-3 top-3 rounded-full px-3 py-1 text-[10px] font-semibold uppercase ${catClass(p.cat)}`}>
-                      {catLabel(p.cat)}
+                    <span className={`absolute left-3 top-3 rounded-full px-3 py-1 text-[10px] font-semibold uppercase ${catClass(p.category)}`}>
+                      {catLabel(p.category as FilterKey)}
                     </span>
                     <span className="absolute right-3 top-3 inline-flex items-center gap-1 rounded-full bg-background/70 px-3 py-1 text-[10px] font-medium backdrop-blur">
-                      <Clock className="h-3 w-3" /> {p.read} {t("blog.min")}
+                      <Clock className="h-3 w-3" /> {p.read_minutes} {t("blog.min")}
                     </span>
                   </div>
                   <div className="p-6">
-                    <div className="text-xs text-muted-foreground">{p.date[lang]}</div>
+                    <div className="text-xs text-muted-foreground">{fmtDate(p.published_at, lang)}</div>
                     <h3 className="mt-2 font-display text-lg font-bold leading-snug group-hover:text-gold">
                       {p.title[lang]}
                     </h3>

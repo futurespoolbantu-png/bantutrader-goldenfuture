@@ -1,22 +1,26 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { ArrowLeft, Calendar, Clock } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { useI18n } from "@/lib/i18n";
-import { blogPosts, getPostBySlug } from "@/lib/blog-posts";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/blog/$slug")({
-  loader: ({ params }) => {
-    const post = getPostBySlug(params.slug);
-    if (!post) throw notFound();
-    return post;
+  loader: async ({ params }) => {
+    const { data } = await supabase
+      .from("blog_posts")
+      .select("*")
+      .eq("slug", params.slug)
+      .eq("published", true)
+      .maybeSingle();
+    if (!data) throw notFound();
+    return data;
   },
   head: ({ loaderData }) => ({
     meta: loaderData
       ? [
-          { title: `${loaderData.title.en} — Bantu Trade Capital` },
-          { name: "description", content: loaderData.excerpt.en },
-          { property: "og:title", content: loaderData.title.en },
-          { property: "og:description", content: loaderData.excerpt.en },
+          { title: `${(loaderData.title as { en: string }).en} — Bantu Trade Capital` },
+          { name: "description", content: (loaderData.excerpt as { en: string }).en },
         ]
       : [],
   }),
@@ -38,19 +42,56 @@ const catClass = (c: string) => {
   }
 };
 
+const fmtDate = (iso: string | null, lang: "en" | "pt") => {
+  if (!iso) return "";
+  const d = new Date(iso);
+  return d.toLocaleDateString(lang === "pt" ? "pt-PT" : "en-US", { day: "2-digit", month: "short", year: "numeric" });
+};
+
+type Related = {
+  id: string;
+  slug: string;
+  category: string;
+  image_url: string | null;
+  title: { en: string; pt: string };
+};
+
 function BlogPost() {
   const post = Route.useLoaderData();
   const { t, lang } = useI18n();
+  const [relatedPosts, setRelatedPosts] = useState<Related[]>([]);
 
-  const related = blogPosts.filter((p) => p.slug !== post.slug && p.cat === post.cat).slice(0, 2);
-  const fallbackRelated = blogPosts.filter((p) => p.slug !== post.slug).slice(0, 2);
-  const relatedPosts = related.length > 0 ? related : fallbackRelated;
+  const title = post.title as { en: string; pt: string };
+  const excerpt = post.excerpt as { en: string; pt: string };
+  const body = post.body as { en: string[]; pt: string[] };
+
+  useEffect(() => {
+    supabase
+      .from("blog_posts")
+      .select("id, slug, category, image_url, title")
+      .eq("published", true)
+      .eq("category", post.category)
+      .neq("id", post.id)
+      .limit(2)
+      .then(async ({ data }) => {
+        if (data && data.length > 0) {
+          setRelatedPosts(data as unknown as Related[]);
+        } else {
+          const fallback = await supabase
+            .from("blog_posts")
+            .select("id, slug, category, image_url, title")
+            .eq("published", true)
+            .neq("id", post.id)
+            .limit(2);
+          setRelatedPosts((fallback.data as unknown as Related[]) ?? []);
+        }
+      });
+  }, [post.id, post.category]);
 
   return (
     <article className="pb-32">
-      {/* Full-width editorial banner */}
       <div className="relative -mt-[1px] h-[46vh] min-h-[320px] w-full overflow-hidden md:h-[58vh]">
-        <img src={post.img} alt="" className="absolute inset-0 h-full w-full object-cover" />
+        <img src={post.image_url ?? ""} alt="" className="absolute inset-0 h-full w-full object-cover" />
         <div
           className="absolute inset-0"
           style={{
@@ -71,18 +112,18 @@ function BlogPost() {
           <Reveal>
             <div className="mx-auto max-w-3xl">
               <div className="flex flex-wrap items-center gap-3 text-xs text-white/70">
-                <span className={`rounded-full px-3 py-1 font-semibold uppercase ${catClass(post.cat)}`}>
-                  {t(`blog.cat${post.cat[0].toUpperCase()}${post.cat.slice(1)}` as Parameters<typeof t>[0])}
+                <span className={`rounded-full px-3 py-1 font-semibold uppercase ${catClass(post.category)}`}>
+                  {t(`blog.cat${post.category[0].toUpperCase()}${post.category.slice(1)}`)}
                 </span>
                 <span className="inline-flex items-center gap-1">
-                  <Calendar className="h-3.5 w-3.5" /> {post.date[lang]}
+                  <Calendar className="h-3.5 w-3.5" /> {fmtDate(post.published_at, lang)}
                 </span>
                 <span className="inline-flex items-center gap-1">
-                  <Clock className="h-3.5 w-3.5" /> {post.read} {t("blog.min")}
+                  <Clock className="h-3.5 w-3.5" /> {post.read_minutes} {t("blog.min")}
                 </span>
               </div>
               <h1 className="mt-4 font-display text-3xl font-bold leading-tight text-white md:text-6xl">
-                {post.title[lang]}
+                {title[lang]}
               </h1>
             </div>
           </Reveal>
@@ -91,51 +132,51 @@ function BlogPost() {
 
       <div className="mx-auto max-w-3xl px-4 pt-10">
         <Reveal>
-          <p className="text-lg leading-relaxed text-muted-foreground">{post.excerpt[lang]}</p>
+          <p className="text-lg leading-relaxed text-muted-foreground">{excerpt[lang]}</p>
         </Reveal>
 
         <Reveal delay={0.15}>
           <div className="prose-legal mt-10 space-y-5 text-[16px] leading-relaxed text-muted-foreground">
-            {post.body[lang].map((para: string, i: number) => (
-            <p key={i}>{para}</p>
-          ))}
-        </div>
+            {body[lang].map((para, i) => (
+              <p key={i}>{para}</p>
+            ))}
+          </div>
 
-        <div className="mt-10 rounded-2xl border border-border bg-foreground/5 p-5 text-xs leading-relaxed text-muted-foreground">
-          {t("blog.disclaimer")}
-        </div>
-      </Reveal>
-
-      {relatedPosts.length > 0 && (
-        <Reveal delay={0.2}>
-          <div className="mt-16 border-t border-border pt-10">
-            <h2 className="font-display text-xl font-bold">{t("blog.related")}</h2>
-            <div className="mt-6 grid gap-4 sm:grid-cols-2">
-              {relatedPosts.map((p) => (
-                <Link
-                  key={p.slug}
-                  to="/blog/$slug"
-                  params={{ slug: p.slug }}
-                  className="surface-card group overflow-hidden"
-                >
-                  <div className="aspect-[16/10] overflow-hidden">
-                    <img
-                      src={p.img}
-                      alt=""
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                  </div>
-                  <div className="p-4">
-                    <h3 className="font-display text-sm font-bold leading-snug group-hover:text-gold">
-                      {p.title[lang]}
-                    </h3>
-                  </div>
-                </Link>
-              ))}
-            </div>
+          <div className="mt-10 rounded-2xl border border-border bg-foreground/5 p-5 text-xs leading-relaxed text-muted-foreground">
+            {t("blog.disclaimer")}
           </div>
         </Reveal>
-      )}
+
+        {relatedPosts.length > 0 && (
+          <Reveal delay={0.2}>
+            <div className="mt-16 border-t border-border pt-10">
+              <h2 className="font-display text-xl font-bold">{t("blog.related")}</h2>
+              <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                {relatedPosts.map((p) => (
+                  <Link
+                    key={p.slug}
+                    to="/blog/$slug"
+                    params={{ slug: p.slug }}
+                    className="surface-card group overflow-hidden"
+                  >
+                    <div className="aspect-[16/10] overflow-hidden">
+                      <img
+                        src={p.image_url ?? ""}
+                        alt=""
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    </div>
+                    <div className="p-4">
+                      <h3 className="font-display text-sm font-bold leading-snug group-hover:text-gold">
+                        {p.title[lang]}
+                      </h3>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+        )}
       </div>
     </article>
   );
