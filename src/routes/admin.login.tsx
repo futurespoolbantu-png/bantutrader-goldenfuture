@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
-import { Lock, Mail, KeyRound, AlertCircle } from "lucide-react";
+import { Lock, Mail, KeyRound, AlertCircle, CheckCircle2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useSession } from "@/lib/useSession";
 
@@ -16,10 +16,11 @@ function AdminLogin() {
   const { session, loading } = useSession();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [mode, setMode] = useState<"login" | "signup">("login");
+  const [mode, setMode] = useState<"login" | "signup" | "forgot">("login");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [signupDone, setSignupDone] = useState(false);
+  const [resetSent, setResetSent] = useState(false);
 
   useEffect(() => {
     if (!loading && session) {
@@ -40,7 +41,7 @@ function AdminLogin() {
         return;
       }
       navigate({ to: "/admin/blog" });
-    } else {
+    } else if (mode === "signup") {
       const { error: signUpError } = await supabase.auth.signUp({ email, password });
       setBusy(false);
       if (signUpError) {
@@ -48,6 +49,16 @@ function AdminLogin() {
         return;
       }
       setSignupDone(true);
+    } else {
+      const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/admin/reset-password`,
+      });
+      setBusy(false);
+      if (resetError) {
+        setError(resetError.message);
+        return;
+      }
+      setResetSent(true);
     }
   };
 
@@ -58,7 +69,7 @@ function AdminLogin() {
           <Lock className="h-4 w-4" /> Admin
         </div>
         <h1 className="mt-2 font-display text-2xl font-bold">
-          {mode === "login" ? "Sign in" : "Create admin account"}
+          {mode === "login" ? "Sign in" : mode === "signup" ? "Create admin account" : "Reset password"}
         </h1>
 
         {signupDone ? (
@@ -68,6 +79,14 @@ function AdminLogin() {
               sign in now
             </button>
             .
+          </div>
+        ) : resetSent ? (
+          <div className="mt-6 flex items-start gap-3 rounded-2xl border border-border bg-foreground/5 p-4 text-sm text-muted-foreground">
+            <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
+            <span>
+              If an account exists for {email}, a password reset link has been sent. Check your inbox (and spam
+              folder), then follow the link to set a new password.
+            </span>
           </div>
         ) : (
           <form onSubmit={submit} className="mt-6 grid gap-4">
@@ -83,19 +102,32 @@ function AdminLogin() {
                 className="w-full rounded-xl border border-border bg-background/60 px-4 py-3 text-sm outline-none focus:border-gold"
               />
             </label>
-            <label className="block">
-              <div className="mb-2 flex items-center gap-2 text-xs uppercase tracking-widest text-muted-foreground">
-                <KeyRound className="h-3.5 w-3.5" /> Password
-              </div>
-              <input
-                required
-                minLength={6}
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full rounded-xl border border-border bg-background/60 px-4 py-3 text-sm outline-none focus:border-gold"
-              />
-            </label>
+
+            {mode !== "forgot" && (
+              <label className="block">
+                <div className="mb-2 flex items-center gap-2 text-xs uppercase tracking-widest text-muted-foreground">
+                  <KeyRound className="h-3.5 w-3.5" /> Password
+                </div>
+                <input
+                  required
+                  minLength={6}
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full rounded-xl border border-border bg-background/60 px-4 py-3 text-sm outline-none focus:border-gold"
+                />
+              </label>
+            )}
+
+            {mode === "login" && (
+              <button
+                type="button"
+                onClick={() => { setMode("forgot"); setError(""); }}
+                className="-mt-2 text-left text-xs text-muted-foreground hover:text-gold"
+              >
+                Forgot your password?
+              </button>
+            )}
 
             {error && (
               <div className="flex items-start gap-2 rounded-xl border border-destructive/30 bg-destructive/10 p-3 text-xs text-destructive">
@@ -108,17 +140,29 @@ function AdminLogin() {
               disabled={busy}
               className="mt-2 rounded-full bg-gold px-6 py-3 text-sm font-semibold text-primary-foreground shadow-gold disabled:opacity-60"
             >
-              {busy ? "..." : mode === "login" ? "Sign in" : "Create account"}
+              {busy
+                ? "..."
+                : mode === "login"
+                  ? "Sign in"
+                  : mode === "signup"
+                    ? "Create account"
+                    : "Send reset link"}
             </button>
           </form>
         )}
 
-        <button
-          onClick={() => { setMode(mode === "login" ? "signup" : "login"); setError(""); setSignupDone(false); }}
-          className="mt-5 text-xs text-muted-foreground hover:text-gold"
-        >
-          {mode === "login" ? "First time here? Create an admin account" : "Already have an account? Sign in"}
-        </button>
+        {!resetSent && (
+          <button
+            onClick={() => {
+              setMode(mode === "login" ? "signup" : "login");
+              setError("");
+              setSignupDone(false);
+            }}
+            className="mt-5 text-xs text-muted-foreground hover:text-gold"
+          >
+            {mode === "signup" ? "Already have an account? Sign in" : "First time here? Create an admin account"}
+          </button>
+        )}
 
         <Link to="/" className="mt-4 block text-xs text-muted-foreground hover:text-gold">
           ← Back to site
