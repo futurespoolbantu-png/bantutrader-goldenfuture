@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useRef, useState } from "react";
 import { CheckCircle2, AlertCircle } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
+import { Logo } from "@/components/Logo";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/onboarding/$token")({
@@ -64,8 +65,9 @@ function Onboarding() {
 
   return (
     <section className="mx-auto max-w-3xl px-4 pb-32 pt-10">
-      <Reveal className="text-center">
-        <span className="inline-flex items-center gap-2 rounded-full border border-border bg-foreground/5 px-4 py-1.5 text-xs font-medium">
+      <Reveal className="flex flex-col items-center text-center">
+        <Logo />
+        <span className="mt-8 inline-flex items-center gap-2 rounded-full border border-border bg-foreground/5 px-4 py-1.5 text-xs font-medium">
           <span className="h-1.5 w-1.5 rounded-full bg-gold" /> Processo de Integração
         </span>
         <h1 className="mx-auto mt-6 max-w-2xl font-display text-4xl font-bold leading-[1.05] md:text-5xl">
