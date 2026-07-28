@@ -144,7 +144,7 @@ function RootComponent() {
         <main className={hideNav ? "min-h-screen" : "min-h-screen pt-24"}>
           <Outlet />
         </main>
-        <Footer />
+        {!hideNav && <Footer />}
         <FloatingWidgets />
       </I18nProvider>
     </QueryClientProvider>
