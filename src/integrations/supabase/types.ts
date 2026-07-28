@@ -281,6 +281,54 @@ export type Database = {
         }
         Relationships: []
       }
+      traders: {
+        Row: {
+          created_at: string
+          discord_invite_url: string | null
+          discord_invite_used: boolean
+          email: string
+          full_name: string
+          id: string
+          terms_accepted: boolean
+          terms_accepted_at: string | null
+          terms_accepted_ip: string | null
+          terms_version_accepted: string | null
+          token: string
+          token_expires_at: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          discord_invite_url?: string | null
+          discord_invite_used?: boolean
+          email: string
+          full_name: string
+          id?: string
+          terms_accepted?: boolean
+          terms_accepted_at?: string | null
+          terms_accepted_ip?: string | null
+          terms_version_accepted?: string | null
+          token?: string
+          token_expires_at?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          discord_invite_url?: string | null
+          discord_invite_used?: boolean
+          email?: string
+          full_name?: string
+          id?: string
+          terms_accepted?: boolean
+          terms_accepted_at?: string | null
+          terms_accepted_ip?: string | null
+          terms_version_accepted?: string | null
+          token?: string
+          token_expires_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
