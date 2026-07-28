@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
@@ -131,12 +132,16 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  // The onboarding/terms-acceptance flow is a focused conversion page — hiding
+  // the main site nav here avoids leads clicking away before they accept.
+  const hideNav = pathname.startsWith("/onboarding");
 
   return (
     <QueryClientProvider client={queryClient}>
       <I18nProvider>
-        <Nav />
-        <main className="min-h-screen pt-24">
+        {!hideNav && <Nav />}
+        <main className={hideNav ? "min-h-screen" : "min-h-screen pt-24"}>
           <Outlet />
         </main>
         <Footer />
