@@ -225,11 +225,28 @@ Deno.serve(async (req: Request) => {
   }
 
   try {
-    // Simple shared-secret protection: only callers who know ADMIN_API_KEY
-    // (set as a Supabase secret) can trigger this function.
+    // Authorization: accept EITHER the shared ADMIN_API_KEY header (for
+    // scripts/curl) OR a valid logged-in Supabase session (for the
+    // /admin/invite-trader page, using the same admin login as the blog admin).
     const adminKey = req.headers.get("x-admin-key");
     const expectedKey = Deno.env.get("ADMIN_API_KEY");
-    if (!expectedKey || adminKey !== expectedKey) {
+    const authHeader = req.headers.get("authorization");
+
+    let authorized = false;
+
+    if (adminKey && expectedKey && adminKey === expectedKey) {
+      authorized = true;
+    } else if (authHeader) {
+      const anonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
+      const authClient = createClient(Deno.env.get("SUPABASE_URL")!, anonKey);
+      const token = authHeader.replace(/^Bearer /i, "");
+      const { data: userData, error: userError } = await authClient.auth.getUser(token);
+      if (!userError && userData?.user) {
+        authorized = true;
+      }
+    }
+
+    if (!authorized) {
       return json({ error: "Unauthorized" }, 401);
     }
 
