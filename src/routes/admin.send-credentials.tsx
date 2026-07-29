@@ -45,6 +45,12 @@ function SendCredentials() {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => setForm((f) => ({ ...f, [key]: e.target.value })),
   });
 
+  const handleAccountSizeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const digits = e.target.value.replace(/[^\d]/g, "");
+    const formatted = digits ? "$" + Number(digits).toLocaleString("en-US") : "";
+    setForm((f) => ({ ...f, accountSize: formatted }));
+  };
+
   const canSubmit =
     form.fullName.trim().length > 2 &&
     /\S+@\S+\.\S+/.test(form.email) &&
@@ -68,7 +74,7 @@ function SendCredentials() {
         account_id: form.accountId.trim(),
         login_username: form.loginUsername.trim(),
         password: form.password,
-        account_size: form.accountSize.trim(),
+        account_size: form.accountSize ? `${form.accountSize} USD` : "",
       },
     });
 
@@ -127,8 +133,14 @@ function SendCredentials() {
           </label>
 
           <label className="block sm:col-span-2">
-            <div className="mb-2 text-xs uppercase tracking-widest text-muted-foreground">Starting Balance</div>
-            <input {...field("accountSize")} placeholder="$50,000 USD" className={inputClass} />
+            <div className="mb-2 text-xs uppercase tracking-widest text-muted-foreground">Starting Balance (USD)</div>
+            <input
+              inputMode="numeric"
+              value={form.accountSize}
+              onChange={handleAccountSizeChange}
+              placeholder="$50,000"
+              className={inputClass}
+            />
           </label>
         </div>
 
