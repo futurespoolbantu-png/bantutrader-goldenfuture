@@ -82,6 +82,10 @@
   --gradient-gold: linear-gradient(135deg, oklch(0.85 0.11 88), oklch(0.65 0.13 72));
   --shadow-gold: 0 10px 40px -10px color-mix(in oklab, var(--gold) 35%, transparent);
   --shadow-elegant: 0 20px 60px -20px oklch(0 0 0 / 60%);
+
+  /* Logo mark colors: swapped in dark mode, "normal" (original) in light mode */
+  --logo-crown: var(--foreground);
+  --logo-head: var(--gold);
 }
 
 .light {
@@ -118,6 +122,10 @@
   --gradient-gold: linear-gradient(135deg, oklch(0.68 0.13 78), oklch(0.48 0.12 65));
   --shadow-gold: 0 10px 40px -10px color-mix(in oklab, var(--gold) 25%, transparent);
   --shadow-elegant: 0 20px 60px -20px oklch(0 0 0 / 15%);
+
+  /* Light mode: logo stays in its original arrangement (gold crown, dark head) */
+  --logo-crown: var(--gold);
+  --logo-head: var(--foreground);
 }
 
 @layer base {
