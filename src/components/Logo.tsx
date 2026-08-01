@@ -1,13 +1,9 @@
-import logoVector from "@/assets/bantu-logo-vector.svg";
+import { BantuLogoMark } from "@/components/BantuLogoMark";
 
 export function Logo({ compact = false }: { compact?: boolean }) {
   return (
     <div className="flex items-center gap-2.5">
-      <img
-        src={logoVector}
-        alt="Bantu Trade Capital"
-        className="h-10 w-10 shrink-0 object-contain"
-      />
+      <BantuLogoMark className="h-10 w-10 shrink-0" />
       {!compact && (
         <div className="flex flex-col leading-none">
           <div className="font-display text-base font-bold tracking-tight">
