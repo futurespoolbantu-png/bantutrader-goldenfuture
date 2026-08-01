@@ -1,10 +1,10 @@
-import logoAsset from "@/assets/bantu-logo.png.asset.json";
+import logoVector from "@/assets/bantu-logo-vector.svg";
 
 export function Logo({ compact = false }: { compact?: boolean }) {
   return (
     <div className="flex items-center gap-2.5">
       <img
-        src={logoAsset.url}
+        src={logoVector}
         alt="Bantu Trade Capital"
         className="h-10 w-10 shrink-0 object-contain"
       />

@@ -19,10 +19,13 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ProductsRouteImport } from './routes/products'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as AdminBlogRouteImport } from './routes/admin.blog'
+import { Route as AdminInviteTraderRouteImport } from './routes/admin.invite-trader'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as AdminResetPasswordRouteImport } from './routes/admin.reset-password'
+import { Route as AdminSendCredentialsRouteImport } from './routes/admin.send-credentials'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as OnboardingTokenRouteImport } from './routes/onboarding.$token'
 import { Route as AdminBlogIndexRouteImport } from './routes/admin.blog.index'
 import { Route as AdminBlogIdRouteImport } from './routes/admin.blog.$id'
 import { Route as AdminBlogNewRouteImport } from './routes/admin.blog.new'
@@ -80,6 +83,11 @@ const AdminBlogRoute = AdminBlogRouteImport.update({
   path: '/admin/blog',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminInviteTraderRoute = AdminInviteTraderRouteImport.update({
+  id: '/admin/invite-trader',
+  path: '/admin/invite-trader',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminLoginRoute = AdminLoginRouteImport.update({
   id: '/admin/login',
   path: '/admin/login',
@@ -88,6 +96,11 @@ const AdminLoginRoute = AdminLoginRouteImport.update({
 const AdminResetPasswordRoute = AdminResetPasswordRouteImport.update({
   id: '/admin/reset-password',
   path: '/admin/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminSendCredentialsRoute = AdminSendCredentialsRouteImport.update({
+  id: '/admin/send-credentials',
+  path: '/admin/send-credentials',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
@@ -99,6 +112,11 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
   getParentRoute: () => BlogRoute,
+} as any)
+const OnboardingTokenRoute = OnboardingTokenRouteImport.update({
+  id: '/onboarding/$token',
+  path: '/onboarding/$token',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AdminBlogIndexRoute = AdminBlogIndexRouteImport.update({
   id: '/',
@@ -143,9 +161,12 @@ export interface FileRoutesByFullPath {
   '/products': typeof ProductsRoute
   '/terms': typeof TermsRoute
   '/admin/blog': typeof AdminBlogRouteWithChildren
+  '/admin/invite-trader': typeof AdminInviteTraderRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/reset-password': typeof AdminResetPasswordRoute
+  '/admin/send-credentials': typeof AdminSendCredentialsRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/onboarding/$token': typeof OnboardingTokenRoute
   '/blog/': typeof BlogIndexRoute
   '/admin/blog/$id': typeof AdminBlogIdRoute
   '/admin/blog/new': typeof AdminBlogNewRoute
@@ -163,9 +184,12 @@ export interface FileRoutesByTo {
   '/privacy': typeof PrivacyRoute
   '/products': typeof ProductsRoute
   '/terms': typeof TermsRoute
+  '/admin/invite-trader': typeof AdminInviteTraderRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/reset-password': typeof AdminResetPasswordRoute
+  '/admin/send-credentials': typeof AdminSendCredentialsRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/onboarding/$token': typeof OnboardingTokenRoute
   '/blog': typeof BlogIndexRoute
   '/admin/blog/$id': typeof AdminBlogIdRoute
   '/admin/blog/new': typeof AdminBlogNewRoute
@@ -186,9 +210,12 @@ export interface FileRoutesById {
   '/products': typeof ProductsRoute
   '/terms': typeof TermsRoute
   '/admin/blog': typeof AdminBlogRouteWithChildren
+  '/admin/invite-trader': typeof AdminInviteTraderRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/reset-password': typeof AdminResetPasswordRoute
+  '/admin/send-credentials': typeof AdminSendCredentialsRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/onboarding/$token': typeof OnboardingTokenRoute
   '/blog/': typeof BlogIndexRoute
   '/admin/blog/$id': typeof AdminBlogIdRoute
   '/admin/blog/new': typeof AdminBlogNewRoute
@@ -210,9 +237,12 @@ export interface FileRouteTypes {
     | '/products'
     | '/terms'
     | '/admin/blog'
+    | '/admin/invite-trader'
     | '/admin/login'
     | '/admin/reset-password'
+    | '/admin/send-credentials'
     | '/blog/$slug'
+    | '/onboarding/$token'
     | '/blog/'
     | '/admin/blog/$id'
     | '/admin/blog/new'
@@ -230,9 +260,12 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/products'
     | '/terms'
+    | '/admin/invite-trader'
     | '/admin/login'
     | '/admin/reset-password'
+    | '/admin/send-credentials'
     | '/blog/$slug'
+    | '/onboarding/$token'
     | '/blog'
     | '/admin/blog/$id'
     | '/admin/blog/new'
@@ -252,9 +285,12 @@ export interface FileRouteTypes {
     | '/products'
     | '/terms'
     | '/admin/blog'
+    | '/admin/invite-trader'
     | '/admin/login'
     | '/admin/reset-password'
+    | '/admin/send-credentials'
     | '/blog/$slug'
+    | '/onboarding/$token'
     | '/blog/'
     | '/admin/blog/$id'
     | '/admin/blog/new'
@@ -275,8 +311,11 @@ export interface RootRouteChildren {
   ProductsRoute: typeof ProductsRoute
   TermsRoute: typeof TermsRoute
   AdminBlogRoute: typeof AdminBlogRouteWithChildren
+  AdminInviteTraderRoute: typeof AdminInviteTraderRoute
   AdminLoginRoute: typeof AdminLoginRoute
   AdminResetPasswordRoute: typeof AdminResetPasswordRoute
+  AdminSendCredentialsRoute: typeof AdminSendCredentialsRoute
+  OnboardingTokenRoute: typeof OnboardingTokenRoute
   LovableEmailAuthPreviewRoute: typeof LovableEmailAuthPreviewRoute
   LovableEmailAuthWebhookRoute: typeof LovableEmailAuthWebhookRoute
   LovableEmailQueueProcessRoute: typeof LovableEmailQueueProcessRoute
@@ -354,6 +393,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminBlogRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/invite-trader': {
+      id: '/admin/invite-trader'
+      path: '/admin/invite-trader'
+      fullPath: '/admin/invite-trader'
+      preLoaderRoute: typeof AdminInviteTraderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/login': {
       id: '/admin/login'
       path: '/admin/login'
@@ -366,6 +412,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/reset-password'
       fullPath: '/admin/reset-password'
       preLoaderRoute: typeof AdminResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/send-credentials': {
+      id: '/admin/send-credentials'
+      path: '/admin/send-credentials'
+      fullPath: '/admin/send-credentials'
+      preLoaderRoute: typeof AdminSendCredentialsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blog/': {
@@ -381,6 +434,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/blog/$slug'
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof BlogRoute
+    }
+    '/onboarding/$token': {
+      id: '/onboarding/$token'
+      path: '/onboarding/$token'
+      fullPath: '/onboarding/$token'
+      preLoaderRoute: typeof OnboardingTokenRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/admin/blog/': {
       id: '/admin/blog/'
@@ -466,8 +526,11 @@ const rootRouteChildren: RootRouteChildren = {
   ProductsRoute: ProductsRoute,
   TermsRoute: TermsRoute,
   AdminBlogRoute: AdminBlogRouteWithChildren,
+  AdminInviteTraderRoute: AdminInviteTraderRoute,
   AdminLoginRoute: AdminLoginRoute,
   AdminResetPasswordRoute: AdminResetPasswordRoute,
+  AdminSendCredentialsRoute: AdminSendCredentialsRoute,
+  OnboardingTokenRoute: OnboardingTokenRoute,
   LovableEmailAuthPreviewRoute: LovableEmailAuthPreviewRoute,
   LovableEmailAuthWebhookRoute: LovableEmailAuthWebhookRoute,
   LovableEmailQueueProcessRoute: LovableEmailQueueProcessRoute,
@@ -475,3 +538,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
