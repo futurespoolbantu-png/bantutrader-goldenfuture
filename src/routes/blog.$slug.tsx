@@ -1,3 +1,6 @@
+import { publicHead, jsonLd, organization } from "@/lib/seo";
+import { languageFromMatches } from "@/lib/locale";
+import { getPublicPost } from "@/lib/public-posts.functions";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { ArrowLeft, Calendar, Clock } from "lucide-react";
@@ -7,24 +10,27 @@ import { supabase } from "@/integrations/supabase/client";
 import { renderBodyBlock } from "@/lib/renderBody";
 
 export const Route = createFileRoute("/blog/$slug")({
+  staticData: { sitemap: true },
   loader: async ({ params }) => {
-    const { data } = await supabase
-      .from("blog_posts")
-      .select("*")
-      .eq("slug", params.slug)
-      .eq("published", true)
-      .maybeSingle();
-    if (!data) throw notFound();
-    return data;
+    const post = await getPublicPost({ data: { slug: params.slug } });
+    if (!post) throw notFound();
+    return post;
   },
-  head: ({ loaderData }) => ({
-    meta: loaderData
-      ? [
-          { title: `${(loaderData.title as { en: string }).en} — Bantu Trade Capital` },
-          { name: "description", content: (loaderData.excerpt as { en: string }).en },
-        ]
-      : [],
-  }),
+  head: ({ loaderData: post, matches, params }) => {
+    if (!post) return { meta: [{ name: "robots", content: "noindex" }] };
+    const lang = languageFromMatches(matches);
+    const title = (post.title as { en: string; pt: string })[lang];
+    const description = (post.excerpt as { en: string; pt: string })[lang];
+    const image = post.image_url?.startsWith("https://") ? post.image_url : undefined;
+    const head = publicHead(`/blog/${encodeURIComponent(params.slug)}`, lang, `${title} — Bantu Trade Capital`, description, image, "article");
+    return { ...head, scripts: [jsonLd({
+      "@context": "https://schema.org", "@type": "BlogPosting",
+      headline: title, description, ...(image ? { image } : {}),
+      datePublished: post.published_at ?? undefined, dateModified: post.updated_at,
+      author: organization, publisher: organization, inLanguage: lang,
+      mainEntityOfPage: head.links[0].href,
+    })] };
+  },
   component: BlogPost,
 });
 

@@ -1,3 +1,4 @@
+import { htmlSecurityHeaders } from "./lib/security-headers";
 import "./lib/error-capture";
 
 import { consumeLastCapturedError } from "./lib/error-capture";
@@ -49,13 +50,13 @@ export default {
     try {
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
-      return await normalizeCatastrophicSsrResponse(response);
+      return htmlSecurityHeaders(await normalizeCatastrophicSsrResponse(response), import.meta.env.DEV);
     } catch (error) {
       console.error(error);
-      return new Response(renderErrorPage(), {
+      return htmlSecurityHeaders(new Response(renderErrorPage(), {
         status: 500,
         headers: { "content-type": "text/html; charset=utf-8" },
-      });
+      }), import.meta.env.DEV);
     }
   },
 };

@@ -1,14 +1,12 @@
+import { pageHead } from "@/lib/seo";
+import { languageFromMatches } from "@/lib/locale";
 import { createFileRoute } from "@tanstack/react-router";
 import { useI18n } from "@/lib/i18n";
 import { LegalLayout } from "@/components/LegalLayout";
 
 export const Route = createFileRoute("/privacy")({
-  head: () => ({
-    meta: [
-      { title: "Privacy Policy — Bantu Trade Capital" },
-      { name: "description", content: "How Bantu Trade Capital collects, uses and protects your personal data." },
-    ],
-  }),
+  staticData: { sitemap: true },
+  head: ({ matches }) => pageHead("privacy", "/privacy", languageFromMatches(matches)),
   component: Privacy,
 });
 

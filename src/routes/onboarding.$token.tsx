@@ -6,6 +6,7 @@ import { Logo } from "@/components/Logo";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/onboarding/$token")({
+  staticData: { sitemap: "exclude-subtree" },
   head: () => ({
     meta: [
       { title: "Termos do Programa de Trader — Bantu Trade Capital" },

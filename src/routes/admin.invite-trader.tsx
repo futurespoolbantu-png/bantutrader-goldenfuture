@@ -5,6 +5,7 @@ import { useSession } from "@/lib/useSession";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/admin/invite-trader")({
+  staticData: { sitemap: "exclude-subtree" },
   head: () => ({ meta: [{ title: "Convidar Trader — Admin" }] }),
   component: InviteTrader,
 });

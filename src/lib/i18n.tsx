@@ -1,3 +1,5 @@
+import { useNavigate, useRouterState } from "@tanstack/react-router";
+import { resolveLanguage } from "./locale";
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 
 export type Theme = "dark" | "light";
@@ -6,6 +8,25 @@ export type Lang = "en" | "pt";
 type Dict = Record<string, { en: string; pt: string }>;
 
 export const dict = {
+  "seo.home.title": { en: "Bantu Trade Capital — Institutional Capital Management", pt: "Bantu Trade Capital — Gestão de Capital Institucional" },
+  "seo.home.description": { en: "4 years of documented track record. Tiered portfolios, institutional risk oversight and fully client-owned accounts.", pt: "4 anos de track record documentado. Portefólios em escalões, supervisão de risco institucional e contas 100% em nome do cliente." },
+  "seo.about.title": { en: "About — Bantu Trade Capital Asset Management", pt: "Sobre — Bantu Trade Capital Asset Management" },
+  "seo.about.description": { en: "Founded 2022. Built by traders, for investors. Discipline, transparency, performance and integrity guide every allocation.", pt: "Fundada em 2022. Criada por traders, para investidores. Disciplina, transparência, desempenho e integridade orientam cada alocação." },
+  "seo.products.title": { en: "Investment Strategies — Bantu Trade Capital", pt: "Estratégias de Investimento — Bantu Trade Capital" },
+  "seo.products.description": { en: "Explore the Aurum and Sterling investment portfolios. Compare risk levels and discover your investor profile.", pt: "Explore os portefólios de investimento Aurum e Sterling. Compare níveis de risco e descubra o seu perfil de investidor." },
+  "seo.markets.title": { en: "Global Markets — Bantu Trade Capital", pt: "Mercados Globais — Bantu Trade Capital" },
+  "seo.markets.description": { en: "Live comparison of major global investment funds — ETFs, mutual funds and index funds — with returns, expense ratios, AUM and product details.", pt: "Compare os principais fundos de investimento globais — ETFs, fundos de investimento e fundos de índice — com retornos, custos, ativos sob gestão e detalhes dos produtos." },
+  "seo.blog.title": { en: "Insights — Bantu Trade Capital", pt: "Análises — Bantu Trade Capital" },
+  "seo.blog.description": { en: "Market analysis, investment education, and company updates from Bantu Trade Capital Asset Management.", pt: "Análises de mercado, educação financeira e novidades da Bantu Trade Capital Asset Management." },
+  "seo.contact.title": { en: "Contact — Bantu Trade Capital", pt: "Contacto — Bantu Trade Capital" },
+  "seo.contact.description": { en: "Get in touch with Bantu Trade Capital Asset Management. Investor inquiries, general questions and media contacts.", pt: "Entre em contacto com a Bantu Trade Capital Asset Management. Pedidos de investidores, questões gerais e contactos de imprensa." },
+  "seo.privacy.title": { en: "Privacy Policy — Bantu Trade Capital", pt: "Política de Privacidade — Bantu Trade Capital" },
+  "seo.privacy.description": { en: "How Bantu Trade Capital collects, uses and protects your personal data.", pt: "Como a Bantu Trade Capital recolhe, utiliza e protege os seus dados pessoais." },
+  "seo.terms.title": { en: "Terms of Service — Bantu Trade Capital", pt: "Termos de Serviço — Bantu Trade Capital" },
+  "seo.terms.description": { en: "Terms and conditions for using the Bantu Trade Capital website.", pt: "Termos e condições de utilização do site da Bantu Trade Capital." },
+  "seo.disclaimer.title": { en: "Disclaimer — Bantu Trade Capital", pt: "Aviso Legal — Bantu Trade Capital" },
+  "seo.disclaimer.description": { en: "Risk disclosure and regulatory disclaimer for Bantu Trade Capital.", pt: "Divulgação de riscos e aviso regulatório da Bantu Trade Capital." },
+  "contact.invalidMsg": { en: "Please check your details: name and profile up to 100 characters, email up to 255, and message up to 1,000 characters.", pt: "Verifique os seus dados: nome e perfil até 100 caracteres, email até 255 e mensagem até 1.000 caracteres." },
   // Nav
   "nav.home": { en: "Home", pt: "Início" },
   "nav.products": { en: "Products", pt: "Produtos" },
@@ -508,39 +529,47 @@ type Ctx = {
 const I18nContext = createContext<Ctx | null>(null);
 
 export function I18nProvider({ children }: { children: ReactNode }) {
+  const search = useRouterState({ select: (state) => state.location.search });
+  const navigate = useNavigate();
+  const urlLanguage = search.lang;
   const [theme, setThemeState] = useState<Theme>("dark");
-  const [lang, setLangState] = useState<Lang>("en");
+  const [storedLang, setStoredLang] = useState<Lang>("en");
+  const [hydrated, setHydrated] = useState(false);
+  const lang = urlLanguage !== undefined ? resolveLanguage(urlLanguage) : storedLang;
 
   useEffect(() => {
-    const t = (localStorage.getItem("btc-theme") as Theme) || "dark";
-    const l = (localStorage.getItem("btc-lang") as Lang) || "en";
-    setThemeState(t);
-    setLangState(l);
+    try {
+      setThemeState(localStorage.getItem("btc-theme") === "light" ? "light" : "dark");
+      setStoredLang(resolveLanguage(localStorage.getItem("btc-lang")));
+    } catch { /* Storage may be disabled. */ }
+    setHydrated(true);
   }, []);
 
   useEffect(() => {
+    if (!hydrated) return;
     const root = document.documentElement;
     root.classList.toggle("light", theme === "light");
     root.classList.toggle("dark", theme === "dark");
     root.setAttribute("data-theme", theme);
-    localStorage.setItem("btc-theme", theme);
-  }, [theme]);
+    try { localStorage.setItem("btc-theme", theme); } catch { /* Optional persistence. */ }
+  }, [theme, hydrated]);
 
   useEffect(() => {
+    if (!hydrated) return;
     document.documentElement.setAttribute("lang", lang);
-    localStorage.setItem("btc-lang", lang);
-  }, [lang]);
+    try { localStorage.setItem("btc-lang", lang); } catch { /* Optional persistence. */ }
+  }, [lang, hydrated]);
 
+  const setLang = (next: Lang) => {
+    setStoredLang(next);
+    void navigate({ to: ".", search: (prev) => ({ ...prev, lang: next }), replace: true, resetScroll: false });
+  };
   const value: Ctx = {
-    theme,
-    lang,
-    setTheme: setThemeState,
-    setLang: setLangState,
+    theme, lang, setTheme: setThemeState, setLang,
     toggleTheme: () => setThemeState((v) => (v === "dark" ? "light" : "dark")),
-    toggleLang: () => setLangState((v) => (v === "en" ? "pt" : "en")),
+    toggleLang: () => setLang(lang === "en" ? "pt" : "en"),
     t: (k) => dict[k][lang],
   };
-
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;
 }
 

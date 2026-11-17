@@ -5,6 +5,7 @@ import { useSession } from "@/lib/useSession";
 import { BlogPostEditor } from "@/components/BlogPostEditor";
 
 export const Route = createFileRoute("/admin/blog/new")({
+  staticData: { sitemap: "exclude-subtree" },
   head: () => ({ meta: [{ title: "New Post — Admin" }] }),
   component: NewPost,
 });

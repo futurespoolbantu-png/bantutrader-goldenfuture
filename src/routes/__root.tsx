@@ -7,6 +7,7 @@ import {
   useRouterState,
   HeadContent,
   Scripts,
+  retainSearchParams,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
@@ -15,6 +16,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { FloatingWidgets } from "@/components/FloatingWidgets";
+import { languageSearch, resolveLanguage } from "@/lib/locale";
 import { I18nProvider } from "@/lib/i18n";
 
 function NotFoundComponent() {
@@ -78,31 +80,17 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+  staticData: { sitemap: false },
+  validateSearch: languageSearch,
+  search: { middlewares: [retainSearchParams(["lang"])] },
   head: () => ({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Bantu Trade Capital" },
-      {
-        name: "description",
-        content:
-          "Bantu Trade Capital Asset Management: institutional-grade portfolio strategies, transparent reporting and client-owned accounts. 4 years of documented track record.",
-      },
       { name: "author", content: "Bantu Trade Capital" },
-      { property: "og:title", content: "Bantu Trade Capital" },
-      {
-        property: "og:description",
-        content:
-          "Institutional-grade portfolio strategies with transparent reporting and client-owned accounts.",
-      },
+      { property: "og:site_name", content: "Bantu Trade Capital" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Bantu Trade Capital" },
-      { name: "description", content: "4 years of documented track record. Tiered investment portfolios, institutional risk oversight, and 100% client-owned accounts." },
-      { property: "og:description", content: "4 years of documented track record. Tiered investment portfolios, institutional risk oversight, and 100% client-owned accounts." },
-      { name: "twitter:description", content: "4 years of documented track record. Tiered investment portfolios, institutional risk oversight, and 100% client-owned accounts." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/8d4e67a2-306e-4c22-8bcc-6e87876a9c18/id-preview-60b127e0--ff58bd43-620e-4776-8621-fd162ddedd82.lovable.app-1783176812930.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/8d4e67a2-306e-4c22-8bcc-6e87876a9c18/id-preview-60b127e0--ff58bd43-620e-4776-8621-fd162ddedd82.lovable.app-1783176812930.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -117,8 +105,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: ReactNode }) {
+  const lang = useRouterState({ select: (state) => resolveLanguage(state.location.search.lang) });
   return (
-    <html lang="en">
+    <html lang={lang} suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>

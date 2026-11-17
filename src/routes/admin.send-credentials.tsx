@@ -5,6 +5,7 @@ import { useSession } from "@/lib/useSession";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/admin/send-credentials")({
+  staticData: { sitemap: "exclude-subtree" },
   head: () => ({ meta: [{ title: "Enviar Credenciais — Admin" }] }),
   component: SendCredentials,
 });

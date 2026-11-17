@@ -17,6 +17,7 @@ import { Route as DisclaimerRouteImport } from './routes/disclaimer'
 import { Route as GlobalMarketsRouteImport } from './routes/global-markets'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ProductsRouteImport } from './routes/products'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as AdminBlogRouteImport } from './routes/admin.blog'
 import { Route as AdminInviteTraderRouteImport } from './routes/admin.invite-trader'
@@ -71,6 +72,11 @@ const PrivacyRoute = PrivacyRouteImport.update({
 const ProductsRoute = ProductsRouteImport.update({
   id: '/products',
   path: '/products',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TermsRoute = TermsRouteImport.update({
@@ -159,6 +165,7 @@ export interface FileRoutesByFullPath {
   '/global-markets': typeof GlobalMarketsRoute
   '/privacy': typeof PrivacyRoute
   '/products': typeof ProductsRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/admin/blog': typeof AdminBlogRouteWithChildren
   '/admin/invite-trader': typeof AdminInviteTraderRoute
@@ -183,6 +190,7 @@ export interface FileRoutesByTo {
   '/global-markets': typeof GlobalMarketsRoute
   '/privacy': typeof PrivacyRoute
   '/products': typeof ProductsRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/admin/invite-trader': typeof AdminInviteTraderRoute
   '/admin/login': typeof AdminLoginRoute
@@ -208,6 +216,7 @@ export interface FileRoutesById {
   '/global-markets': typeof GlobalMarketsRoute
   '/privacy': typeof PrivacyRoute
   '/products': typeof ProductsRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/admin/blog': typeof AdminBlogRouteWithChildren
   '/admin/invite-trader': typeof AdminInviteTraderRoute
@@ -235,6 +244,7 @@ export interface FileRouteTypes {
     | '/global-markets'
     | '/privacy'
     | '/products'
+    | '/sitemap.xml'
     | '/terms'
     | '/admin/blog'
     | '/admin/invite-trader'
@@ -259,6 +269,7 @@ export interface FileRouteTypes {
     | '/global-markets'
     | '/privacy'
     | '/products'
+    | '/sitemap.xml'
     | '/terms'
     | '/admin/invite-trader'
     | '/admin/login'
@@ -283,6 +294,7 @@ export interface FileRouteTypes {
     | '/global-markets'
     | '/privacy'
     | '/products'
+    | '/sitemap.xml'
     | '/terms'
     | '/admin/blog'
     | '/admin/invite-trader'
@@ -309,6 +321,7 @@ export interface RootRouteChildren {
   GlobalMarketsRoute: typeof GlobalMarketsRoute
   PrivacyRoute: typeof PrivacyRoute
   ProductsRoute: typeof ProductsRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
   AdminBlogRoute: typeof AdminBlogRouteWithChildren
   AdminInviteTraderRoute: typeof AdminInviteTraderRoute
@@ -377,6 +390,13 @@ declare module '@tanstack/react-router' {
       path: '/products'
       fullPath: '/products'
       preLoaderRoute: typeof ProductsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/terms': {
@@ -524,6 +544,7 @@ const rootRouteChildren: RootRouteChildren = {
   GlobalMarketsRoute: GlobalMarketsRoute,
   PrivacyRoute: PrivacyRoute,
   ProductsRoute: ProductsRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
   AdminBlogRoute: AdminBlogRouteWithChildren,
   AdminInviteTraderRoute: AdminInviteTraderRoute,

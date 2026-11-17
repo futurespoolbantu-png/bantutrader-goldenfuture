@@ -1,14 +1,12 @@
+import { pageHead } from "@/lib/seo";
+import { languageFromMatches } from "@/lib/locale";
 import { createFileRoute } from "@tanstack/react-router";
 import { useI18n } from "@/lib/i18n";
 import { LegalLayout } from "@/components/LegalLayout";
 
 export const Route = createFileRoute("/disclaimer")({
-  head: () => ({
-    meta: [
-      { title: "Disclaimer — Bantu Trade Capital" },
-      { name: "description", content: "Risk disclosure and regulatory disclaimer for Bantu Trade Capital." },
-    ],
-  }),
+  staticData: { sitemap: true },
+  head: ({ matches }) => pageHead("disclaimer", "/disclaimer", languageFromMatches(matches)),
   component: Disclaimer,
 });
 

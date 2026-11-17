@@ -1,23 +1,16 @@
+import { pageHead } from "@/lib/seo";
+import { languageFromMatches } from "@/lib/locale";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { ArrowRight, Calendar, Clock } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { useI18n } from "@/lib/i18n";
-import { supabase } from "@/integrations/supabase/client";
+import { getPublicPosts } from "@/lib/public-posts.functions";
 
 export const Route = createFileRoute("/blog/")({
-  head: () => ({
-    meta: [
-      { title: "Insights — Bantu Trade Capital" },
-      {
-        name: "description",
-        content:
-          "Market analysis, investment education, and company updates from Bantu Trade Capital Asset Management.",
-      },
-      { property: "og:title", content: "Insights — Bantu Trade Capital" },
-      { property: "og:description", content: "News & insights from our team of managers and analysts." },
-    ],
-  }),
+  staticData: { sitemap: true },
+  head: ({ matches }) => pageHead("blog", "/blog", languageFromMatches(matches)),
+  loader: () => getPublicPosts(),
   component: Blog,
 });
 
@@ -59,20 +52,8 @@ const fmtDate = (iso: string | null, lang: "en" | "pt") => {
 function Blog() {
   const { t, lang } = useI18n();
   const [filter, setFilter] = useState<FilterKey>("all");
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    supabase
-      .from("blog_posts")
-      .select("id, slug, category, image_url, read_minutes, published_at, title, excerpt")
-      .eq("published", true)
-      .order("published_at", { ascending: false })
-      .then(({ data }) => {
-        setPosts((data as unknown as Post[]) ?? []);
-        setLoading(false);
-      });
-  }, []);
+  const posts = Route.useLoaderData() as unknown as Post[];
+  const loading = false;
 
   const catLabel = (c: FilterKey) =>
     c === "all" ? t("blog.catAll")

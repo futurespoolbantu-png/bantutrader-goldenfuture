@@ -1,3 +1,5 @@
+import { pageHead, homeSchema, jsonLd } from "@/lib/seo";
+import { languageFromMatches } from "@/lib/locale";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef } from "react";
 import {
@@ -22,22 +24,8 @@ import { useI18n } from "@/lib/i18n";
 import { AfricanPattern } from "@/components/AfricanPattern";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Bantu Trade Capital — Gestão de Capital Institucional" },
-      {
-        name: "description",
-        content:
-          "4 anos de track record documentado. Portefólios em escalões, supervisão de risco institucional e contas 100% em nome do cliente.",
-      },
-      { property: "og:title", content: "Bantu Trade Capital — Gestão de Capital" },
-      {
-        property: "og:description",
-        content:
-          "Gestão discricionária, execução disciplinada e relatórios transparentes para investidores exigentes.",
-      },
-    ],
-  }),
+  staticData: { sitemap: true },
+  head: ({ matches }) => ({ ...pageHead("home", "/", languageFromMatches(matches)), scripts: [jsonLd(homeSchema)] }),
   component: Home,
 });
 

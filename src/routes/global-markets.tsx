@@ -1,3 +1,5 @@
+import { pageHead } from "@/lib/seo";
+import { languageFromMatches } from "@/lib/locale";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -35,21 +37,8 @@ import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 export const Route = createFileRoute("/global-markets")({
-  head: () => ({
-    meta: [
-      { title: "Global Markets — Bantu Trade Capital" },
-      {
-        name: "description",
-        content:
-          "Live comparison of major global investment funds — ETFs, mutual funds and index funds — with returns, expense ratios, AUM and product details.",
-      },
-      { property: "og:title", content: "Global Markets — Bantu Trade Capital" },
-      {
-        property: "og:description",
-        content: "Compare 18 leading global funds side by side: 1Y & 3Y returns, expense ratios, AUM and product info.",
-      },
-    ],
-  }),
+  staticData: { sitemap: true },
+  head: ({ matches }) => pageHead("markets", "/global-markets", languageFromMatches(matches)),
   component: GlobalMarkets,
 });
 

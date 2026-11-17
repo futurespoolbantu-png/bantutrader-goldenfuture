@@ -5,6 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useSession } from "@/lib/useSession";
 
 export const Route = createFileRoute("/admin/blog/")({
+  staticData: { sitemap: "exclude-subtree" },
   head: () => ({ meta: [{ title: "Manage Blog — Admin" }] }),
   component: AdminBlogList,
 });

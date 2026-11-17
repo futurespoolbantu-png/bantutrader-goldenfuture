@@ -1,3 +1,5 @@
+import { pageHead } from "@/lib/seo";
+import { languageFromMatches } from "@/lib/locale";
 import { createFileRoute } from "@tanstack/react-router";
 import { Zap, Eye, ShieldCheck, Sparkles, TrendingUp, Scale } from "lucide-react";
 import samuelson from "@/assets/samuelson-gomes.jpg.asset.json";
@@ -7,18 +9,8 @@ import { Reveal } from "@/components/Reveal";
 import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/about")({
-  head: () => ({
-    meta: [
-      { title: "About — Bantu Trade Capital Asset Management" },
-      {
-        name: "description",
-        content:
-          "Founded 2022. Built by traders, for investors. Discipline, transparency, performance and integrity guide every allocation.",
-      },
-      { property: "og:title", content: "About — Bantu Trade Capital" },
-      { property: "og:description", content: "Where capital is managed with precision." },
-    ],
-  }),
+  staticData: { sitemap: true },
+  head: ({ matches }) => pageHead("about", "/about", languageFromMatches(matches)),
   component: About,
 });
 

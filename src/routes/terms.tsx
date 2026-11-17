@@ -1,14 +1,12 @@
+import { pageHead } from "@/lib/seo";
+import { languageFromMatches } from "@/lib/locale";
 import { createFileRoute } from "@tanstack/react-router";
 import { useI18n } from "@/lib/i18n";
 import { LegalLayout } from "@/components/LegalLayout";
 
 export const Route = createFileRoute("/terms")({
-  head: () => ({
-    meta: [
-      { title: "Terms of Service — Bantu Trade Capital" },
-      { name: "description", content: "Terms and conditions for using the Bantu Trade Capital website." },
-    ],
-  }),
+  staticData: { sitemap: true },
+  head: ({ matches }) => pageHead("terms", "/terms", languageFromMatches(matches)),
   component: Terms,
 });
 

@@ -1,3 +1,5 @@
+import { pageHead } from "@/lib/seo";
+import { languageFromMatches } from "@/lib/locale";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import {
@@ -16,18 +18,8 @@ import { Reveal } from "@/components/Reveal";
 import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/products")({
-  head: () => ({
-    meta: [
-      { title: "Investment Strategies — Bantu Trade Capital" },
-      {
-        name: "description",
-        content:
-          "Explore the Aurum and Sterling investment portfolios. Compare risk levels and discover your investor profile.",
-      },
-      { property: "og:title", content: "Investment Strategies — Bantu Trade Capital" },
-      { property: "og:description", content: "Two strategy families designed for different risk profiles." },
-    ],
-  }),
+  staticData: { sitemap: true },
+  head: ({ matches }) => pageHead("products", "/products", languageFromMatches(matches)),
   component: Products,
 });
 

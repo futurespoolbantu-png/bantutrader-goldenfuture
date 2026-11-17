@@ -4,6 +4,7 @@ import { Lock, KeyRound, AlertCircle, CheckCircle2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/admin/reset-password")({
+  staticData: { sitemap: "exclude-subtree" },
   head: () => ({
     meta: [{ title: "Reset Password — Bantu Trade Capital" }],
   }),
